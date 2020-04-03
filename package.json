@@ -12,7 +12,10 @@
     "hammerjs": "^2.0.8",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
-    "vue": "^2.6.11"
+    "lib-flexible": "^0.3.2",
+    "postcss-px2rem": "^0.3.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",

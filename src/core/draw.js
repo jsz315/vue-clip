@@ -127,7 +127,7 @@ function start($x, $y){
 
     isMove = false;
     isDrag = false;
-    let haveSize = pointSize / 2;
+    let haveSize = pointSize / 1;
 
     points.forEach(point => {
         let obj = getPosition(point.name);
@@ -273,11 +273,21 @@ function clip(){
     return dataUrl;
 }
 
+function getBound(){
+    return {
+        x: x,
+        y: y,
+        width: maskWidth,
+        height: maskHeight
+    }
+}
+
 export default {
     init,
     start,
     move,
     end,
     scale,
-    clip
+    clip,
+    getBound
 }

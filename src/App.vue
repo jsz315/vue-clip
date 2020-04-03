@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <clip/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import clip from './components/clip/index.vue'
+
+
 
 export default {
   name: 'App',
   components: {
-    clip
+    
   }
 }
 </script>
@@ -20,7 +21,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 12px;
+  font-size: 28px;
 }
 html, body{
   padding: 0;
