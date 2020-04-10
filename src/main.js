@@ -7,6 +7,7 @@ import ListView from './components/list-view/index.vue'
 import EditView from './components/edit-view/index.vue'
 import DetailView from './components/detail-view/index.vue'
 import TestView from './components/test-view/index.vue'
+import store from "./store/index";
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,7 @@ const router = new VueRouter({
 Vue.config.productionTip = false
 
 new Vue({
+  store,
   router,
   render: h => h(App),
 }).$mount('#app')

@@ -1,24 +1,31 @@
 <template>
-    <div class="clip">
-        <div class="title">图片裁剪</div>
-
-        <canvas class="canvas" ref="canvas"></canvas>
-        
-        <canvas class="draw" ref="draw"></canvas>
-        <div class="tip">type: {{type}}</div>
-        <div class="tip">scale: {{scale}}</div>
-        <div class="tip">rotation: {{rotation}}</div>
-        <div class="tip">x: {{x}}</div>
-        <div class="tip">y: {{y}}</div>
-        <div class="btn" @click="onClip">裁剪</div>
-        <img class="pic" v-if="pic" :src="pic"/>
+    <div class="clip-view">
+        <PageView>
+            <template v-slot:header>
+                <span class="iconfont icon-liebiao" @click="onBack"></span>
+                <div class="title">图片裁剪</div>
+            </template>
+            <template v-slot:content>
+                <canvas class="canvas" ref="canvas"></canvas>
+                <canvas class="draw" ref="draw"></canvas>
+                <div class="tip">type: {{type}}</div>
+                <div class="tip">scale: {{scale}}</div>
+                <div class="tip">rotation: {{rotation}}</div>
+                <div class="tip">x: {{x}}</div>
+                <div class="tip">y: {{y}}</div>
+                <div class="btn" @click="onClip">裁剪</div>
+                <img class="pic" v-if="pic" :src="pic"/>
+            </template>
+        </PageView>
     </div>
 </template>
 
 <script>
+import PageView from '../page-view/index.vue'
 // import Hammer from 'hammerjs';
 import draw from '../../core/draw';
 import tooler from '../../core/tooler';
+import { mapState, mapMutations } from 'vuex'
 
 let isMobile = tooler.checkMobile();
 let lastPoint;
@@ -35,11 +42,14 @@ export default {
             pic: null
         };
     },
+    components: {PageView},
+    computed:{
+        ...mapState(['pics', 'id'])
+    },
     mounted() {
         var canvas = this.$refs.canvas;
-        draw.init(canvas, '/man.jpg', this.$refs.draw);
-
-        // var vm = this;
+        var url = this.pics[this.id];
+        draw.init(canvas, url, this.$refs.draw);
         var offset = tooler.getElementPosition(canvas);
         console.log(offset);
 
@@ -73,70 +83,14 @@ export default {
             
             console.log(e);
         })
-
-        // var mc = new Hammer.Manager(canvas);
-
-        // mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-        // mc.add(new Hammer.Rotate({ threshold: 0 })).recognizeWith(mc.get('pan'));
-        // mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
-        // mc.add(new Hammer.Tap());
-
-        // mc.on("panstart panmove", onPan);
-        // mc.on("rotatestart rotatemove", onRotate);
-        // mc.on("pinchstart pinchmove", onPinch);
-        // mc.on("tap", onTap);
-
-        // mc.on("hammer.input", function(ev) {
-        //     if(ev.isFirst){
-        //         console.log('开始');
-        //         console.log(ev);
-        //         vm.type = '开始';
-        //         let p = ev.changedPointers[0];
-        //         draw.start(p.clientX, p.clientY);
-        //     }
-        //     if(ev.isFinal) {
-        //         console.log('结束');
-        //         draw.end();
-        //         vm.type = '结束';
-        //     }
-        // });
-    
-        // function onPan(ev) {
-        //     console.log('onPan');
-        //     console.log(ev);
-        //     vm.type = 'onPan';
-        //     vm.x = ev.deltaX;
-        //     vm.y = ev.deltaY;
-        //     draw.move(ev.deltaX, ev.deltaY);
-        // }
-
-        // function onPinch(ev) {
-        //     console.log('onPinch');
-        //     console.log(ev);
-        //     console.log(ev.scale);
-        //     vm.scale = ev.scale;
-        //     draw.scale(ev.scale);
-        //     // vm.type = 'onPinch';
-        // }
-
-        // function onRotate(ev) {
-        //     console.log('onRotate');
-        //     console.log(ev);
-        //     // console.log(ev.rotation);
-        //     vm.rotation = ev.rotation;
-        //     vm.type = 'onRotate';
-        // }
-
-        // function onTap(ev) {
-        //     console.log('onTap');
-        //     console.log(ev);
-        //     vm.type = 'onTap';
-        // }
-
     },
     methods:{
+        ...mapMutations(['changePics']),
         onClip(){
             this.pic = draw.clip();
+        },
+        onBack(){
+            history.back();
         }
     }
 };

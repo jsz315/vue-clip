@@ -1,39 +1,30 @@
-.list-view{
-    .header{
-        position: fixed;
-        width: 100%;
-        background: #666666;
-        color: #ffffff;
-        height: 60px;
-        line-height: 60px;
-        z-index: 1;
-        left: 0;
+.list-view {
+
+    .title {
+        text-align: center;
+    }
+
+    .iconfont {
+        font-size: 32px;
+        position: absolute;
+        right: 15px;
         top: 0;
-        .title{
-            text-align: center;
-        }
-        .iconfont{
-            font-size: 32px;
-            position: absolute;
-            right: 15px;
-            top: 0;
-            bottom: 0;
-            margin: auto;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .list {
+        display: flex;
+        flex-wrap: wrap;
+
+        .item {
+            width: 222px;
+            height: 260px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-left: 20px;
+            margin-top: 20px;
         }
     }
-    .content{
-        margin-top: 60px;
-        .list{
-            display: flex;
-            flex-wrap: wrap;
-            .item{
-                width: 222px;
-                height: 260px;
-                background: #666666;
-                margin-left: 20px;
-                margin-top: 20px;
-            }
-        }
-    }
-    
 }

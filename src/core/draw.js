@@ -27,6 +27,7 @@ async function init($canvas, $url, $pic){
     canvas = $canvas;
     canvas.width = 1200;
     canvas.height = img.height * 1200 / img.width;
+    
     ctx = canvas.getContext("2d");
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
