@@ -8,11 +8,14 @@ import EditView from './components/edit-view/index.vue'
 import DetailView from './components/detail-view/index.vue'
 import TestView from './components/test-view/index.vue'
 import store from "./store/index";
+import toastRegistry from './components/toast-view/index.js'
 
+// 这里也可以直接执行 toastRegistry()
+Vue.use(toastRegistry);
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/test' },
+  { path: '/', redirect: '/list' },
   { path: '/clip', component: ClipView },
   { path: '/list', component: ListView },
   { path: '/edit', component: EditView },

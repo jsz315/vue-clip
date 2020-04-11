@@ -1,32 +1,49 @@
-function getImage(url){
+function getImage(url) {
     return new Promise(resolve => {
         var img = new Image();
-        img.onload = function(){
+        img.onload = function () {
             resolve(img);
         }
         img.src = url;
     })
 }
 
-function checkMobile(){
+function checkMobile() {
     let list = ["Android", "iPhone", "iPad"];
     let res = list.find(item => {
-        if(navigator.userAgent.indexOf(item) != -1){
+        if (navigator.userAgent.indexOf(item) != -1) {
             return true;
         }
     })
     return !!res;
 }
 
-function getElementPosition(element){
+function getElementPosition(element) {
     var x = element.getBoundingClientRect().left;
     var y = element.getBoundingClientRect().top;
-    return {x: x, y: y};
+    return {
+        x: x,
+        y: y
+    };
 }
 
+function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1];
+    var bstr = atob(arr[1]);
+    var n = bstr.length;
+    var u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {
+        type: mime
+    });
+}
 
 export default {
     getImage,
     checkMobile,
-    getElementPosition
+    getElementPosition,
+    dataURLtoFile
 }

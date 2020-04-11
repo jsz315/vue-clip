@@ -2,11 +2,15 @@
     <div class="clip-view">
         <PageView>
             <template v-slot:header>
-                <span class="iconfont icon-liebiao" @click="onBack"></span>
+                <!-- <span class="iconfont icon-liebiao" @click="onBack"></span> -->
+                <div class="iconfont icon-liebiao" @click="onBack"></div>
                 <div class="title">图片裁剪</div>
             </template>
             <template v-slot:content>
-                <canvas class="canvas" ref="canvas"></canvas>
+                <div class="tip">图片尺寸: {{width}} x {{height}}</div>
+                <div class="canvas-box" ref="box">
+                    <canvas class="canvas" ref="canvas"></canvas>
+                </div>
                 <canvas class="draw" ref="draw"></canvas>
                 <div class="tip">type: {{type}}</div>
                 <div class="tip">scale: {{scale}}</div>
@@ -25,6 +29,7 @@ import PageView from '../page-view/index.vue'
 // import Hammer from 'hammerjs';
 import draw from '../../core/draw';
 import tooler from '../../core/tooler';
+import yunTooler from '../../core/yunTooler';
 import { mapState, mapMutations } from 'vuex'
 
 let isMobile = tooler.checkMobile();
@@ -39,27 +44,35 @@ export default {
             type: '',
             x: 0,
             y: 0,
-            pic: null
+            pic: null,
+            width: 0,
+            height: 0
         };
     },
     components: {PageView},
     computed:{
         ...mapState(['pics', 'id'])
     },
-    mounted() {
+    async mounted() {
+        this.changeId(Number(this.$route.query.id));
+
         var canvas = this.$refs.canvas;
         var url = this.pics[this.id];
-        draw.init(canvas, url, this.$refs.draw);
-        var offset = tooler.getElementPosition(canvas);
+        var offset = tooler.getElementPosition(this.$refs.box);
         console.log(offset);
+        var img = await draw.init(canvas, url, this.$refs.draw, offset);
+        this.width = img.width;
+        this.height = img.height;
+        // var offset = tooler.getElementPosition(canvas);
 
-        canvas.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
+        this.$refs.box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
+            e.preventDefault();
             if(isMobile){
                 e = e.changedTouches[0];
             }
             lastPoint = {x: e.clientX, y: e.clientY};
 
-            draw.start(e.clientX - offset.x, e.clientY - offset.y);
+            draw.start(e.clientX, e.clientY);
         })
 
         window.addEventListener(isMobile ? "touchmove" : "mousemove", (e) => {
@@ -73,23 +86,31 @@ export default {
             
         })
 
-        window.addEventListener(isMobile ? "touchend" : "mouseup", (e) => {
+        window.addEventListener(isMobile ? "touchend" : "mouseup", () => {
             if(isMobile){
                 lastPoint = null;
             }
 
             lastPoint = null;
             draw.end();
-            
-            console.log(e);
         })
     },
     methods:{
-        ...mapMutations(['changePics']),
-        onClip(){
+        ...mapMutations(['changePics', 'changeId']),
+        async onClip(){
             this.pic = draw.clip();
+            var fname = 'aaa.jpg';
+            var file = tooler.dataURLtoFile(this.pic, fname);
+            var res = await yunTooler.startUpload(file, '/', '/' + fname);
+            if(res){
+                this.$message({message:'上传成功'});
+            }
+            else{
+                this.$message({message:'上传失败'});
+            }
         },
         onBack(){
+            console.log('clip back');
             history.back();
         }
     }

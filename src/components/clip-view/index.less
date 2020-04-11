@@ -17,10 +17,16 @@
         padding: 10px 20px;
     }
 
-    .canvas {
-        width: 100%;
-        margin-bottom: 10px;
+    .canvas-box{
+        text-align: center;
+        background: #000000;
+        .canvas {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
     }
+    
 
     .draw {
         display: none;
@@ -41,4 +47,56 @@
         width: 100%;
         margin-top: 20px;
     }
+}
+@media screen and (min-width: 768PX){
+.clip-view {
+    .title {
+        text-align: center;
+    }
+
+    .icon-liebiao {
+        font-size: 32PX;
+        position: absolute;
+        left: 15PX;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
+    .tip {
+        color: #999999;
+        padding: 10PX 20PX;
+    }
+
+    .canvas-box{
+        text-align: center;
+        background: #000000;
+        .canvas {
+            display: block;
+            width: 100%;
+            margin-bottom: 10PX;
+        }
+    }
+    
+
+    .draw {
+        display: none;
+    }
+
+    .btn {
+        width: 712PX;
+        margin: 40PX auto;
+        background: rgb(0, 217, 255);
+        text-align: center;
+        height: 60PX;
+        line-height: 60PX;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    .pic {
+        width: 100%;
+        margin-top: 20PX;
+    }
+}
 }

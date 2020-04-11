@@ -47,13 +47,23 @@ export default {
     },
     mounted() {
         // var list = this.$refs.list;
-        console.log(this.$store.state.id, 'id');
+        console.log('== detail-view mounted ==');
+        console.log(this.$route, 'route');
+        this.changeId(Number(this.$route.query.id));
+
+        this.$nextTick(()=>{
+            console.log('== detail-view nextTick ==');
+            this.resetPic();
+        })
+        
         var box = this.$refs.box;
 
         box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
+            e.preventDefault();
             if(isMobile){
                 e = e.changedTouches[0];
             }
+            
             lastPoint = {x: e.clientX, y: e.clientY};
             startPoint = {x: e.clientX, y: e.clientY};
         })
@@ -100,8 +110,7 @@ export default {
             }
             console.log(e);
         })
-
-        this.resetPic();
+        
     },
     methods:{
         ...mapMutations(['changeId', 'changeNext', 'changePrev']),
@@ -132,6 +141,7 @@ export default {
             this.$router.push({ path: '/clip', query: { id: this.id }});
         },
         onBack(){
+            console.log('detail back');
             history.back();
         }
     }

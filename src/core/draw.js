@@ -9,10 +9,6 @@ let canvasWidth;
 let canvasHeight;
 let x = 0;
 let y = 0;
-let startX = 0;
-let startY = 0;
-let startMaskWidth = 0;
-let startMaskHeight = 0;
 let pic;
 let points = [];
 let pointSize = 20;
@@ -20,26 +16,47 @@ let pointSize = 20;
 let isMove = false;
 let isDrag = false;
 let dragName;
+let offset;
+let scale = 1;
+let padding = 20;
+let imgx = padding;
+let imgy = padding;
 
-async function init($canvas, $url, $pic){
+async function init($canvas, $url, $pic, $offset){
     img = await tooler.getImage($url);
     pic = $pic;
+    offset = $offset;
     canvas = $canvas;
-    canvas.width = 1200;
-    canvas.height = img.height * 1200 / img.width;
+
+    var sw = window.innerWidth;
+    var sh = window.innerHeight - offset.y - 200;
+    // var sh = window.innerWidth;
+
+    if(img.width / img.height > (sw - padding) / (sh - padding)){
+        scale = (sw - 2 * padding) / img.width;
+        canvas.width = sw;
+        canvas.height = img.height * scale + 2 * padding;
+        imgx = padding;
+    }
+    else{
+        scale = (sh - 2 * padding) / img.height;
+        canvas.width = sw;
+        canvas.height = sh;
+        imgx = (sw - img.width * scale) / 2;
+    }
+
+    imgy = padding;
     
     ctx = canvas.getContext("2d");
+    console.log(ctx);
     canvasWidth = canvas.width;
     canvasHeight = canvas.height;
     console.log('canvas', canvasWidth, canvasHeight);
     x = (canvasWidth - maskWidth) / 2;
     y = (canvasHeight - maskHeight) / 2;
-    startX = x;
-    startY = y;
-    startMaskWidth = maskWidth;
-    startMaskHeight = maskHeight;
     initPoints();
     update();
+    return img;
 }
 
 function initPoints(){
@@ -118,13 +135,15 @@ function updatePoints(){
 }
 
 function start($x, $y){
-    console.log("page", $x, $y);
+    console.log("canvas", $x - offset.x, $y - offset.y);
 
-    let scale = canvasWidth / window.innerWidth;
+    // let scale = canvasWidth / window.innerWidth;
 
-    $x = $x * scale;
-    $y = $y * scale;
-    console.log("canvas", $x, $y);
+    // $x = $x * scale;
+    // $y = $y * scale;
+
+    $x -= offset.x;
+    $y -= offset.y;
 
     isMove = false;
     isDrag = false;
@@ -151,64 +170,108 @@ function start($x, $y){
     }
 }
 
-function move($x, $y){
-    let scale = window.innerWidth / canvasWidth;
-    $x = $x / scale;
-    $y = $y / scale;
+function nearPoint(){
+    if(x < imgx){
+        x = imgx;
+    }
+    else if(x + maskWidth > canvasWidth - imgx){
+        x = canvasWidth - imgx - maskWidth;
+    }
+    if(y < imgy){
+        y = imgy;
+    }
+    else if(y + maskHeight > canvasHeight - imgy){
+        y = canvasHeight - imgy - maskHeight;
+    }
+}
 
+function nearSize(){
+    if(maskWidth < 0){
+        maskWidth = 0;
+    }
+    if(maskHeight < 0){
+        maskHeight = 0;
+    }
+    if(x + maskWidth > canvasWidth - imgx){
+        maskWidth = canvasWidth - imgx - x;
+    }
+    if(y + maskHeight > canvasHeight - imgy){
+        maskHeight = canvasHeight - imgy - y;
+    }
+}
+
+function move($x, $y){
     if(isMove){
         console.log('move', $x, $y);
         x = x + $x;
         y = y + $y;
+        nearPoint();
         update();
     }
     else if(isDrag){
-
         if(dragName == "RB"){
             maskWidth += $x;
             maskHeight += $y;
+
+            nearSize();
             update();
         }
         else if(dragName == "RC"){
             maskWidth += $x;
+            nearSize();
+
             update();
         }
         else if(dragName == "RT"){
             maskWidth += $x;
             maskHeight -= $y;
+            nearSize();
+
             y += $y;
+            nearPoint();
             update();
         }
         else if(dragName == "CT"){
             // maskWidth += $x;
-            maskHeight -= $y;
             y += $y;
+            nearPoint();
+            maskHeight -= $y;
+            nearSize();
+
             update();
         }
         else if(dragName == "LT"){
             maskWidth -= $x;
             maskHeight -= $y;
+            nearSize();
+
             x += $x;
             y += $y;
+            nearPoint();
             update();
         }
         else if(dragName == "LC"){
             maskWidth -= $x;
+            nearSize();
             // maskHeight -= $y;
             x += $x;
             // y += $y;
+            nearPoint();
             update();
         }
         else if(dragName == "LB"){
             maskWidth -= $x;
             maskHeight += $y;
+            nearSize();
             x += $x;
+            nearPoint();
             // y += $y;
             update();
         }
         else if(dragName == "CB"){
             // maskWidth -= $x;
             maskHeight += $y;
+            nearSize();
             // x += $x;
             // y += $y;
             update();
@@ -219,30 +282,19 @@ function move($x, $y){
 
 function end(){
     if(isMove){
-        startX = x;
-        startY = y;
-        startMaskWidth = maskWidth;
-        startMaskHeight = maskHeight;
         update();
     }
     isDrag = false;
     isMove = false;
-    
-}
-
-function scale($n){
-    maskWidth = startMaskWidth * $n;
-    maskHeight = startMaskHeight * $n;
-    x = startX - (maskWidth - startMaskWidth) / 2;
-    y = startY - (maskHeight - startMaskHeight) / 2;
-    update();
 }
 
 function update(){
     ctx.save();
 
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasWidth, canvasHeight);
+    ctx.fillStyle = "#999999";
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    // ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.drawImage(img, 0, 0, img.width, img.height, imgx, imgy, canvasWidth - 2 * imgx, canvasHeight - 2 * imgy);
 
     ctx.globalAlpha = 0.5;
     ctx.fillStyle = "#000000";
@@ -269,26 +321,18 @@ function clip(){
     pic.width = maskWidth;
     pic.height = maskHeight;
     let ctx = pic.getContext("2d");
-    ctx.drawImage(img, x, y, maskWidth, maskHeight, 0, 0, pic.width, pic.height);
+    var sx = (x - imgx) / scale;
+    var sy = (y - imgy) / scale;
+    ctx.drawImage(img, sx, sy, maskWidth / scale, maskHeight / scale, 0, 0, pic.width, pic.height);
     var dataUrl = pic.toDataURL('image/jpeg');
     return dataUrl;
 }
 
-function getBound(){
-    return {
-        x: x,
-        y: y,
-        width: maskWidth,
-        height: maskHeight
-    }
-}
 
 export default {
     init,
     start,
     move,
     end,
-    scale,
     clip,
-    getBound
 }
