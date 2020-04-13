@@ -2,12 +2,18 @@
     <div class="list-view">
         <PageView>
             <template v-slot:header>
-                <div class="title">图片列表</div>
-                <span class="iconfont icon-tianjia" @click="onAdd"></span>
+                <div class="title">上传图片</div>
+                <span class="iconfont icon-tianjia"></span>
             </template>
             <template v-slot:content>
+                <div class="upload-box">
+                    <div class="file" @click="onOpen"><div class="ico"></div>点击选择上传文件</div>
+                    <input v-show="false" ref="file" type="file" multiple="multiple" @change="onChange($event)"/>
+                </div>
                 <div class="list">
-                    <div class="item" v-for="(item, index) in pics" v-bind:key="index" @click="onShow(index)" :style="{'background-image': 'url(' + item + ')'}"></div>
+                    <div class="item" v-for="(item, index) in list" v-bind:key="index" @click="onEdit(item)">
+                        <img class="img" :src="fileToImage(item)"/>
+                    </div>
                 </div>
             </template>
         </PageView>
@@ -28,7 +34,7 @@ export default {
     props: {},
     data() {
         return {
-            src: null
+            list: []
         };
     },
     components: {PageView},
@@ -48,12 +54,24 @@ export default {
     },
     methods: {
         ...mapMutations(['changePics', 'changeId']),
-        onShow(n){
-            // this.changeId(n);
-            this.$router.push({ path: '/detail', query: { id: n }});
+        fileToImage(file){
+            return window.URL.createObjectURL(file);
         },
-        onAdd(){
-            this.$router.push({ path: '/upload' });
+        onEdit(n){
+            // this.changeId(n);
+            // this.$router.push({ path: '/detail', query: { id: n }});
+            // this.$router.push({ path: '/clip', query: { id: this.id }});
+            this.$router.push({ name: 'clip', params: { pic: n } });
+        },
+        onOpen(){
+            this.$refs.file.click();
+        },
+        onChange(e){
+            console.log(e);
+            var files = e.target.files;
+            for(var i = 0; i < files.length; i++){
+                this.list.push(files[i]);
+            }
         }
     }
 };

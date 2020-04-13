@@ -41,9 +41,19 @@ function dataURLtoFile(dataurl, filename) {
     });
 }
 
+function addListener(target, type, callback){
+    target.addEventListener(type, callback);
+    return {
+        destroy() {
+            target.removeEventListener(type, callback);
+        }
+    };
+}
+
 export default {
     getImage,
     checkMobile,
     getElementPosition,
-    dataURLtoFile
+    dataURLtoFile,
+    addListener
 }

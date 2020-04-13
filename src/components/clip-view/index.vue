@@ -12,11 +12,26 @@
                     <canvas class="canvas" ref="canvas"></canvas>
                 </div>
                 <canvas class="draw" ref="draw"></canvas>
-                <div class="tip">type: {{type}}</div>
-                <div class="tip">scale: {{scale}}</div>
-                <div class="tip">rotation: {{rotation}}</div>
-                <div class="tip">x: {{x}}</div>
-                <div class="tip">y: {{y}}</div>
+                <div class="tags-box">
+                    标签：
+                    <div class="tags">
+                        <TagView name="卡通" class="tag" v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7]" v-bind:key="index"></TagView>
+                        <div class="ico add" @click="onAdd"></div>
+                    </div>
+                </div>
+                <div class="tags-box">
+                    推荐：
+                    <div class="tags">
+                        <TagView name="卡通" class="tag" v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7]" v-bind:key="index"></TagView>
+                        <div class="ico refresh"></div>
+                    </div>
+                </div>
+                <div class="info-box">
+                    描述：<textarea class="info" rows="3"></textarea>
+                </div>
+
+                <InputView ref="input"></InputView>
+
                 <div class="btn" @click="onClip">裁剪</div>
                 <img class="pic" v-if="pic" :src="pic"/>
             </template>
@@ -26,6 +41,8 @@
 
 <script>
 import PageView from '../page-view/index.vue'
+import TagView from '../tag-view/index.vue'
+import InputView from '../input-view/index.vue'
 // import Hammer from 'hammerjs';
 import draw from '../../core/draw';
 import tooler from '../../core/tooler';
@@ -34,26 +51,26 @@ import { mapState, mapMutations } from 'vuex'
 
 let isMobile = tooler.checkMobile();
 let lastPoint;
+let moveEvent;
+let endEvent;
 
 export default {
     props: {},
     data() {
         return {
-            rotation: 0,
-            scale: 0,
-            type: '',
-            x: 0,
-            y: 0,
             pic: null,
             width: 0,
             height: 0
         };
     },
-    components: {PageView},
+    components: {PageView, TagView, InputView},
     computed:{
         ...mapState(['pics', 'id'])
     },
     async mounted() {
+        console.log(this.$route, 'this.$route');
+
+
         this.changeId(Number(this.$route.query.id));
 
         var canvas = this.$refs.canvas;
@@ -73,27 +90,53 @@ export default {
             lastPoint = {x: e.clientX, y: e.clientY};
 
             draw.start(e.clientX, e.clientY);
-        })
-
-        window.addEventListener(isMobile ? "touchmove" : "mousemove", (e) => {
-            if(isMobile){
-                e = e.changedTouches[0];
-            }
-            if(lastPoint){
-                draw.move(e.clientX - lastPoint.x, e.clientY - lastPoint.y);
-                lastPoint = {x: e.clientX, y: e.clientY};
-            }
             
-        })
+            moveEvent = tooler.addListener(window, isMobile ? "touchmove" : "mousemove", (e) => {
+                if(isMobile){
+                    e = e.changedTouches[0];
+                }
+                if(lastPoint){
+                    draw.move(e.clientX - lastPoint.x, e.clientY - lastPoint.y);
+                    lastPoint = {x: e.clientX, y: e.clientY};
+                }
+                
+            })
 
-        window.addEventListener(isMobile ? "touchend" : "mouseup", () => {
-            if(isMobile){
+            endEvent = tooler.addListener(window, isMobile ? "touchend" : "mouseup", () => {
+                console.log('mouse up ==');
+                if(isMobile){
+                    lastPoint = null;
+                }
+
                 lastPoint = null;
-            }
+                draw.end();
+                
+                moveEvent.destroy();
+                endEvent.destroy();
+            });
 
-            lastPoint = null;
-            draw.end();
         })
+
+        // window.addEventListener(isMobile ? "touchmove" : "mousemove", (e) => {
+        //     if(isMobile){
+        //         e = e.changedTouches[0];
+        //     }
+        //     if(lastPoint){
+        //         draw.move(e.clientX - lastPoint.x, e.clientY - lastPoint.y);
+        //         lastPoint = {x: e.clientX, y: e.clientY};
+        //     }
+            
+        // })
+
+        // window.addEventListener(isMobile ? "touchend" : "mouseup", () => {
+        //     console.log('mouse up ==');
+        //     if(isMobile){
+        //         lastPoint = null;
+        //     }
+
+        //     lastPoint = null;
+        //     draw.end();
+        // })
     },
     methods:{
         ...mapMutations(['changePics', 'changeId']),
@@ -112,6 +155,9 @@ export default {
         onBack(){
             console.log('clip back');
             history.back();
+        },
+        onAdd(){
+            this.$refs.input.show();
         }
     }
 };

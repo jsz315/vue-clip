@@ -47,6 +47,51 @@
         width: 100%;
         margin-top: 20px;
     }
+
+    .info-box{
+        padding: 30px;
+        display: flex;
+        .info{
+            flex: 1;
+            font-size: 20px;
+            line-height: 48px;
+            display: flex;
+            box-sizing: border-box;
+            padding: 8px;
+        }
+    }
+    .tags-box{
+        padding: 30px;
+        display: flex;
+        font-size: 28px;
+        line-height: 36px;
+        .tags{
+            flex: 1;
+            transform: translateY(-8px);
+            .tag{
+                margin-right: 16px;
+                margin-bottom: 16px;
+                vertical-align: top;
+            }
+            .ico{
+                vertical-align: top;
+                width: 40px;
+                height: 40px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center;
+                border-radius: 50%;
+                display: inline-block;
+                transform: translateY(6px);
+            }
+            .add{
+                background-image: url(../../assets/img/add.png);
+            }
+            .refresh{
+                background-image: url(../../assets/img/refresh.png);
+            }
+        }
+    }
 }
 @media screen and (min-width: 768PX){
 .clip-view {

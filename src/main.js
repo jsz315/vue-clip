@@ -7,6 +7,7 @@ import ListView from './components/list-view/index.vue'
 import EditView from './components/edit-view/index.vue'
 import DetailView from './components/detail-view/index.vue'
 import TestView from './components/test-view/index.vue'
+import UploadView from './components/upload-view/index.vue'
 import store from "./store/index";
 import toastRegistry from './components/toast-view/index.js'
 
@@ -16,10 +17,11 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/list' },
-  { path: '/clip', component: ClipView },
+  { path: '/clip', name: 'clip', component: ClipView },
   { path: '/list', component: ListView },
   { path: '/edit', component: EditView },
   { path: '/detail', component: DetailView },
+  { path: '/upload', component: UploadView },
   { path: '/test', component: TestView }
 ]
 
