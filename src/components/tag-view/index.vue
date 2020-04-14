@@ -30,6 +30,7 @@ export default {
         ...mapMutations(['changePics', 'changeId']),
         onDelete(){
             console.log('onDelete');
+            this.$emit('delete');
         }
     }
 };

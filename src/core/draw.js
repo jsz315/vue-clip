@@ -28,6 +28,11 @@ async function init($canvas, $url, $pic, $offset){
     offset = $offset;
     canvas = $canvas;
 
+    reset();
+    return img;
+}
+
+function reset(){
     var sw = window.innerWidth;
     var sh = window.innerHeight - offset.y - 200;
     // var sh = window.innerWidth;
@@ -56,7 +61,29 @@ async function init($canvas, $url, $pic, $offset){
     y = (canvasHeight - maskHeight) / 2;
     initPoints();
     update();
-    return img;
+}
+
+async function parse($canvas, $file, $pic, $offset){
+    return new Promise(resolve => {
+        let f = new FileReader();
+        f.onload = async function (e) { 
+            img = await tooler.getImage(e.target.result);
+            resolve(img);
+            reset();
+            // img.setAttribute("crossOrigin",'Anonymous')
+            // img.src = e.target.result;
+            // img.onload = function(){
+            //     resolve(img);
+            //     console.log(img, 'img');
+            //     reset();
+            // }
+        }
+        f.readAsDataURL($file);
+    
+        pic = $pic;
+        offset = $offset;
+        canvas = $canvas;
+    })
 }
 
 function initPoints(){
@@ -318,14 +345,18 @@ function update(){
 }
 
 function clip(){
-    pic.width = maskWidth;
-    pic.height = maskHeight;
+    pic.width = maskWidth / scale;
+    pic.height = maskHeight / scale;
     let ctx = pic.getContext("2d");
     var sx = (x - imgx) / scale;
     var sy = (y - imgy) / scale;
     ctx.drawImage(img, sx, sy, maskWidth / scale, maskHeight / scale, 0, 0, pic.width, pic.height);
     var dataUrl = pic.toDataURL('image/jpeg');
-    return dataUrl;
+    return {
+        src: dataUrl, 
+        width: pic.width, 
+        height: pic.height
+    };
 }
 
 
@@ -335,4 +366,5 @@ export default {
     move,
     end,
     clip,
+    parse,
 }

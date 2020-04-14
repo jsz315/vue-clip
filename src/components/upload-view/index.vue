@@ -1,9 +1,9 @@
 <template>
-    <div class="list-view">
+    <div class="upload-view">
         <PageView>
             <template v-slot:header>
+                <span class="iconfont icon-liebiao" @click="onBack"></span>
                 <div class="title">上传图片</div>
-                <span class="iconfont icon-tianjia"></span>
             </template>
             <template v-slot:content>
                 <div class="upload-box">
@@ -72,6 +72,9 @@ export default {
             for(var i = 0; i < files.length; i++){
                 this.list.push(files[i]);
             }
+        },
+        onBack(){
+            history.back();
         }
     }
 };

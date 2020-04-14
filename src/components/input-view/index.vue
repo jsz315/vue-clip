@@ -1,14 +1,8 @@
 <template>
     <div class="input-view" v-if="visible">
         <div class="tag-content">
-            <input type="text" class="text" placeholder="输入标签，多个可用空格隔开"/>
-            <div class="tags-box">
-                推荐：
-                <div class="tags">
-                    <TagView name="卡通" class="tag" v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7]" v-bind:key="index"></TagView>
-                    <div class="add"></div>
-                </div>
-            </div>
+            <input type="text" v-model="word" class="text" placeholder="输入标签，多个可用空格隔开"/>
+            <LatelyTagView @choose="onChoose"/>
             <div class="btns">
                 <div class="btn quit" @click="onQuit">取消</div>
                 <div class="btn sure" @click="onSure">确定</div>
@@ -18,7 +12,7 @@
 </template>
 
 <script>
-import TagView from '../tag-view/index.vue'
+import LatelyTagView from '../lately-tag-view/index.vue'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
 // import tooler from '../../core/tooler';
@@ -30,25 +24,25 @@ export default {
     props: {},
     data() {
         return {
-            visible: false
+            visible: false,
+            word: ''
         };
     },
-    components: {TagView},
+    components: {LatelyTagView},
     computed:{
-        ...mapState(['pics', 'id'])
+        ...mapState(['pics', 'id', 'tags'])
     },
     mounted() {
     
     },
     methods:{
-        ...mapMutations(['changePics', 'changeId']),
+        ...mapMutations(['changePics', 'changeId', 'addTag']),
         onQuit(){
-            console.log('onQuit');
             this.hide();
         },
         onSure(){
-            console.log('onSure');
             this.hide();
+            this.$emit("input", this.word);
         },
         hide(){
             this.visible = false;
@@ -57,6 +51,11 @@ export default {
         show(){
             this.visible = true;
             document.body.classList.add("onscroll");
+        },
+        onChoose(n){
+            var t = this.word.split(/\s+/);
+            t.push(n);
+            this.word = t.join(" ") + " ";
         }
     }
 };

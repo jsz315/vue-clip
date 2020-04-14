@@ -57,7 +57,6 @@ export default {
         })
         
         var box = this.$refs.box;
-
         box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
             e.preventDefault();
             if(isMobile){
@@ -75,7 +74,6 @@ export default {
                 this.x += e.clientX - lastPoint.x;
                 lastPoint = {x: e.clientX, y: e.clientY};
             }
-            
         })
 
         box.addEventListener(isMobile ? "touchend" : "mouseup", (e) => {
@@ -110,6 +108,16 @@ export default {
             }
             console.log(e);
         })
+        
+
+        // var mc = new Hammer.Manager(document.body);
+        // var pinch = new Hammer.Pinch();
+        // var rotate = new Hammer.Rotate();
+        // pinch.recognizeWith(rotate);
+        // mc.add([pinch, rotate]);
+        // mc.on("pinch rotate", function(ev) {
+        //     console.log(ev.type + " ");
+        // });
         
     },
     methods:{

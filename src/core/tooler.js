@@ -1,6 +1,7 @@
 function getImage(url) {
     return new Promise(resolve => {
         var img = new Image();
+        img.setAttribute("crossOrigin",'Anonymous');
         img.onload = function () {
             resolve(img);
         }

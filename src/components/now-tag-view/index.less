@@ -1,25 +1,33 @@
-.tag-view {
-    padding: 10px 60px 10px 12px;
-    background: #ffffff;
-    border: solid 1px #f0f0f0;
-    border-radius: 8px;
-    position: relative;
-    display: inline-block;
+.now-tag-view {
+    display: flex;
     font-size: 28px;
-    line-height: 28px;
-    .icon-bianji{
-        display: block;
-        position: absolute;
-        width: 60px;
-        height: 30px;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        text-align: center;
-        font-size: 28px;
-        cursor: pointer;
+    align-items: flex-start;
+    .tip{
+        color: #666666;
+        line-height: 28px;
+        transform: translateY(11px);
     }
+    .list{
+        flex: 1;
+        .tag{
+            margin-right: 12px;
+            margin-bottom: 12px;
+        }
+        .add{
+            cursor: pointer;
+            vertical-align: top;
+            width: 40px;
+            height: 40px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            border-radius: 50%;
+            display: inline-block;
+            transform: translateY(4px);
+            background-image: url(../../assets/img/add.png);
+        }
+    }
+    
 }
 @media screen and (min-width: 768PX){
 .clip-view {
