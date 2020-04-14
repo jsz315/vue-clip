@@ -35,7 +35,6 @@ export default {
     props: {},
     data() {
         return {
-            src: '/man.jpg',
             list: [],
             x: 0,
             move: true
@@ -85,7 +84,7 @@ export default {
                 var distance = e.clientX - startPoint.x;
                 if(distance > 200){
                     console.log("左移");
-                    this.x = 750;
+                    this.x = window.innerWidth;
                     this.changePrev();
                     setTimeout(() => {
                         console.log('resetPic');
@@ -94,7 +93,7 @@ export default {
                 }
                 else if(distance < -200){
                     console.log("右移");
-                    this.x = -750;
+                    this.x = -window.innerWidth;
                     this.changeNext();
                     setTimeout(() => {
                         console.log('resetPic');
@@ -140,8 +139,8 @@ export default {
             if(n < 0){
                 return pics[pics.length - 1];
             }
-            if(n == pics.length){
-                return pics[0];
+            if(n >= pics.length){
+                return pics[n % pics.length];
             }
             return pics[n];
         },
