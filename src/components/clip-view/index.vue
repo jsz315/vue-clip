@@ -8,17 +8,9 @@
             </template>
             <template v-slot:content>
                 <div class="tip">图片尺寸: {{width}} x {{height}}</div>
-                <div class="canvas-box" ref="box">
-                    <canvas class="canvas" ref="canvas"></canvas>
+                <div class="canvas-box" @click="goClip">
+                    <img class="canvas" v-if="pic" :src="pic"/>
                 </div>
-                <canvas class="draw" ref="draw"></canvas>
-                <!-- <div class="tags-box">
-                    标签：
-                    <div class="tags">
-                        <TagView :name="item" class="tag" v-for="(item, index) in tags" v-bind:key="index"></TagView>
-                        <div class="ico add" @click="onAdd"></div>
-                    </div>
-                </div> -->
 
                 <NowTagView class="now-tag" ref="now" @add="onAdd"/>
                 <LatelyTagView class="lately-tag" @choose="onChoose"/>
@@ -43,16 +35,8 @@ import PageView from '../page-view/index.vue'
 import LatelyTagView from '../lately-tag-view/index.vue'
 import NowTagView from '../now-tag-view/index.vue'
 import InputView from '../input-view/index.vue'
-// import Hammer from 'hammerjs';
-import draw from '../../core/draw';
-import tooler from '../../core/tooler';
-import yunTooler from '../../core/yunTooler';
 import { mapState, mapMutations } from 'vuex'
 
-let isMobile = tooler.checkMobile();
-let lastPoint;
-let moveEvent;
-let endEvent;
 
 export default {
     props: {},
@@ -71,75 +55,25 @@ export default {
     },
     async mounted() {
         console.log(this.$route, 'this.$route');
-
-        var canvas = this.$refs.canvas;
-        var offset = tooler.getElementPosition(this.$refs.box);
-        console.log(offset);
-
         this.changeId(Number(this.$route.query.id));
-        var url = this.pics[this.id];
-        var size;
-        if(this.$route.params.pic){
-            size = await draw.parse(canvas, this.$route.params.pic, this.$refs.draw, offset);
-        }
-        else{
-            size = await draw.init(canvas, url, this.$refs.draw, offset);
-        }
-        
-        this.width = size.width;
-        this.height = size.height;
-
-        this.$refs.box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
-            e.preventDefault();
-            if(isMobile){
-                e = e.changedTouches[0];
-            }
-            lastPoint = {x: e.clientX, y: e.clientY};
-
-            draw.start(e.clientX, e.clientY);
-            
-            moveEvent = tooler.addListener(window, isMobile ? "touchmove" : "mousemove", (e) => {
-                if(isMobile){
-                    e = e.changedTouches[0];
-                }
-                if(lastPoint){
-                    draw.move(e.clientX - lastPoint.x, e.clientY - lastPoint.y);
-                    lastPoint = {x: e.clientX, y: e.clientY};
-                }
-                
-            })
-
-            endEvent = tooler.addListener(window, isMobile ? "touchend" : "mouseup", () => {
-                console.log('mouse up ==');
-                if(isMobile){
-                    lastPoint = null;
-                }
-
-                lastPoint = null;
-                draw.end();
-                
-                moveEvent.destroy();
-                endEvent.destroy();
-            });
-
-        })
+        this.pic = this.pics[this.id];
     },
     methods:{
         ...mapMutations(['changePics', 'changeId', 'addTag']),
         async onClip(){
-            var data = draw.clip();
-            this.pic = data.src;
-            this.clipWidth = data.width;
-            this.clipHeight = data.height;
-            var fname = 'aaa.jpg';
-            var file = tooler.dataURLtoFile(this.pic, fname);
-            var res = await yunTooler.startUpload(file, '/', '/' + fname);
-            if(res){
-                this.$message({message:'上传成功'});
-            }
-            else{
-                this.$message({message:'上传失败'});
-            }
+            // var data = draw.clip();
+            // this.pic = data.src;
+            // this.clipWidth = data.width;
+            // this.clipHeight = data.height;
+            // var fname = 'aaa.jpg';
+            // var file = tooler.dataURLtoFile(this.pic, fname);
+            // var res = await yunTooler.startUpload(file, '/', '/' + fname);
+            // if(res){
+            //     this.$message({message:'上传成功'});
+            // }
+            // else{
+            //     this.$message({message:'上传失败'});
+            // }
         },
         onBack(){
             console.log('clip back');
@@ -160,6 +94,9 @@ export default {
                     this.$refs.now.push(item);
                 }
             });
+        },
+        goClip(){
+            this.$router.push({ path: '/frame', query: { url: this.pic }});
         }
     }
 };

@@ -8,6 +8,7 @@ function startUpload(file, path, fullPath) {
     data.append('path', temp.join("/"));
     data.append('file', file);
     data.append('name', name);
+    data.append('tag', '0');
 
     return new Promise(resolve=>{
         axios({
@@ -35,7 +36,7 @@ function deleteFolder(item, path){
         params: {url: key}
     }).then(res => {
         console.log(res.data);
-    });
+    })
 }
 
 //上传参数为/key
@@ -45,7 +46,7 @@ function deleteFile(item, path){
         params: {url: key}
     }).then(res => {
         console.log(res.data);
-    });
+    })
 }
 
 export default {
