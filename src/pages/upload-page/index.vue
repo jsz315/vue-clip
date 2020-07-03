@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import PageView from '../page-view/index.vue'
+import PageView from '@/components/page-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';

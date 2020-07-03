@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import PageView from '../page-view/index.vue'
+import PageView from '@/components/page-view/index.vue'
 // import TagView from '../tag-view/index.vue'
-import LatelyTagView from '../lately-tag-view/index.vue'
-import NowTagView from '../now-tag-view/index.vue'
-import InputView from '../input-view/index.vue'
+import LatelyTagView from '@/components/lately-tag-view/index.vue'
+import NowTagView from '@/components/now-tag-view/index.vue'
+import InputView from '@/components/input-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 
 

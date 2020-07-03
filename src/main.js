@@ -2,13 +2,14 @@ import 'lib-flexible'
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import ClipView from './components/clip-view/index.vue'
-import ListView from './components/list-view/index.vue'
-import EditView from './components/edit-view/index.vue'
-import DetailView from './components/detail-view/index.vue'
-import TestView from './components/test-view/index.vue'
-import UploadView from './components/upload-view/index.vue'
-import FrameView from './components/frame-view/index.vue'
+
+import ClipPage from '@/pages/clip-page/index.vue'
+import ListPage from '@/pages/list-page/index.vue'
+import EditPage from '@/pages/edit-page/index.vue'
+import DetailPage from '@/pages/detail-page/index.vue'
+import UploadPage from '@/pages/upload-page/index.vue'
+
+
 import store from "./store/index";
 import toastRegistry from './components/toast-view/index.js'
 
@@ -18,13 +19,11 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/list' },
-  { path: '/clip', name: 'clip', component: ClipView },
-  { path: '/list', component: ListView },
-  { path: '/edit', component: EditView },
-  { path: '/detail', component: DetailView },
-  { path: '/upload', component: UploadView },
-  { path: '/test', component: TestView },
-  { path: '/frame', component: FrameView }
+  { path: '/list', component: ListPage },
+  { path: '/detail', component: DetailPage },
+  { path: '/edit', component: EditPage },
+  { path: '/clip', component: ClipPage },
+  { path: '/upload', component: UploadPage },
 ]
 
 const router = new VueRouter({

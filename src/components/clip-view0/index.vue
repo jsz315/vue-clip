@@ -1,40 +1,14 @@
 <template>
     <div class="clip-view">
-        <PageView>
-            <template v-slot:header>
-                <!-- <span class="iconfont icon-liebiao" @click="onBack"></span> -->
-                <div class="iconfont icon-liebiao" @click="onBack"></div>
-                <div class="title">图片裁剪</div>
-            </template>
-            <template v-slot:content>
-                <div class="tip">图片尺寸: {{width}} x {{height}}</div>
-                <div class="canvas-box" @click="goClip">
-                    <img class="canvas" v-if="pic" :src="pic"/>
-                </div>
-
-                <NowTagView class="now-tag" ref="now" @add="onAdd"/>
-                <LatelyTagView class="lately-tag" @choose="onChoose"/>
-
-                <div class="info-box">
-                    描述：<textarea class="info" rows="3"></textarea>
-                </div>
-
-                <InputView ref="input" @input="onInput"></InputView>
-
-                <div class="btn" @click="onClip">裁剪</div>
-                <div class="tip" v-if="pic">图片尺寸: {{clipWidth}} x {{clipHeight}}</div>
-                <img class="pic" v-if="pic" :src="pic"/>
-            </template>
-        </PageView>
+        <iframe class="frame" id="frame" :src="src"></iframe>
     </div>
 </template>
 
 <script>
-import PageView from '../page-view/index.vue'
-// import TagView from '../tag-view/index.vue'
-import LatelyTagView from '../lately-tag-view/index.vue'
-import NowTagView from '../now-tag-view/index.vue'
-import InputView from '../input-view/index.vue'
+// import PageView from '../page-view/index.vue'
+// import LatelyTagView from '../lately-tag-view/index.vue'
+// import NowTagView from '../now-tag-view/index.vue'
+// import InputView from '../input-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 
 
@@ -47,9 +21,10 @@ export default {
             height: 0,
             clipWidth: 0,
             clipHeight: 0,
+            src: "about:blank"
         };
     },
-    components: {PageView, InputView, LatelyTagView, NowTagView},
+    components: {},
     computed:{
         ...mapState(['pics', 'id', 'tags'])
     },
@@ -57,6 +32,14 @@ export default {
         console.log(this.$route, 'this.$route');
         this.changeId(Number(this.$route.query.id));
         this.pic = this.pics[this.id];
+       
+        this.src = "index.html?url=" + encodeURIComponent(this.pic);
+        window.addEventListener("message", e=>{
+            var obj = e.data;
+            if(obj.type == "complete"){
+                console.log(obj);
+            }
+        })
     },
     methods:{
         ...mapMutations(['changePics', 'changeId', 'addTag']),
@@ -96,7 +79,7 @@ export default {
             });
         },
         goClip(){
-            this.$router.push({ path: '/frame', query: { url: encodeURIComponent(this.pic) }});
+            this.$router.push({ path: '/frame', query: { url: this.pic }});
         }
     }
 };
