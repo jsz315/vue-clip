@@ -52,7 +52,7 @@ export default {
         // 不！能！获取组件实例 `this`
         // 因为当守卫执行前，组件实例还没被创建
         console.log("进入页面", to, from);
-        return next();
+        next();
     },
     beforeRouteLeave (to, from, next) {
         // 导航离开该组件的对应路由时调用
@@ -66,8 +66,7 @@ export default {
     methods: {
         ...mapMutations(['changePics', 'changeId', 'changeClipData']),
         fileToImage(file){
-
-            if(file.type == "clip"){
+            if(file.type == "complete"){
                 return window.URL.createObjectURL(file.blob);
             }
             return window.URL.createObjectURL(file);
@@ -75,7 +74,7 @@ export default {
         onEdit(n){
             // this.changeId(n);
             // this.$router.push({ path: '/detail', query: { id: n }});
-            this.$router.push({ path: '/frame', query: { url: encodeURIComponent(this.fileToImage(n)) }});
+            this.$router.push({ path: '/clip', query: { url: encodeURIComponent(this.fileToImage(n)) }});
             // this.$router.push({ name: 'clip', params: { pic: n } });
         },
         onOpen(){

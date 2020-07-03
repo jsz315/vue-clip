@@ -145,7 +145,7 @@ export default {
             return pics[n];
         },
         onEdit(){
-            this.$router.push({ path: '/clip', query: { id: this.id }});
+            this.$router.push({ path: '/edit', query: { id: this.id }});
         },
         onBack(){
             console.log('detail back');
