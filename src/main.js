@@ -19,11 +19,11 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/list' },
-  { path: '/list', component: ListPage },
-  { path: '/detail', component: DetailPage },
-  { path: '/edit', component: EditPage },
-  { path: '/clip', component: ClipPage },
-  { path: '/upload', component: UploadPage },
+  { path: '/list', component: ListPage, name: 'list' },
+  { path: '/detail', component: DetailPage, name: 'detail' },
+  { path: '/edit', component: EditPage, name: 'edit' },
+  { path: '/clip', component: ClipPage, name: 'clip' },
+  { path: '/upload', component: UploadPage, name: 'upload' },
 ]
 
 const router = new VueRouter({

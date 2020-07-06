@@ -2,7 +2,7 @@
     <div class="lately-tag-view">
         <div class="tip">推荐：</div>
         <div class="list">
-            <div class="tag" v-for="(item, index) in list" v-bind:key="item + '_' + index" @click="onChoose(item)">{{item}}</div>
+            <div class="tag" v-for="(item, index) in list" v-bind:key="item.name + '_' + index" @click="onChoose(item)">{{item.name}}</div>
             <div class="refresh" @click="onRefresh"></div>
         </div>
     </div>
@@ -30,7 +30,10 @@ export default {
         ...mapState(['tags'])
     },
     mounted() {
-        this.onRefresh();
+        setTimeout(() => {
+            this.onRefresh();
+        }, 300);
+        
     },
     methods:{
         ...mapMutations(['changePics']),
@@ -38,12 +41,23 @@ export default {
             console.log('onDelete');
         },
         onRefresh(){
+            console.log(this, "this");
+            console.log(this.tags, "this tags");
+            // var times = 0;
+            // while(++times < 4){
+            //     if(this.tags){
+            //         break;
+            //     }
+            //     console.log(times, "times");
+            //     tooler.sleep(300);
+            // }
             var list = [];
             for(var i = this.id; i < this.max + this.id; i++){
                 list.push(this.tags[i % this.tags.length]);
             }
             this.list = list;
             this.id += this.max;
+            console.log(this.list, "--> list");
         },
         onChoose(n){
             this.$emit("choose", n);

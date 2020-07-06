@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
   </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
+import request from "@/core/request"
 
 
 export default {
@@ -25,11 +28,15 @@ export default {
       'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586502962693&di=83606ae7627dee2503a9a1e6ed163941&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fb90e7bec54e736d1e3eb0c7b9b504fc2d46269cd.jpg'
     ]);
   },
-  mounted() {
+  async mounted() {
     console.log('== app mounted ==');
+    var res = await request.httpGet("/resource/tags");
+    if(res.data){
+        this.changeTags(res.data.data);
+    }
   },
   methods:{
-    ...mapMutations(['changePics', 'changeId']),
+    ...mapMutations(['changePics', 'changeId', 'changeTags']),
   }
 }
 </script>

@@ -74,7 +74,7 @@ export default {
         onEdit(n){
             // this.changeId(n);
             // this.$router.push({ path: '/detail', query: { id: n }});
-            this.$router.push({ path: '/clip', query: { url: encodeURIComponent(this.fileToImage(n)) }});
+            this.$router.push({ path: '/edit', query: { url: encodeURIComponent(this.fileToImage(n)) }});
             // this.$router.push({ name: 'clip', params: { pic: n } });
         },
         onOpen(){

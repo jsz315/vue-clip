@@ -108,16 +108,6 @@ export default {
             console.log(e);
         })
         
-
-        // var mc = new Hammer.Manager(document.body);
-        // var pinch = new Hammer.Pinch();
-        // var rotate = new Hammer.Rotate();
-        // pinch.recognizeWith(rotate);
-        // mc.add([pinch, rotate]);
-        // mc.on("pinch rotate", function(ev) {
-        //     console.log(ev.type + " ");
-        // });
-        
     },
     methods:{
         ...mapMutations(['changeId', 'changeNext', 'changePrev']),
@@ -145,7 +135,7 @@ export default {
             return pics[n];
         },
         onEdit(){
-            this.$router.push({ path: '/edit', query: { id: this.id }});
+            this.$router.push({ path: '/edit', query: { url: this.pics[this.id], id: this.id }});
         },
         onBack(){
             console.log('detail back');

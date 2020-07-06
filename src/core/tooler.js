@@ -28,6 +28,18 @@ function getElementPosition(element) {
     };
 }
 
+async function urlToBase64(url) {
+    var img = await getImage(url);
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+    var dataURL = canvas.toDataURL("image/" + ext);
+    return dataURL;
+}
+
 function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(',');
     var mime = arr[0].match(/:(.*?);/)[1];
@@ -42,13 +54,13 @@ function dataURLtoFile(dataurl, filename) {
     });
 }
 
-function addListener(target, type, callback){
-    target.addEventListener(type, callback);
-    return {
-        destroy() {
-            target.removeEventListener(type, callback);
-        }
-    };
+function sleep(time){
+    return new Promise(resolve=>{
+        setTimeout(() => {
+            resolve();
+        }, time);
+    })
+    
 }
 
 export default {
@@ -56,5 +68,6 @@ export default {
     checkMobile,
     getElementPosition,
     dataURLtoFile,
-    addListener
+    urlToBase64,
+    sleep
 }

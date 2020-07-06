@@ -1,6 +1,6 @@
 <template>
     <div class="tag-view">
-        {{name}}<span class="iconfont icon-bianji" @click="onDelete"></span>
+        {{item.name}}<span class="iconfont icon-bianji" @click="onDelete"></span>
     </div>
 </template>
 
@@ -13,7 +13,7 @@
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-    props: ["name"],
+    props: ["item"],
     data() {
         return {
             

@@ -2,7 +2,7 @@
     <div class="now-tag-view">
         <div class="tip">标签：</div>
         <div class="list">
-            <TagView :name="item" class="tag" v-for="(item, index) in list" v-bind:key="item + '_' + index" @delete='onDelete(index)'></TagView>
+            <TagView :item="item" class="tag" v-for="(item, index) in list" v-bind:key="item.name + '_' + index" @delete='onDelete(index)'></TagView>
             <div class="add" @click="onAdd"></div>
         </div>
     </div>
