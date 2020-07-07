@@ -16,7 +16,7 @@
                 <LatelyTagView class="lately-tag" @choose="onChoose" />
 
                 <div class="info-box">
-                    描述：<textarea class="info" rows="3"></textarea>
+                    描述：<textarea class="info" rows="3" v-model="desc"></textarea>
                 </div>
 
                 <InputView ref="input" @input="onInput"></InputView>
@@ -36,7 +36,7 @@ import LatelyTagView from "@/components/lately-tag-view/index.vue";
 import NowTagView from "@/components/now-tag-view/index.vue";
 import InputView from "@/components/input-view/index.vue";
 import { mapState, mapMutations } from "vuex";
-import tooler from "@/core/tooler";
+// import tooler from "@/core/tooler";
 import yunTooler from "@/core/yunTooler";
 
 export default {
@@ -44,12 +44,13 @@ export default {
     data() {
         return {
             pic: null,
-            // preview: null,
+            cur: null,
             width: 0,
             height: 0,
             clipWidth: 0,
             clipHeight: 0,
-            id: 0
+            id: 0,
+            desc: ""
         };
     },
     components: { PageView, InputView, LatelyTagView, NowTagView },
@@ -70,50 +71,68 @@ export default {
         next(vm => {
             console.log("== beforeRouteEnter nextTick ==", vm);
             console.log(vm.clipData);
+            vm.id = vm.$route.query.id;
             if (vm.clipData) {
                 vm.pic = window.URL.createObjectURL(vm.clipData.blob);
             }
             else{
-                vm.id = vm.$route.query.id;
                 vm.pic = decodeURIComponent(vm.$route.query.url);
+                vm.cur = vm.pics[vm.id];
             }
+            vm.resetSize();
         });
     },
     beforeRouteLeave(to, from, next) {
         // 导航离开该组件的对应路由时调用
         // 可以访问组件实例 `this`
         this.changeClipData(null);
+        // this.cur = null;
         console.log("离开页面");
         next();
     },
     methods: {
         ...mapMutations(["changePics", "changeId", "addTag", "changeClipData"]),
-        async onUpload() {
-            var url = await tooler.urlToBase64(this.pic);
-            console.log("url====", url);
+        resetSize(){
+            var img = new Image();
+            img.onload = ()=>{
+                this.width = img.naturalWidth;
+                this.height = img.naturalHeight;
+            }
+            img.src = this.pic;
 
+            if(this.cur){
+                var tags = this.cur.tags.split(",");
+                var list = [];
+                tags.forEach(item=>{
+                    console.log(this.tags);
+                    var obj = this.tags.find(m => m.id == item);
+                    if(obj){
+                        list.push(obj);
+                    }
+                }, this)
+                console.log(this.cur, "this.cur");
+                console.log(tags, "tags");
+                this.desc = this.cur.desc;
+                this.$refs.now.setTags(list);
+            }
+        },
+        async onUpload() {
+            console.log(this, "this");
+            var tags = this.$refs.now.getTags();
+            var src = this.clipData ? this.clipData.url : this.pic;
             if(this.id){
-                console.log("修改");
-                if(this.clipData && this.clipData.url){
-                    console.log("图片有修改")
+                if(this.clipData){
+                    console.log("图片有修改");
+                    yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name);
                 }
                 else{
                     console.log("图片未修改")
+                    yunTooler.editResource(this.cur.id, tags, this.desc);
                 }
             }
             else{
                 console.log('新增');
-            }
-
-            if(this.clipData){
-                var fname = "aaa.jpg";
-                var file = tooler.dataURLtoFile(this.clipData.url, fname);
-                var res = await yunTooler.startUpload(file, "/", "/" + fname);
-                if (res) {
-                    this.$message({ message: "上传成功" });
-                } else {
-                    this.$message({ message: "上传失败" });
-                }
+                yunTooler.addResource(src, tags, this.desc);
             }
            
         },

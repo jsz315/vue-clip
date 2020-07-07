@@ -25,6 +25,7 @@ import PageView from '@/components/page-view/index.vue'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
 import tooler from '@/core/tooler';
+import config from '@/core/config';
 import { mapState, mapMutations } from 'vuex'
 
 let isMobile = tooler.checkMobile();
@@ -44,16 +45,28 @@ export default {
     computed:{
         ...mapState(['pics', 'id'])
     },
+    beforeRouteEnter(to, from, next) {
+        // 在渲染该组件的对应路由被 confirm 前调用
+        // 不！能！获取组件实例 `this`
+        // 因为当守卫执行前，组件实例还没被创建
+        console.log("进入页面", to, from);
+        next(vm => {
+            console.log("== beforeRouteEnter nextTick ==", vm);
+            // vm.id = vm.$route.query.id;
+            vm.changeId(Number(vm.$route.query.id));
+            vm.resetPic();
+        });
+    },
     mounted() {
         // var list = this.$refs.list;
-        console.log('== detail-view mounted ==');
-        console.log(this.$route, 'route');
-        this.changeId(Number(this.$route.query.id));
+        // console.log('== detail-view mounted ==');
+        // console.log(this.$route, 'route');
+        // this.changeId(Number(this.$route.query.id));
 
-        this.$nextTick(()=>{
-            console.log('== detail-view nextTick ==');
-            this.resetPic();
-        })
+        // this.$nextTick(()=>{
+        //     console.log('== detail-view nextTick ==');
+        //     this.resetPic();
+        // })
         
         var box = this.$refs.box;
         box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
@@ -132,10 +145,12 @@ export default {
             if(n >= pics.length){
                 return pics[n % pics.length];
             }
-            return pics[n];
+            // return pics[n];
+            return config.getPath(pics[n].name);
         },
         onEdit(){
-            this.$router.push({ path: '/edit', query: { url: this.pics[this.id], id: this.id }});
+            var url = config.getPath(this.pics[this.id].name);
+            this.$router.push({ path: '/edit', query: { url: url, id: this.id }});
         },
         onBack(){
             console.log('detail back');

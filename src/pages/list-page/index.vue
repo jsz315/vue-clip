@@ -7,7 +7,7 @@
             </template>
             <template v-slot:content>
                 <div class="list">
-                    <div class="item" v-for="(item, index) in pics" v-bind:key="index" @click="onShow(index)" :style="{'background-image': 'url(' + item + ')'}"></div>
+                    <div class="item" v-for="(item, index) in pics" v-bind:key="index" @click="onShow(index)" :style="{'background-image': 'url(' + getPath(item.name) + ')'}"></div>
                 </div>
             </template>
         </PageView>
@@ -19,7 +19,7 @@ import PageView from '@/components/page-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
-// import tooler from '../../core/tooler';
+import config from '@/core/config';
 
 // let isMobile = tooler.checkMobile();
 // let lastPoint;
@@ -54,7 +54,11 @@ export default {
         },
         onAdd(){
             this.$router.push({ path: '/upload' });
+        },
+        getPath(name){
+            return config.getPath(name);
         }
+        
     }
 };
 </script>

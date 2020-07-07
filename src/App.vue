@@ -3,12 +3,15 @@
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
+
+      <!-- <router-view></router-view> -->
   </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
-import request from "@/core/request"
+// import request from "@/core/request"
+import yunTooler from "@/core/yunTooler"
 
 
 export default {
@@ -30,9 +33,14 @@ export default {
   },
   async mounted() {
     console.log('== app mounted ==');
-    var res = await request.httpGet("/resource/tags");
+    var res = await yunTooler.getTags();
     if(res.data){
         this.changeTags(res.data.data);
+    }
+
+    res = await yunTooler.getImages();
+    if(res && res.data){
+        this.changePics(res.data.data);
     }
   },
   methods:{

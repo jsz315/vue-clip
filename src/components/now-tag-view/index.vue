@@ -2,7 +2,7 @@
     <div class="now-tag-view">
         <div class="tip">标签：</div>
         <div class="list">
-            <TagView :item="item" class="tag" v-for="(item, index) in list" v-bind:key="item.name + '_' + index" @delete='onDelete(index)'></TagView>
+            <TagView :item="item" class="tag" v-for="(item, index) in list" v-bind:key="item.id" @delete='onDelete(index)'></TagView>
             <div class="add" @click="onAdd"></div>
         </div>
     </div>
@@ -42,7 +42,12 @@ export default {
             if(this.list.indexOf(n) == -1){
                 this.list.push(n);
             }
-            
+        },
+        getTags(){
+            return this.list.map(item => item.id);
+        },
+        setTags(tags){
+            this.list = tags;
         }
     }
 };

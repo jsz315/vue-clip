@@ -1,4 +1,6 @@
-const axios = require('axios');
+import axios from 'axios';
+import tooler from './tooler'
+import request from './request'
 
 function startUpload(file, path, fullPath) {
     console.log(path, fullPath);
@@ -29,6 +31,38 @@ function startUpload(file, path, fullPath) {
     
 }
 
+async function getImages(){
+    return request.httpGet('/resource/imgs');
+}
+
+async function getTags(){
+    return request.httpGet('/resource/tags');
+}
+
+async function addResource(src, tags, desc){
+    var str = await tooler.urlToBase64(src);
+    var file = tooler.dataURLtoFile(str, "file.jpg");
+    let data = new FormData();
+    data.append('file', file);
+    data.append('tags', tags.join(","));
+    data.append('desc', desc);
+    return request.httpPost("/resource/add", data);
+}
+
+async function editResource(id, tags, desc, src, old){
+    let data = new FormData();
+    data.append('id', id);
+    data.append('tags', tags.join(","));
+    data.append('desc', desc);
+    if(src){
+        var str = await tooler.urlToBase64(src);
+        var file = tooler.dataURLtoFile(str, "file.jpg");
+        data.append('file', file);
+        data.append('old', old);
+    }
+    return request.httpPost("/resource/edit", data);
+}
+
 //上传参数为/key
 function deleteFolder(item, path){
     var key = path + item.name;
@@ -52,5 +86,9 @@ function deleteFile(item, path){
 export default {
     startUpload,
     deleteFolder,
-    deleteFile
+    deleteFile,
+    addResource,
+    editResource,
+    getImages,
+    getTags
 }
