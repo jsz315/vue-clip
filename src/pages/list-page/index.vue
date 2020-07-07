@@ -2,12 +2,15 @@
     <div class="list-view">
         <PageView>
             <template v-slot:header>
+                <span class="iconfont icon-bianji" @click="onEdit"></span>
                 <div class="title">图片列表</div>
                 <span class="iconfont icon-tianjia" @click="onAdd"></span>
             </template>
             <template v-slot:content>
                 <div class="list">
-                    <div class="item" v-for="(item, index) in pics" v-bind:key="index" @click="onShow(index)" :style="{'background-image': 'url(' + getPath(item.name) + ')'}"></div>
+                    <div class="item" v-for="(item, index) in pics" v-bind:key="index" @click="onShow(index)" :style="{'background-image': 'url(' + getPath(item.name) + ')'}">
+                        <CheckboxView></CheckboxView>
+                    </div>
                 </div>
             </template>
         </PageView>
@@ -16,6 +19,7 @@
 
 <script>
 import PageView from '@/components/page-view/index.vue'
+import CheckboxView from '@/components/checkbox-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
@@ -31,7 +35,7 @@ export default {
             src: null
         };
     },
-    components: {PageView},
+    components: {PageView, CheckboxView},
     mounted() {
         // this.changePics([
         //     'http://gss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/42a98226cffc1e177a2eb0404290f603738de92a.jpg',
