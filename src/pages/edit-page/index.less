@@ -3,7 +3,7 @@
         text-align: center;
     }
 
-    .icon-liebiao {
+    .iconfanhui {
         font-size: 32px;
         position: absolute;
         left: 15px;
@@ -14,7 +14,7 @@
 
     .tip {
         color: #999999;
-        padding: 10px 20px;
+        padding: 10px 30px;
     }
 
     .canvas-box{
@@ -35,12 +35,17 @@
     .btn {
         width: 712px;
         margin: 40px auto;
-        background: rgb(0, 217, 255);
         text-align: center;
-        height: 60px;
-        line-height: 60px;
+        height: 72px;
+        line-height: 72px;
         color: #ffffff;
-        cursor: pointer;
+        pointer-events: none;
+        background: #999999;
+        &.enable{
+            pointer-events: all;
+            cursor: pointer;
+            background: #f33030;
+        }
     }
 
     .pic {
@@ -53,11 +58,11 @@
         display: flex;
         .info{
             flex: 1;
-            font-size: 20px;
+            font-size: 24px;
             line-height: 48px;
             display: flex;
             box-sizing: border-box;
-            padding: 8px;
+            padding: 4px 8px;
         }
     }
     .tags-box{
@@ -93,13 +98,14 @@
         padding: 30px;
     }
 }
+
 @media screen and (min-width: 768PX){
 .clip-view {
     .title {
         text-align: center;
     }
 
-    .icon-liebiao {
+    .iconfanhui {
         font-size: 32PX;
         position: absolute;
         left: 15PX;
@@ -110,7 +116,7 @@
 
     .tip {
         color: #999999;
-        padding: 10PX 20PX;
+        padding: 10PX 30PX;
     }
 
     .canvas-box{
@@ -131,10 +137,10 @@
     .btn {
         width: 712PX;
         margin: 40PX auto;
-        background: rgb(0, 217, 255);
+        background: #f33030;
         text-align: center;
-        height: 60PX;
-        line-height: 60PX;
+        height: 72PX;
+        line-height: 72PX;
         color: #ffffff;
         cursor: pointer;
     }
@@ -143,5 +149,51 @@
         width: 100%;
         margin-top: 20PX;
     }
+
+    .info-box{
+        padding: 30PX;
+        display: flex;
+        .info{
+            flex: 1;
+            font-size: 24PX;
+            line-height: 48PX;
+            display: flex;
+            box-sizing: border-box;
+            padding: 4PX 8PX;
+        }
+    }
+    .tags-box{
+        padding: 30PX;
+        display: flex;
+        font-size: 28PX;
+        line-height: 36PX;
+        .tags{
+            flex: 1;
+            transform: translateY(-8PX);
+            .tag{
+                margin-right: 16PX;
+                margin-bottom: 16PX;
+                vertical-align: top;
+            }
+            .ico{
+                vertical-align: top;
+                width: 40PX;
+                height: 40PX;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center;
+                border-radius: 50%;
+                display: inline-block;
+                transform: translateY(6PX);
+            }
+            .add{
+                background-image: url(../../assets/img/add.png);
+            }
+        }
+    }
+    .now-tag, .lately-tag{
+        padding: 30PX;
+    }
 }
+
 }

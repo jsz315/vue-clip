@@ -60,8 +60,11 @@ function sleep(time){
             resolve();
         }, time);
     })
-    
 }
+
+function isEmpty(str){
+    return str.replace(/(^s*)|(s*$)/g, "").length == 0
+} 
 
 export default {
     getImage,
@@ -69,5 +72,6 @@ export default {
     getElementPosition,
     dataURLtoFile,
     urlToBase64,
-    sleep
+    sleep,
+    isEmpty
 }

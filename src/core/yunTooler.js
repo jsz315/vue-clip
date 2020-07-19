@@ -31,8 +31,8 @@ function startUpload(file, path, fullPath) {
     
 }
 
-async function getImages(){
-    return request.httpGet('/resource/imgs');
+async function getImages(page, size){
+    return request.httpGet('/resource/imgs', {page, size});
 }
 
 async function getTags(){
@@ -63,6 +63,20 @@ async function editResource(id, tags, desc, src, old){
     return request.httpPost("/resource/edit", data);
 }
 
+async function deleteResources(list){
+    let data = new FormData();
+    data.append('list', JSON.stringify(list));
+    return request.httpPost("/resource/delete", data);
+}
+
+async function addTag(tag){
+    return request.httpGet("/resource/addTag", {tag});
+}
+
+async function search(param){
+    return request.httpGet("/resource/search", param);
+}
+
 //上传参数为/key
 function deleteFolder(item, path){
     var key = path + item.name;
@@ -90,5 +104,8 @@ export default {
     addResource,
     editResource,
     getImages,
-    getTags
+    getTags,
+    deleteResources,
+    addTag,
+    search
 }

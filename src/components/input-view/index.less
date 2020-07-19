@@ -23,6 +23,9 @@
             font-size: 24px;
             margin-bottom: 20px;
         }
+        .add{
+            margin: 16px 0 32px;
+        }
     }
     .btns{
         margin-top: 24px;
@@ -41,63 +44,69 @@
         }
         .sure{
             margin-left: 20px;
-            background: #1c96dd;
+            background: #f33030;
         }
         .quit{
-            background: #333333;
+            background: #888888;
         }
     }
 }
     
+
 @media screen and (min-width: 768PX){
-.clip-view {
-    .title {
-        text-align: center;
-    }
-
-    .icon-liebiao {
-        font-size: 32PX;
-        position: absolute;
-        left: 15PX;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-    }
-
-    .tip {
-        color: #999999;
-        padding: 10PX 20PX;
-    }
-
-    .canvas-box{
-        text-align: center;
-        background: #000000;
-        .canvas {
+.input-view{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 28PX;
+    background: rgba(0, 0, 0, 0.72);
+    .tag-content{
+        width: 600PX;
+        padding: 48PX 30PX;
+        background: #ffffff;
+        border-radius: 8PX;
+        .text{
             display: block;
+            box-sizing: border-box;
+            padding: 16PX;
             width: 100%;
-            margin-bottom: 10PX;
+            font-size: 24PX;
+            margin-bottom: 20PX;
+        }
+        .add{
+            margin: 16PX 0 32PX;
         }
     }
-    
-
-    .draw {
-        display: none;
-    }
-
-    .btn {
-        width: 712PX;
-        margin: 40PX auto;
-        background: rgb(0, 217, 255);
-        text-align: center;
-        height: 60PX;
-        line-height: 60PX;
-        color: #ffffff;
-        cursor: pointer;
-    }
-
-    .pic {
+    .btns{
+        margin-top: 24PX;
+        display: flex;
         width: 100%;
-        margin-top: 20PX;
+        justify-content: space-between;
+        align-items: center;
+        .btn{
+            flex: 1;
+            width: 300PX;
+            height: 72PX;
+            line-height: 72PX;
+            border-radius: 4PX;
+            text-align: center;
+            color: #ffffff;
+        }
+        .sure{
+            margin-left: 20PX;
+            background: #f33030;
+        }
+        .quit{
+            background: #888888;
+        }
     }
 }
+    
+
 }

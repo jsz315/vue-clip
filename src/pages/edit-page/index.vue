@@ -3,7 +3,7 @@
         <PageView>
             <template v-slot:header>
                 <!-- <span class="iconfont icon-liebiao" @click="onBack"></span> -->
-                <div class="iconfont icon-liebiao" @click="onBack"></div>
+                <div class="iconfont iconfanhui" @click="onBack"></div>
                 <div class="title">图片编辑</div>
             </template>
             <template v-slot:content>
@@ -21,7 +21,7 @@
 
                 <InputView ref="input" @input="onInput"></InputView>
 
-                <div class="btn" @click="onUpload">确定</div>
+                <div class="btn" @click="onUpload" :class="{enable}">确定</div>
                 <!-- <div class="tip" v-if="preview">图片尺寸: {{clipWidth}} x {{clipHeight}}</div>
                 <img class="pic" v-if="preview" :src="preview" /> -->
             </template>
@@ -38,6 +38,7 @@ import InputView from "@/components/input-view/index.vue";
 import { mapState, mapMutations } from "vuex";
 // import tooler from "@/core/tooler";
 import yunTooler from "@/core/yunTooler";
+// import _ from 'lodash';
 
 export default {
     props: {},
@@ -50,7 +51,8 @@ export default {
             clipWidth: 0,
             clipHeight: 0,
             id: 0,
-            desc: ""
+            desc: "",
+            enable: true
         };
     },
     components: { PageView, InputView, LatelyTagView, NowTagView },
@@ -116,24 +118,35 @@ export default {
                 this.$refs.now.setTags(list);
             }
         },
-        async onUpload() {
+        onUpload: async function() {
+            if(!this.enable){
+                console.log("已经在上传中");
+                return;
+            }
+            this.enable = false;
             console.log(this, "this");
             var tags = this.$refs.now.getTags();
             var src = this.clipData ? this.clipData.url : this.pic;
+            var res;
             if(this.id){
                 if(this.clipData){
                     console.log("图片有修改");
-                    yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name);
+                    res = await yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name);
                 }
                 else{
                     console.log("图片未修改")
-                    yunTooler.editResource(this.cur.id, tags, this.desc);
+                    res = await yunTooler.editResource(this.cur.id, tags, this.desc);
                 }
             }
             else{
                 console.log('新增');
-                yunTooler.addResource(src, tags, this.desc);
+                res = await yunTooler.addResource(src, tags, this.desc);
             }
+            if(res.data.res){
+                this.$toast({message: "操作成功"});
+                history.back();
+            }
+            this.enable = true;
            
         },
         onBack() {
@@ -151,8 +164,13 @@ export default {
             var list = word.split(/\s+/g);
             list.forEach(item => {
                 if (item) {
+                    var obj = this.tags.find(m => m.name == item);
+                    if(obj){
+                        // list.push(obj);
+                        this.$refs.now.push(obj);
+                    }
                     // this.addTag(item);
-                    this.$refs.now.push(item);
+                    // this.$refs.now.push(item);
                 }
             });
         },

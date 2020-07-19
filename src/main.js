@@ -9,6 +9,11 @@ import EditPage from '@/pages/edit-page/index.vue'
 import DetailPage from '@/pages/detail-page/index.vue'
 import UploadPage from '@/pages/upload-page/index.vue'
 
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload)
+
+import EasyRefresh from 'vue-easyrefresh'
+Vue.use(EasyRefresh)
 
 import store from "./store/index";
 import toastRegistry from './components/toast-view/index.js'

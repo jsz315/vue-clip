@@ -1,0 +1,43 @@
+.add-tag-view {
+    display: flex;
+    font-size: 28px;
+    align-items: flex-start;
+    .text{
+        border: solid 1px #f0f0f0;
+        padding: 4px 10px;
+        font-size: 28px;
+    }
+    .sure{
+        margin-left: 20px;
+        text-align: center;
+        font-size: 28px;
+        color: #b3b3b3;
+        pointer-events: none;
+        &.enable{
+            cursor: pointer;
+            pointer-events: all;
+            color: #0f92dd;
+        }
+    }
+    
+}
+@media screen and (min-width: 768PX){
+.add-tag-view {
+    display: flex;
+    font-size: 28PX;
+    align-items: flex-start;
+    .text{
+        border: solid 1PX #f0f0f0;
+        padding: 4PX 10PX;
+        font-size: 28PX;
+    }
+    .sure{
+        margin-left: 20PX;
+        cursor: pointer;
+        text-align: center;
+        font-size: 28PX;
+       color: #0f92dd;
+    }
+    
+}
+}

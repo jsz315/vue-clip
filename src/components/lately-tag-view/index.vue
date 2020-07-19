@@ -22,12 +22,21 @@ export default {
         return {
             id: 0,
             max: 6,
-            list: []
+            // list: []
         };
     },
     components: {},
     computed:{
-        ...mapState(['tags'])
+        ...mapState(['tags']),
+        list(){
+            var aim = [];
+            if(this.tags.length > 0){
+                for(var i = this.id; i < this.max + this.id; i++){
+                    aim.push(this.tags[i % this.tags.length]);
+                }
+            }
+            return aim;
+        }
     },
     mounted() {
         setTimeout(() => {
@@ -41,13 +50,16 @@ export default {
             console.log('onDelete');
         },
         onRefresh(){
-            var list = [];
-            for(var i = this.id; i < this.max + this.id; i++){
-                list.push(this.tags[i % this.tags.length]);
-            }
-            this.list = list;
+            // var list = [];
+            // if(this.tags.length > 0){
+            //     for(var i = this.id; i < this.max + this.id; i++){
+            //         list.push(this.tags[i % this.tags.length]);
+            //     }
+            // }
+            
+            // this.list = list;
             this.id += this.max;
-            console.log(this.list, "--> list");
+            // console.log(this.list, "--> list");
         },
         onChoose(n){
             this.$emit("choose", n);

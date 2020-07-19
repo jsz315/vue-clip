@@ -1,6 +1,6 @@
 <template>
     <div class="tag-view">
-        {{item.name}}<span class="iconfont icon-bianji" @click="onDelete"></span>
+        {{item.name}}<span class="iconfont iconguanbi" @click="onDelete"></span>
     </div>
 </template>
 

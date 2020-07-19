@@ -30,7 +30,7 @@ export default {
         ...mapMutations(['changePics', 'changeId']),
         onChange(){
             this.selected = !this.selected;
-            this.$emit('change');
+            this.$emit('change', this.selected);
         }
     }
 };

@@ -7,16 +7,23 @@
     .iconfont {
         font-size: 32px;
         position: absolute;
-        
         top: 0;
         bottom: 0;
         margin: auto;
     }
-    .icon-bianji{
+    .iconbianji{
         left: 15px;
     }
-    .icon-tianjia{
+    .iconadd-fill-copy{
         right: 15px;
+        font-size: 36px;
+    }
+    .over-btn{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 15px;
     }
 
     .list {
@@ -32,9 +39,16 @@
             background-size: contain;
             margin-left: 20px;
             margin-top: 20px;
+            position: relative;
+            .btn{
+                position: absolute;
+                left: 12px;
+                top: 12px;
+            }
         }
     }
 }
+
 @media screen and (min-width: 768PX){
 .list-view {
 
@@ -45,25 +59,46 @@
     .iconfont {
         font-size: 32PX;
         position: absolute;
-        right: 15PX;
         top: 0;
         bottom: 0;
         margin: auto;
+    }
+    .iconbianji{
+        left: 15PX;
+    }
+    .iconadd-fill-copy{
+        right: 15PX;
+        font-size: 36PX;
+    }
+    .over-btn{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 15PX;
     }
 
     .list {
         display: flex;
         flex-wrap: wrap;
-
+        padding-bottom: 30PX;
         .item {
             width: 222PX;
             height: 260PX;
+            background-color: #eeeeee;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: contain;
             margin-left: 20PX;
             margin-top: 20PX;
+            position: relative;
+            .btn{
+                position: absolute;
+                left: 12PX;
+                top: 12PX;
+            }
         }
     }
 }
+
 }

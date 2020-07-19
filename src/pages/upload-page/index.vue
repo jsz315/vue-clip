@@ -2,7 +2,7 @@
     <div class="upload-view">
         <PageView>
             <template v-slot:header>
-                <span class="iconfont icon-liebiao" @click="onBack"></span>
+                <span class="iconfont iconbiaodanliebiao-" @click="onBack"></span>
                 <div class="title">上传图片</div>
             </template>
             <template v-slot:content>
@@ -15,6 +15,7 @@
                         <img class="img" :src="fileToImage(item)"/>
                     </div>
                 </div>
+                <ReflashView @reflash="onReflash"></ReflashView>
             </template>
         </PageView>
     </div>
@@ -22,6 +23,7 @@
 
 <script>
 import PageView from '@/components/page-view/index.vue'
+import ReflashView from '@/components/reflash-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
@@ -37,9 +39,8 @@ export default {
             list: []
         };
     },
-    components: {PageView},
+    components: {PageView, ReflashView},
     mounted() {
-        console.log("upload page ==", this.clipData);
         if(this.clipData){
             this.list.push(this.clipData);
         }
@@ -89,6 +90,9 @@ export default {
         },
         onBack(){
             history.back();
+        },
+        onReflash(){
+            this.list = [];
         }
     }
 };

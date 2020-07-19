@@ -1,17 +1,10 @@
 <template>
-    <div class="delete-view">
-        <div class="all-btn">
-            <CheckboxView @change="onChange"></CheckboxView>
-            <span class="tip">全选</span>
-        </div>
-        <div class="delete-btn" @click="onDelete">
-            <span>删除</span>
-        </div>
+    <div class="reflash-view">
+        <span class="iconfont iconshuaxin1" @click="onReflash"></span>
     </div>
 </template>
 
 <script>
-import CheckboxView from "@/components/checkbox-view/index.vue";
 // import PageView from '../page-view/index.vue'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
@@ -26,7 +19,7 @@ export default {
             
         };
     },
-    components: {CheckboxView},
+    components: {},
     computed:{
         ...mapState(['pics', 'id'])
     },
@@ -35,11 +28,8 @@ export default {
     },
     methods:{
         ...mapMutations(['changePics', 'changeId']),
-        onDelete(){
-            this.$emit('delete');
-        },
-        onChange(n){
-            this.$emit('all', n);
+        onReflash(){
+            this.$emit('reflash');
         }
     }
 };
