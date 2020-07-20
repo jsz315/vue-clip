@@ -14,6 +14,14 @@
                     :userSelect="false"
                     :onRefresh="onRefresh"
                     :loadMore="onLoadMore">
+                    <template v-slot:header>
+                        <ClassicsHeader
+                            refreshText="下拉刷新"
+                            refreshReadyText="准备刷新"
+                            refreshingText="刷新中"
+                            refreshedText="刷新完成"
+                            />
+                    </template>
                     <div class="list">
                         <div class="item" v-for="(item, index) in pics" v-bind:key="item.id" @click="onShow(index)" v-lazy:background-image="getPath(item.name)">
                             <div class="btn">
@@ -21,6 +29,15 @@
                             </div>
                         </div>
                     </div>
+                    <template v-slot:footer>
+                        <ClassicsFooter
+                        loadText="上拉加载"
+                        loadReadyText="准备加载"
+                        loadingText="加载中"
+                        noMoreText="没有更多内容"
+                        loadedText="加载完成"
+                        />
+                    </template>
                 </EasyRefresh>
                 
                 <DeleteView @all="onAll" @delete="onDelete" v-show="isEdit"></DeleteView>
