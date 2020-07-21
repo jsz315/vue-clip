@@ -12,12 +12,13 @@ const httpGet = function(url, data){
     })
 }
 
-const httpPost = function(url, data){
-    return axios.post(url, data, {
+const httpPost = function(url, data, config){
+    return axios.post(url, data, Object.assign(config || {}, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    })
+    }
+    ));
 }
 
 export default {

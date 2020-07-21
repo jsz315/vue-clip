@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             id: 0,
-            max: 6,
+            max: 9,
             // list: []
         };
     },

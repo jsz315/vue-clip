@@ -39,17 +39,21 @@ async function getTags(){
     return request.httpGet('/resource/tags');
 }
 
-async function addResource(src, tags, desc){
+async function addResource(src, tags, desc, onProgress){
     var str = await tooler.urlToBase64(src);
     var file = tooler.dataURLtoFile(str, "file.jpg");
     let data = new FormData();
     data.append('file', file);
     data.append('tags', tags.join(","));
     data.append('desc', desc);
-    return request.httpPost("/resource/add", data);
+    return request.httpPost("/resource/add", data, {
+        onUploadProgress: e => {
+            onProgress && onProgress(e.loaded / e.total)
+        }
+    });
 }
 
-async function editResource(id, tags, desc, src, old){
+async function editResource(id, tags, desc, src, old, onProgress){
     let data = new FormData();
     data.append('id', id);
     data.append('tags', tags.join(","));
@@ -60,7 +64,11 @@ async function editResource(id, tags, desc, src, old){
         data.append('file', file);
         data.append('old', old);
     }
-    return request.httpPost("/resource/edit", data);
+    return request.httpPost("/resource/edit", data, {
+        onUploadProgress: e => {
+            onProgress && onProgress(e.loaded / e.total)
+        }
+    });
 }
 
 async function deleteResources(list){

@@ -24,6 +24,8 @@
                 <div class="btn" @click="onUpload" :class="{enable}">确定</div>
                 <!-- <div class="tip" v-if="preview">图片尺寸: {{clipWidth}} x {{clipHeight}}</div>
                 <img class="pic" v-if="preview" :src="preview" /> -->
+
+                <ProgressView ref="progress" v-show="!enable"></ProgressView>
             </template>
         </PageView>
     </div>
@@ -35,6 +37,7 @@ import PageView from "@/components/page-view/index.vue";
 import LatelyTagView from "@/components/lately-tag-view/index.vue";
 import NowTagView from "@/components/now-tag-view/index.vue";
 import InputView from "@/components/input-view/index.vue";
+import ProgressView from "@/components/progress-view/index.vue";
 import { mapState, mapMutations } from "vuex";
 // import tooler from "@/core/tooler";
 import yunTooler from "@/core/yunTooler";
@@ -55,7 +58,7 @@ export default {
             enable: true
         };
     },
-    components: { PageView, InputView, LatelyTagView, NowTagView },
+    components: { PageView, InputView, LatelyTagView, NowTagView, ProgressView },
     computed: {
         ...mapState(["pics", "tags", "clipData"])
     },
@@ -118,6 +121,10 @@ export default {
                 this.$refs.now.setTags(list);
             }
         },
+        onProgress(n){
+            console.log(Math.floor(n * 100) + "%");
+            this.$refs.progress.show(Math.floor(n * 100));
+        },
         onUpload: async function() {
             if(!this.enable){
                 console.log("已经在上传中");
@@ -131,7 +138,7 @@ export default {
             if(this.id){
                 if(this.clipData){
                     console.log("图片有修改");
-                    res = await yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name);
+                    res = await yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name, this.onProgress);
                 }
                 else{
                     console.log("图片未修改")
@@ -140,7 +147,7 @@ export default {
             }
             else{
                 console.log('新增');
-                res = await yunTooler.addResource(src, tags, this.desc);
+                res = await yunTooler.addResource(src, tags, this.desc, this.onProgress);
             }
             if(res.data.res){
                 this.$toast({message: "操作成功"});

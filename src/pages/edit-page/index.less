@@ -99,6 +99,7 @@
     }
 }
 
+
 @media screen and (min-width: 768PX){
 .clip-view {
     .title {
@@ -137,12 +138,17 @@
     .btn {
         width: 712PX;
         margin: 40PX auto;
-        background: #f33030;
         text-align: center;
         height: 72PX;
         line-height: 72PX;
         color: #ffffff;
-        cursor: pointer;
+        pointer-events: none;
+        background: #999999;
+        &.enable{
+            pointer-events: all;
+            cursor: pointer;
+            background: #f33030;
+        }
     }
 
     .pic {
@@ -195,5 +201,6 @@
         padding: 30PX;
     }
 }
+
 
 }

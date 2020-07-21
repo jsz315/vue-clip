@@ -21,6 +21,7 @@
     }
     
 }
+
 @media screen and (min-width: 768PX){
 .add-tag-view {
     display: flex;
@@ -33,11 +34,17 @@
     }
     .sure{
         margin-left: 20PX;
-        cursor: pointer;
         text-align: center;
         font-size: 28PX;
-       color: #0f92dd;
+        color: #b3b3b3;
+        pointer-events: none;
+        &.enable{
+            cursor: pointer;
+            pointer-events: all;
+            color: #0f92dd;
+        }
     }
     
 }
+
 }
