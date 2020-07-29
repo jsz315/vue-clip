@@ -3,11 +3,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 
-import ClipPage from '@/pages/clip-page/index.vue'
-import ListPage from '@/pages/list-page/index.vue'
-import EditPage from '@/pages/edit-page/index.vue'
-import DetailPage from '@/pages/detail-page/index.vue'
-import UploadPage from '@/pages/upload-page/index.vue'
+// import ClipPage from '@/pages/clip-page/index.vue'
+// import ListPage from '@/pages/list-page/index.vue'
+// import EditPage from '@/pages/edit-page/index.vue'
+// import DetailPage from '@/pages/detail-page/index.vue'
+// import UploadPage from '@/pages/upload-page/index.vue'
 
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload)
@@ -24,11 +24,11 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/list' },
-  { path: '/list', component: ListPage, name: 'list' },
-  { path: '/detail', component: DetailPage, name: 'detail' },
-  { path: '/edit', component: EditPage, name: 'edit' },
-  { path: '/clip', component: ClipPage, name: 'clip' },
-  { path: '/upload', component: UploadPage, name: 'upload' },
+  { path: '/list', component: (resolve)=>require(['@/pages/list-page/index.vue'], resolve), name: 'list' },
+  { path: '/detail', component: (resolve)=>require(['@/pages/detail-page/index.vue'], resolve), name: 'detail' },
+  { path: '/edit', component: (resolve)=>require(['@/pages/edit-page/index.vue'], resolve), name: 'edit' },
+  { path: '/clip', component: (resolve)=>require(['@/pages/clip-page/index.vue'], resolve), name: 'clip' },
+  { path: '/upload', component: (resolve)=>require(['@/pages/upload-page/index.vue'], resolve), name: 'upload' },
 ]
 
 const router = new VueRouter({

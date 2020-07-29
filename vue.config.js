@@ -20,5 +20,13 @@ publicPath: '',
     } else if (process.env.NODE_ENV === "production") {
       config.devtool = "eval-source-map";
     }
+    // return {
+    //     externals: {
+    //         'vue': 'Vue',
+    //         'vue-router': 'VueRouter',
+    //         'vuex': 'Vuex',
+    //         'axios': 'axios',
+    //     }
+    // }
   }
 }

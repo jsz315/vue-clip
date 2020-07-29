@@ -7,6 +7,7 @@
             </template>
             <template v-slot:content>
                 <div class="upload-box">
+                    <DragView @drag="onDrag"></DragView>
                     <div class="file" @click="onOpen"><div class="ico"></div>点击选择上传文件</div>
                     <input v-show="false" ref="file" type="file" multiple="multiple" @change="onChange($event)"/>
                 </div>
@@ -24,6 +25,7 @@
 <script>
 import PageView from '@/components/page-view/index.vue'
 import ReflashView from '@/components/reflash-view/index.vue'
+import DragView from '@/components/drag-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
@@ -39,7 +41,7 @@ export default {
             list: []
         };
     },
-    components: {PageView, ReflashView},
+    components: {PageView, ReflashView, DragView},
     mounted() {
         if(this.clipData){
             this.list.push(this.clipData);
@@ -93,6 +95,12 @@ export default {
         },
         onReflash(){
             this.list = [];
+        },
+        onDrag(files){
+            console.log(files);
+            for(var i = 0; i < files.length; i++){
+                this.list.push(files[i]);
+            }
         }
     }
 };
