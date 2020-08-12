@@ -53,8 +53,10 @@ export default {
         next(vm => {
             console.log("== beforeRouteEnter nextTick ==", vm);
             // vm.id = vm.$route.query.id;
-            vm.changeId(Number(vm.$route.query.id));
-            vm.resetPic();
+            if(from.name !== "edit"){
+                vm.changeId(Number(vm.$route.query.id));
+                vm.resetPic();
+            }
         });
     },
     mounted() {

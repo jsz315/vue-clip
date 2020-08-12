@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             id: 0,
-            max: 9,
+            max: 15,
             // list: []
         };
     },
@@ -39,9 +39,9 @@ export default {
         }
     },
     mounted() {
-        setTimeout(() => {
-            this.onRefresh();
-        }, 300);
+        // setTimeout(() => {
+        //     this.onRefresh();
+        // }, 300);
         
     },
     methods:{
