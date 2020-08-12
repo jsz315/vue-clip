@@ -10,18 +10,7 @@
             </template>
             <template v-slot:content>
                 <FilterView v-show="isFilter" @cancel="onCancel"></FilterView>
-                <EasyRefresh
-                    :userSelect="false"
-                    :onRefresh="onRefresh"
-                    :loadMore="onLoadMore">
-                    <template v-slot:header>
-                        <ClassicsHeader
-                            refreshText="下拉刷新"
-                            refreshReadyText="准备刷新"
-                            refreshingText="刷新中"
-                            refreshedText="刷新完成"
-                            />
-                    </template>
+                <ScrollView @loadMore="onLoadMore" @refresh="onRefresh" scroll_class="scroll" :bottom="20">
                     <div class="list">
                         <div class="item" v-for="(item, index) in pics" v-bind:key="item.id" @click="onShow(index)" v-lazy:background-image="getPath(item.name)">
                             <div class="btn">
@@ -29,16 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <template v-slot:footer>
-                        <ClassicsFooter
-                        loadText="上拉加载"
-                        loadReadyText="准备加载"
-                        loadingText="加载中"
-                        noMoreText="没有更多内容"
-                        loadedText="加载完成"
-                        />
-                    </template>
-                </EasyRefresh>
+                </ScrollView>
                 
                 <DeleteView @all="onAll" @delete="onDelete" v-show="isEdit"></DeleteView>
             </template>
@@ -50,13 +30,14 @@
 import PageView from '@/components/page-view/index.vue'
 import CheckboxView from '@/components/checkbox-view/index.vue'
 import DeleteView from '@/components/delete-view/index.vue'
-// import ReflashView from '@/components/reflash-view/index.vue'
+import ScrollView from "@/components/scroll-view/index.vue";
 import FilterView from '@/components/filter-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
 import config from '@/core/config';
 import yunTooler from "@/core/yunTooler";
+import tooler from "@/core/tooler";
 
 // let isMobile = tooler.checkMobile();
 // let lastPoint;
@@ -72,17 +53,8 @@ export default {
             curPage: 0
         };
     },
-    components: {PageView, CheckboxView, DeleteView, FilterView},
+    components: {PageView, CheckboxView, DeleteView, FilterView, ScrollView},
     mounted() {
-        // this.changePics([
-        //     'http://gss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/42a98226cffc1e177a2eb0404290f603738de92a.jpg',
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586502962707&di=ee98af61cb765ad0afa14e1f66e02629&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201505%2F13%2F20150513144838_UkA58.thumb.700_0.jpeg',
-        //     'http://pic2.52pk.com/files/130426/1283568_114807_4882.jpg',
-        //     'http://www.1lifan.com/uploads/allimg/180731/230ILS6-5.jpg',
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586510568232&di=ff9c981c6849e5abc8fcd4dec7590851&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fbaike%2Fpic%2Fitem%2Ff11f3a292df5e0fe285a6174566034a85edf7201.jpg',
-        //     'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2207089593,3263649201&fm=15&gp=0.jpg',
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586502962693&di=83606ae7627dee2503a9a1e6ed163941&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fb90e7bec54e736d1e3eb0c7b9b504fc2d46269cd.jpg'
-        // ]);
         this.onLoadMore();
     },
     computed: {
@@ -149,29 +121,19 @@ export default {
             }
         },
         async onRefresh(done){
-            console.log("onRefresh")
             var res = await yunTooler.getTags();
             if(res.data){
                 this.changeTags(res.data.data);
             }
             this.curPage = 0;
             this.changePics([]);
-            // this.onLoadMore(done);
             await this.loadData();
             done && done();
         },
-        async onLoadMore(done){
-            console.log("onLoadMore");
-            await this.loadData();
-            done && done();
-            // if(done){
-            //     if(list.length < this.size){
-            //         done(false);
-            //     }
-            //     else{
-            //         done(false);
-            //     }
-            // }
+        onLoadMore(){
+            tooler.throttle(async ()=>{
+                await this.loadData();
+            }, 400);
         }
     }
 };

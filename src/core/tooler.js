@@ -66,6 +66,25 @@ function isEmpty(str){
     return str.replace(/(^s*)|(s*$)/g, "").length == 0
 } 
 
+
+let timerId = 0;
+const throttle = (fn, time = 300)=>{
+    if(timerId == 0){
+        timerId = 1;
+        fn.apply(this);
+        setTimeout(() => {
+            if(timerId > 1){
+                console.log("执行忽略期间再次调用");
+                fn.apply(this);
+            }
+            timerId = 0;
+        }, time);
+    }
+    else{
+        console.log("忽略此次执行", timerId++);
+    }
+}
+
 export default {
     getImage,
     checkMobile,
@@ -73,5 +92,6 @@ export default {
     dataURLtoFile,
     urlToBase64,
     sleep,
-    isEmpty
+    isEmpty,
+    throttle
 }

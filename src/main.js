@@ -12,8 +12,8 @@ import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload)
 
-import EasyRefresh from 'vue-easyrefresh'
-Vue.use(EasyRefresh)
+// import EasyRefresh from 'vue-easyrefresh'
+// Vue.use(EasyRefresh)
 
 import store from "./store/index";
 import toastRegistry from './components/toast-view/index.js'
