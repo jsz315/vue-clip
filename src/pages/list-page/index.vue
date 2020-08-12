@@ -9,7 +9,7 @@
                 <span class="iconfont iconadd-fill-copy" @click="onAdd"></span>
             </template>
             <template v-slot:content>
-                <FilterView v-show="isFilter" @cancel="onCancel"></FilterView>
+                <FilterView v-show="isFilter" @cancel="onCancel" @close="isFilter=false"></FilterView>
                 <ScrollView @loadMore="onLoadMore" @refresh="onRefresh" scroll_class="scroll" :bottom="20">
                     <div class="list">
                         <div class="item" v-for="(item, index) in pics" v-bind:key="item.id" @click="onShow(index)" v-lazy:background-image="getPath(item.name)">

@@ -63,6 +63,7 @@ export default {
             if(res && res.data){
                 this.changePics(res.data.data);
             }
+            this.$emit("close");
         },
         async onSure(){
             if(tooler.isEmpty(this.name)){
@@ -82,6 +83,7 @@ export default {
             if(res && res.data){
                 this.changePics(res.data.data);
             }
+            this.$emit("close");
         },
         onCancel(){
             this.$emit("cancel");

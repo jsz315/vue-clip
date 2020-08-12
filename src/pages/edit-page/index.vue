@@ -77,6 +77,7 @@ export default {
             console.log("== beforeRouteEnter nextTick ==", vm);
             console.log(vm.clipData);
             vm.id = vm.$route.query.id;
+            vm.enable = true;
             if (vm.clipData) {
                 vm.pic = window.URL.createObjectURL(vm.clipData.blob);
             }
