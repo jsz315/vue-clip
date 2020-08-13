@@ -97,7 +97,7 @@ export default {
             if(lastPoint){
                 lastPoint = null;
                 var distance = e.clientX - startPoint.x;
-                if(distance > 200){
+                if(distance > 80){
                     console.log("左移");
                     this.x = window.innerWidth;
                     this.changePrev();
@@ -106,7 +106,7 @@ export default {
                         this.resetPic();
                     }, 300);
                 }
-                else if(distance < -200){
+                else if(distance < -80){
                     console.log("右移");
                     this.x = -window.innerWidth;
                     this.changeNext();

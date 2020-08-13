@@ -1,5 +1,5 @@
 <template>
-    <div class="filter-view">
+    <div class="filter-view" :class="{'show': show}">
         <div class="line">
             <div class="type">搜索:</div>
             <div class="param">
@@ -44,6 +44,7 @@ export default {
             name: ""
         };
     },
+    props: ["show"],
     components: {CheckboxView},
     computed:{
         ...mapState(['tags'])
