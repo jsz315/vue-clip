@@ -17,9 +17,12 @@ Vue.use(VueLazyload)
 
 import store from "./store/index";
 import toastRegistry from './components/toast-view/index.js'
+import alertRegistry from  './components/alert-view/index.js'
 
 // 这里也可以直接执行 toastRegistry()
 Vue.use(toastRegistry);
+Vue.use(alertRegistry);
+
 Vue.use(VueRouter)
 
 const routes = [

@@ -9,19 +9,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(#f9f9f9, #cccccc);
+    // background: linear-gradient(#f9f9f9, #cccccc);
+    background: rgb(255, 255, 255);
     border-radius: 24px;
     border: solid 1px #cecece;
     height: 72px;
     box-shadow: rgba(0, 0, 0, 0.4) 8px 8px 12px;
     animation: turn 200ms;
     animation-fill-mode: forwards;
+    overflow: hidden;
     .all-btn{
         flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-right: solid 1px #bbbbbb;
         .tip{
             margin-left: 20px;
         }
@@ -31,7 +32,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #ff0000;
+        color: #ffffff;
+        background: #ff0000;
+        height: 100%;
     }
 }
 

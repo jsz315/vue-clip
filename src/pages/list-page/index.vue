@@ -5,7 +5,7 @@
                 <span class="iconfont iconbianji" @click="onEdit" v-show="!isEdit"></span>
                 <span class="over-btn" @click="onQuit" v-show="isEdit">完成</span>
                 
-                <div class="title" @click="onTogglerFilter">筛选列表</div>
+                <div class="title" @click="onTogglerFilter">筛选列表<div class="arrow" :class="{'open': isFilter}"></div></div>
                 <span class="iconfont iconadd-fill-copy" @click="onAdd"></span>
             </template>
             <template v-slot:content>
@@ -50,7 +50,8 @@ export default {
             isEdit: false,
             isFilter: false,
             size: 20,
-            curPage: 0
+            curPage: 0,
+            hasNext: true
         };
     },
     components: {PageView, CheckboxView, DeleteView, FilterView, ScrollView},
@@ -86,21 +87,27 @@ export default {
             });
         },
         onDelete(){
-            console.log("delete");
             var checkboxs = this.$refs.checkboxs;
             var list = this.pics.filter((item, index)=>{
                 return checkboxs[index].selected
             })
-            var pics = this.pics.filter((item, index)=>{
-                return !checkboxs[index].selected
-            })
-            this.changePics(pics);
+            
             if(list.length == 0){
-                this.$toast({message: "操作对象为空"})
-                return;
+                this.$toast({message: "没有选择任何对象"});
             }
-            yunTooler.deleteResources(list);
-            this.isEdit = false;
+            else{
+                if(list.length > 0){
+                    this.$alert({tip: `你确定要删除${list.length}个对象吗？`, onSure: ()=>{
+                        var pics = this.pics.filter((item, index)=>{
+                            return !checkboxs[index].selected
+                        })
+                        this.changePics(pics);
+                        yunTooler.deleteResources(list);
+                        this.isEdit = false;
+                    }});
+                }
+            }
+            
         },
         onChoose(v, id){
             console.log(v, id);
@@ -113,9 +120,14 @@ export default {
             this.isFilter = false;
         },
         async loadData(){
+            if(!this.hasNext){
+                console.log('没有更多');
+                return;
+            }
             var res = await yunTooler.getImages(this.curPage++, this.size);
             if(res && res.data){
                 var list = res.data.data.list;
+                this.hasNext = this.size == list.length;
                 var pics = this.pics.concat(list);
                 this.changePics(pics);
             }

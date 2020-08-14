@@ -1,11 +1,7 @@
 .filter-view {
     overflow-y: hidden;
     transition: all 200ms;
-    min-height: 0px;
     height: 0;
-    &.show{
-        min-height: 1000px;
-    }
     .line{
         display: flex;
         justify-content: start;
@@ -32,19 +28,24 @@
     .input{
         display: flex;
         font-size: 28px;
-        align-items: flex-start;
+        align-items: center;
         padding: 8px 0;
         .text{
             border: solid 1px #f0f0f0;
-            padding: 4px 10px;
+            padding: 8px 10px;
             font-size: 28px;
+            width: 240px;
         }
         .sure{
             margin-left: 20px;
             cursor: pointer;
             text-align: center;
             font-size: 28px;
-           color: #0f92dd;
+            color: #0f92dd;
+        }
+        .cancel{
+            color: #ff0000;
+            margin-left: 60px;
         }
     }
     .checks{

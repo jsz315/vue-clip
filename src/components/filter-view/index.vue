@@ -1,32 +1,33 @@
 <template>
-    <div class="filter-view" :class="{'show': show}">
-        <div class="line">
-            <div class="type">搜索:</div>
-            <div class="param">
-                <div class="input">
-                    <input class="text" type="text" placeholder="请输入搜索关键词" v-model="name"/>
-                    <div class="sure" @click="onSure">确定</div>
-                    <div class="sure" @click="onCancel">取消</div>
-                </div>
-                <div class="checks">
-                    <CheckboxView ref="tag" @change="onChange"></CheckboxView>
-                    <span class="tip">标签</span>
-                </div>
-                <div class="checks">
-                    <CheckboxView ref="desc" @change="onChange"></CheckboxView>
-                    <span class="tip">描述</span>
+    <div class="filter-view" :style="{'height': height}">
+        <div class="content" ref="content">
+            <div class="line">
+                <div class="type">搜索:</div>
+                <div class="param">
+                    <div class="input">
+                        <input class="text" type="text" placeholder="请输入搜索关键词" v-model="name"/>
+                        <div class="sure" @click="onSure">确定</div>
+                        <div class="sure cancel" @click="onCancel">取消</div>
+                    </div>
+                    <div class="checks">
+                        <CheckboxView ref="tag" @change="onChange"></CheckboxView>
+                        <span class="tip">标签</span>
+                    </div>
+                    <div class="checks">
+                        <CheckboxView ref="desc" @change="onChange"></CheckboxView>
+                        <span class="tip">描述</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="line">
-            <div class="type">分类:</div>
-            <div class="param">
-                <div class="item" @click="onCancel">全部</div>
-                <div class="item" v-for="item in tags" v-bind:key="item.id" @click="onChoose(item)">{{item.name}}</div>
+            <div class="line">
+                <div class="type">分类:</div>
+                <div class="param">
+                    <div class="item" @click="onCancel">全部</div>
+                    <div class="item" v-for="item in tags" v-bind:key="item.id" @click="onChoose(item)">{{item.name}}</div>
+                </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -41,16 +42,28 @@ import { mapState, mapMutations } from 'vuex'
 export default {
     data() {
         return {
-            name: ""
+            name: "",
+            height: 0
         };
     },
     props: ["show"],
     components: {CheckboxView},
     computed:{
-        ...mapState(['tags'])
+        ...mapState(['tags']),
+    },
+    watch: {
+        show(newValue, oldValue) {
+            console.log(`${oldValue} ==> ${newValue}`);
+            if(newValue){
+                this.height = this.$refs.content.clientHeight + "px";
+            }
+            else{
+                this.height = 0;
+            }
+        },
     },
     mounted() {
-        
+        console.log(this);
     },
     methods:{
         ...mapMutations(['changePics']),

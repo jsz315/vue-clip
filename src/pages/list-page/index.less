@@ -1,7 +1,25 @@
 .list-view {
 
     .title {
-        text-align: center;
+        width: 40%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        .arrow{
+            width: 36px;
+            height: 36px;
+            background: url(../../assets/img/open.png) no-repeat center;
+            background-size: contain;
+            margin-left: 20px;
+            opacity: 0.8;
+            transition: all 200ms;
+            transform: rotate(180deg);
+            &.open{
+                transform: rotate(0deg);
+            }
+        }
     }
 
     .iconfont {
@@ -12,10 +30,10 @@
         margin: auto;
     }
     .iconbianji{
-        left: 15px;
+        left: 30px;
     }
     .iconadd-fill-copy{
-        right: 15px;
+        right: 30px;
         font-size: 36px;
     }
     .over-btn{
@@ -23,7 +41,7 @@
         top: 0;
         bottom: 0;
         margin: auto;
-        left: 15px;
+        left: 30px;
     }
 
     .scroll{
