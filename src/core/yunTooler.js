@@ -36,7 +36,7 @@ async function getImages(page, size){
 }
 
 async function getTags(){
-    return request.httpGet('/resource/tags');
+    return request.httpGet('/resource/allTags');
 }
 
 async function addResource(src, tags, desc, onProgress){

@@ -126,7 +126,7 @@ export default {
             }
             var res = await yunTooler.getImages(this.curPage++, this.size);
             if(res && res.data){
-                var list = res.data.data.list;
+                var list = res.data.data;
                 this.hasNext = this.size == list.length;
                 var pics = this.pics.concat(list);
                 this.changePics(pics);
