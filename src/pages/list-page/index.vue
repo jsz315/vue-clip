@@ -9,10 +9,10 @@
                 <span class="iconfont iconadd-fill-copy" @click="onAdd"></span>
             </template>
             <template v-slot:content>
-                <FilterView :show="isFilter" @cancel="onCancel" @close="isFilter=false"></FilterView>
+                <FilterView :show="isFilter" @search="onSearch" @cancel="onCancel" @close="isFilter=false"></FilterView>
                 <ScrollView @loadMore="onLoadMore" @refresh="onRefresh" scroll_class="scroll" :bottom="20">
                     <div class="list">
-                        <div class="item" v-for="(item, index) in pics" v-bind:key="item.id" @click="onShow(index)" v-lazy:background-image="getPath(item.name)">
+                        <div class="item" v-for="(item, index) in pics" v-bind:key="index + item.name" @click="onShow(index)" v-lazy:background-image="getPath(item.name)">
                             <div class="btn">
                                 <CheckboxView ref="checkboxs" @change="onChoose($event, index)" v-show="isEdit"></CheckboxView>
                             </div>
@@ -51,7 +51,8 @@ export default {
             isFilter: false,
             size: 20,
             curPage: 0,
-            hasNext: true
+            hasNext: true,
+            searchParam: null
         };
     },
     components: {PageView, CheckboxView, DeleteView, FilterView, ScrollView},
@@ -85,6 +86,15 @@ export default {
             this.$refs.checkboxs.forEach(element => {
                 element.selected = n;
             });
+        },
+        onSearch(obj){
+            console.log(obj);
+            this.curPage = 0;
+            this.hasNext = true;
+            this.searchParam = obj;
+            this.changePics([]);
+
+            this.onLoadMore();
         },
         onDelete(){
             var checkboxs = this.$refs.checkboxs;
@@ -124,7 +134,17 @@ export default {
                 console.log('没有更多');
                 return;
             }
-            var res = await yunTooler.getImages(this.curPage++, this.size);
+            var res;
+            if(this.searchParam){
+                res = await yunTooler.search({
+                    ...this.searchParam,
+                    size: this.size,
+                    page: this.curPage++
+                });
+            }
+            else{
+                res = await yunTooler.getImages(this.curPage++, this.size);
+            }
             if(res && res.data){
                 var list = res.data.data;
                 this.hasNext = this.size == list.length;

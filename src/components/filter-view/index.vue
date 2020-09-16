@@ -36,7 +36,7 @@ import CheckboxView from '@/components/checkbox-view/index.vue'
 // import PageView from '../page-view/index.vue'
 // import Hammer from 'hammerjs';
 import tooler from '@/core/tooler';
-import yunTooler from '@/core/yunTooler';
+// import yunTooler from '@/core/yunTooler';
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -68,15 +68,19 @@ export default {
     methods:{
         ...mapMutations(['changePics']),
         async onChoose(item){
-            var res = await yunTooler.search({
+            // var res = await yunTooler.search({
+            //     name: item.name,
+            //     isTag: true,
+            //     isDesc: false
+            // });
+            // if(res && res.data){
+            //     this.changePics(res.data.data);
+            // }
+            this.$emit("search", {
                 name: item.name,
                 isTag: true,
                 isDesc: false
             });
-            // res = await yunTooler.getImages();
-            if(res && res.data){
-                this.changePics(res.data.data);
-            }
             this.$emit("close");
         },
         async onSure(){
@@ -88,18 +92,24 @@ export default {
                 this.$toast({message: "筛选条件不能为空"})
                 return;
             }
-            var res = await yunTooler.search({
+            // var res = await yunTooler.search({
+            //     name: this.name,
+            //     isTag: this.$refs.tag.selected,
+            //     isDesc: this.$refs.desc.selected
+            // });
+            // if(res && res.data){
+            //     this.changePics(res.data.data);
+            // }
+            this.$emit("search", {
                 name: this.name,
                 isTag: this.$refs.tag.selected,
                 isDesc: this.$refs.desc.selected
             });
-            // res = await yunTooler.getImages();
-            if(res && res.data){
-                this.changePics(res.data.data);
-            }
+
             this.$emit("close");
         },
         onCancel(){
+            this.$emit("search", null);
             this.$emit("cancel");
         },
         onChange(){
