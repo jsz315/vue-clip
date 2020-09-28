@@ -1,6 +1,7 @@
 import axios from 'axios';
 import tooler from './tooler'
 import request from './request'
+import cosTooler from './cosTooler'
 
 function startUpload(file, path, fullPath) {
     console.log(path, fullPath);
@@ -39,21 +40,58 @@ async function getTags(){
     return request.httpGet('/resource/allTags');
 }
 
-async function addResource(src, tags, desc, onProgress){
+// async function addResource(src, tags, desc, onProgress){
+//     var str = await tooler.urlToBase64(src);
+//     var file = tooler.dataURLtoFile(str, "file.jpg");
+//     let data = new FormData();
+//     data.append('file', file);
+//     data.append('tags', tags.join(","));
+//     data.append('desc', desc);
+//     return request.httpPost("/resource/add", data, {
+//         onUploadProgress: e => {
+//             onProgress && onProgress(e.loaded / e.total)
+//         }
+//     });
+// }
+
+async function addResourceCos(src, tags, desc, onProgress){
     var str = await tooler.urlToBase64(src);
     var file = tooler.dataURLtoFile(str, "file.jpg");
+    var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
+    await cosTooler.putObject(file, filename, e => {
+        onProgress && onProgress(e.loaded / e.total);
+    });
     let data = new FormData();
-    data.append('file', file);
+    data.append('filename', filename);
     data.append('tags', tags.join(","));
     data.append('desc', desc);
-    return request.httpPost("/resource/add", data, {
+    return request.httpPost("/resource/cos/add", data, {
         onUploadProgress: e => {
             onProgress && onProgress(e.loaded / e.total)
         }
     });
 }
 
-async function editResource(id, tags, desc, src, old, onProgress){
+// async function editResource(id, tags, desc, src, oldName, onProgress){
+//     let data = new FormData();
+//     data.append('id', id);
+//     data.append('tags', tags.join(","));
+//     data.append('desc', desc);
+//     if(src){
+//         var str = await tooler.urlToBase64(src);
+//         var file = tooler.dataURLtoFile(str, "file.jpg");
+//         data.append('file', file);
+//         data.append('old', oldName);
+//     }
+//     return request.httpPost("/resource/edit", data, {
+//         onUploadProgress: e => {
+//             onProgress && onProgress(e.loaded / e.total)
+//         }
+//     });
+// }
+
+
+async function editResourceCos(id, tags, desc, src, oldName, onProgress){
     let data = new FormData();
     data.append('id', id);
     data.append('tags', tags.join(","));
@@ -61,10 +99,14 @@ async function editResource(id, tags, desc, src, old, onProgress){
     if(src){
         var str = await tooler.urlToBase64(src);
         var file = tooler.dataURLtoFile(str, "file.jpg");
-        data.append('file', file);
-        data.append('old', old);
+        var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
+        await cosTooler.putObject(file, filename, e => {
+            onProgress && onProgress(e.loaded / e.total);
+        });
+        data.append('filename', filename);
+        // data.append('old', oldName);
     }
-    return request.httpPost("/resource/edit", data, {
+    return request.httpPost("/resource/cos/edit", data, {
         onUploadProgress: e => {
             onProgress && onProgress(e.loaded / e.total)
         }
@@ -109,8 +151,8 @@ export default {
     startUpload,
     deleteFolder,
     deleteFile,
-    addResource,
-    editResource,
+    addResource: addResourceCos,
+    editResource: editResourceCos,
     getImages,
     getTags,
     deleteResources,

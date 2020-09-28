@@ -25,6 +25,7 @@ Vue.use(alertRegistry);
 
 Vue.use(VueRouter)
 
+
 const routes = [
   { path: '/', redirect: '/list' },
   { path: '/list', component: (resolve)=>require(['@/pages/list-page/index.vue'], resolve), name: 'list' },
@@ -32,6 +33,7 @@ const routes = [
   { path: '/edit', component: (resolve)=>require(['@/pages/edit-page/index.vue'], resolve), name: 'edit' },
   { path: '/clip', component: (resolve)=>require(['@/pages/clip-page/index.vue'], resolve), name: 'clip' },
   { path: '/upload', component: (resolve)=>require(['@/pages/upload-page/index.vue'], resolve), name: 'upload' },
+  { path: '/move', component: (resolve)=>require(['@/pages/move-page/index.vue'], resolve), name: 'move' },
 ]
 
 const router = new VueRouter({

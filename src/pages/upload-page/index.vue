@@ -29,7 +29,7 @@ import DragView from '@/components/drag-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
-import cosTooler from '../../core/cosTooler';
+// import cosTooler from '../../core/cosTooler';
 
 // let isMobile = tooler.checkMobile();
 // let lastPoint;
@@ -88,7 +88,7 @@ export default {
             var files = e.target.files;
             for(var i = 0; i < files.length; i++){
                 this.list.push(files[i]);
-                cosTooler.putObject(files[i], files[i].name);
+                // cosTooler.putObject(files[i], files[i].name, e => {console.log(e)});
             }
 
         },
