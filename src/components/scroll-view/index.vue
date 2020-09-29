@@ -23,6 +23,7 @@ export default {
             top: 0, //下拉元素距离顶部的距离
             tip: "下拉即可刷新", //下拉提示文案
             startY: -1, //滚动到顶部时的鼠标位置
+            position: 0
         };
     },
     props: {
@@ -40,6 +41,17 @@ export default {
             }
         }
     },
+    activated(){
+        //this.$nextTick()异步执行dom刷新
+        this.$nextTick(() => {
+            console.log("activated", this.position)
+            // this.$refs.content.scrollTop = this.position;
+        })
+    },
+    deactivated(){
+        this.position = this.$refs.content.scrollTop;
+        console.log("deactivated", this.position)
+    },
     methods: {
         scroll() {
             if (this.$refs.content.scrollTop + this.$refs.content.clientHeight >= this.$refs.content.scrollHeight - this.bottom) {
@@ -47,6 +59,7 @@ export default {
                 this.$emit("loadMore");
             }
         },
+        
         touchstart() {
             //拖动时取消过度效果
             this.$refs.box.style.transition = "none";
