@@ -16,6 +16,11 @@
             </div>
             <div class="btn" @click="toggler" :class="{running}">{{running ? "停止" : "运行"}}</div>
         </div>
+        <div class="search">
+            <input v-model="fileName" type="text" class="file-name"/>
+            <div class="btn" @click="search">搜索</div>
+        </div>
+        
         <canvas v-show="false" ref="canvas"></canvas>
     </div>
 </template>
@@ -46,7 +51,8 @@ export default {
             pass: 0,
             total: 0,
             hasNext: true,
-            running: false
+            running: false,
+            fileName: ""
         };
     },
     mounted() {
@@ -66,6 +72,21 @@ export default {
             this.running = !this.running;
             if(this.running){
                 this.loadData();
+            }
+        },
+        async search(){
+            var item = {name: this.fileName, id: this.fileName};
+            var url = this.getPath(item.name);
+            item.percent = "开始下载";
+            this.list = [item];
+            var canvas = this.$refs.canvas;
+            var file = await fileTooler.urlToFile(url, canvas, false);
+            if(file){
+                await this.upload(file, item);
+                item.percent = "1";
+            }
+            else{
+                item.percent = "下载失败";
             }
         },
         async loadData(){
