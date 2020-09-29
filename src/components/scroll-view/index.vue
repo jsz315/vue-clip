@@ -44,13 +44,13 @@ export default {
     activated(){
         //this.$nextTick()异步执行dom刷新
         this.$nextTick(() => {
-            console.log("activated", this.position)
-            // this.$refs.content.scrollTop = this.position;
+            // console.log("activated", this.position)
+            this.$refs.content.scrollTop = this.position;
         })
     },
     deactivated(){
-        this.position = this.$refs.content.scrollTop;
-        console.log("deactivated", this.position)
+        // this.position = this.$refs.content.scrollTop;
+        // console.log("deactivated", this.position)
     },
     methods: {
         scroll() {
@@ -58,6 +58,7 @@ export default {
                 //滚动到底部
                 this.$emit("loadMore");
             }
+            this.position = this.$refs.content.scrollTop;
         },
         
         touchstart() {

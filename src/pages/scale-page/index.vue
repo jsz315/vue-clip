@@ -51,6 +51,8 @@ export default {
     },
     mounted() {
         // this.loadData();
+        var page = localStorage.getItem("page");
+        this.curPage = page || 1;
     },
     computed: {
         
@@ -80,6 +82,7 @@ export default {
             }
             this.total = 0;
             var res = await yunTooler.getImages(this.curPage++, this.size);
+            localStorage.setItem("page", this.curPage);
             if(res && res.data){
                 var list = res.data.data;
                 this.hasNext = this.size == list.length;

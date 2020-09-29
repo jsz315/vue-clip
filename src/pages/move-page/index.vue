@@ -4,7 +4,7 @@
             <div class="item" v-for="(item, index) in list" :key="item.id">
                 <div class="img" :style="{'background-image': 'url(' + getPath(item.name) + ')'}"></div>
                 <div class="name">{{index + 1}}. {{item.name}}</div>
-                <div class="percent">{{item.percent}}</div>
+                <div class="percent" :class="{over: item.percent == 1}">{{item.percent == 1 ? "上传完成" : item.percent}}</div>
             </div>
         </div>
         <div class="state">
@@ -51,6 +51,8 @@ export default {
     },
     mounted() {
         // this.loadData();
+        var page = localStorage.getItem("page");
+        this.curPage = page || 1;
     },
     computed: {
         
@@ -76,6 +78,7 @@ export default {
             }
             this.total = 0;
             var res = await yunTooler.getImages(this.curPage++, this.size);
+            localStorage.setItem("page", this.curPage);
             if(res && res.data){
                 var list = res.data.data;
                 this.hasNext = this.size == list.length;
@@ -89,30 +92,27 @@ export default {
                         item.percent = "开始下载";
                         var file = await fileTooler.urlToFile(url, canvas, false);
                         if(file){
-                            this.upload(file, item);
+                            await this.upload(file, item);
+                            this.success++;
+                            item.percent = "1";
                         }
                         else{
-                            item.percent = "下载失败";
                             this.error++;
-                            this.checkComplete();
+                            item.percent = "下载失败";
                         }
                     }
                     else{
                         item.percent = "已处理";
                         this.pass++;
-                        this.checkComplete();
                     }
+                    this.checkComplete();
                 });
                 this.list = list;
             }
         },
         upload(file, item){
-            cosTooler.putObject(file, item.name, e => {
+            return cosTooler.putObject(file, item.name, e => {
                 console.log(e);
-                if(e.percent == 1){
-                    this.success++;
-                    this.checkComplete();
-                }
                 item.percent = "已上传" + Math.floor(e.percent * 100) + "%";
             });
         },
