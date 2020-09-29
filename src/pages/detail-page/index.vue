@@ -148,10 +148,10 @@ export default {
                 return pics[n % pics.length];
             }
             // return pics[n];
-            return config.getPath(pics[n].name);
+            return config.cosPath(pics[n].name);
         },
         onEdit(){
-            var url = config.getPath(this.pics[this.id].name);
+            var url = config.cosPath(this.pics[this.id].name);
             this.$router.push({ path: '/edit', query: { url: url, id: this.id }});
         },
         onBack(){

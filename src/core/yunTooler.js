@@ -2,6 +2,8 @@ import axios from 'axios';
 import tooler from './tooler'
 import request from './request'
 import cosTooler from './cosTooler'
+import fileTooler from './fileTooler'
+import config from './config'
 
 function startUpload(file, path, fullPath) {
     console.log(path, fullPath);
@@ -54,10 +56,11 @@ async function getTags(){
 //     });
 // }
 
-async function addResourceCos(src, tags, desc, onProgress){
+async function addResourceCos(src, tags, desc, onProgress, canvas){
     var str = await tooler.urlToBase64(src);
     var file = tooler.dataURLtoFile(str, "file.jpg");
     var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
+    await minUpload(src, canvas, filename, onProgress);
     await cosTooler.putObject(file, filename, e => {
         onProgress && onProgress(e.loaded / e.total);
     });
@@ -91,7 +94,7 @@ async function addResourceCos(src, tags, desc, onProgress){
 // }
 
 
-async function editResourceCos(id, tags, desc, src, oldName, onProgress){
+async function editResourceCos(id, tags, desc, src, oldName, onProgress, canvas){
     let data = new FormData();
     data.append('id', id);
     data.append('tags', tags.join(","));
@@ -100,6 +103,7 @@ async function editResourceCos(id, tags, desc, src, oldName, onProgress){
         var str = await tooler.urlToBase64(src);
         var file = tooler.dataURLtoFile(str, "file.jpg");
         var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
+        await minUpload(src, canvas, filename, onProgress);
         await cosTooler.putObject(file, filename, e => {
             onProgress && onProgress(e.loaded / e.total);
         });
@@ -111,6 +115,16 @@ async function editResourceCos(id, tags, desc, src, oldName, onProgress){
             onProgress && onProgress(e.loaded / e.total)
         }
     });
+}
+
+async function minUpload(url, canvas, filename, onProgress){
+    console.log("minUpload");
+    var file = await fileTooler.urlToFile(url, canvas, true);
+    if(file){
+        await cosTooler.putObject(file, config.minPath(filename), e => {
+            onProgress && onProgress(e.loaded / e.total);
+        });
+    }
 }
 
 async function deleteResources(list){

@@ -1,5 +1,5 @@
 <template>
-    <div class="move-view">
+    <div class="scale-view">
         <div class="list">
             <div class="item" v-for="(item, index) in list" :key="item.id">
                 <div class="img" :style="{'background-image': 'url(' + getPath(item.name) + ')'}"></div>
@@ -40,7 +40,7 @@ export default {
         return {
             list: [],
             size: 20,
-            curPage: 20,
+            curPage: 0,
             success: 0,
             error: 0,
             pass: 0,
@@ -57,7 +57,11 @@ export default {
     },
     methods: {
         getPath(name){
-            return config.cvmPath(name);
+            return config.cosPath(name);
+        },
+        getMinPath(name){
+            var url = config.cosPath(name);
+            return config.minPath(url);
         },
         toggler(){
             this.curPage = Number(this.curPage);
@@ -82,12 +86,12 @@ export default {
                 var canvas = this.$refs.canvas;
                 list.map(async item => {
                     item.percent = "checking";
-                    // var has = await fileTooler.validateLink(config.cosPath(item.name));
-                    var has = false;
+                    var minPath = config.minPath(config.cosPath(item.name));
+                    var has = await fileTooler.validateLink(minPath);
                     if(!has){
                         var url = this.getPath(item.name);
                         item.percent = "开始下载";
-                        var file = await fileTooler.urlToFile(url, canvas, false);
+                        var file = await fileTooler.urlToFile(url, canvas, true);
                         if(file){
                             this.upload(file, item);
                         }
@@ -107,7 +111,7 @@ export default {
             }
         },
         upload(file, item){
-            cosTooler.putObject(file, item.name, e => {
+            cosTooler.putObject(file, config.minPath(item.name), e => {
                 console.log(e);
                 if(e.percent == 1){
                     this.success++;

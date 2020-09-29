@@ -34,6 +34,7 @@ const routes = [
   { path: '/clip', component: (resolve)=>require(['@/pages/clip-page/index.vue'], resolve), name: 'clip' },
   { path: '/upload', component: (resolve)=>require(['@/pages/upload-page/index.vue'], resolve), name: 'upload' },
   { path: '/move', component: (resolve)=>require(['@/pages/move-page/index.vue'], resolve), name: 'move' },
+  { path: '/scale', component: (resolve)=>require(['@/pages/scale-page/index.vue'], resolve), name: 'scale' },
 ]
 
 const router = new VueRouter({

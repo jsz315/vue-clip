@@ -28,6 +28,7 @@
                 <ProgressView ref="progress" v-show="!enable"></ProgressView>
             </template>
         </PageView>
+        <canvas v-show="false" ref="canvas"></canvas>
     </div>
 </template>
 
@@ -136,10 +137,11 @@ export default {
             var tags = this.$refs.now.getTags();
             var src = this.clipData ? this.clipData.url : this.pic;
             var res;
+            var canvas = this.$refs.canvas;
             if(this.id){
                 if(this.clipData){
                     console.log("图片有修改");
-                    res = await yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name, this.onProgress);
+                    res = await yunTooler.editResource(this.cur.id, tags, this.desc, src, this.cur.name, this.onProgress, canvas);
                 }
                 else{
                     console.log("图片未修改")
@@ -148,7 +150,7 @@ export default {
             }
             else{
                 console.log('新增');
-                res = await yunTooler.addResource(src, tags, this.desc, this.onProgress);
+                res = await yunTooler.addResource(src, tags, this.desc, this.onProgress, canvas);
             }
             if(res.data.res){
                 this.$toast({message: "操作成功"});

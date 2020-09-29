@@ -1,4 +1,6 @@
-function urlToFile(url, canvas) {
+const maxSize = 240;
+
+function urlToFile(url, canvas, scale) {
     return new Promise(resolve => {
         var image = new Image();
         // 给img加上随机值一部分情况下能解决跨域
@@ -7,21 +9,39 @@ function urlToFile(url, canvas) {
         // 允许跨域操作
         image.setAttribute("crossOrigin", 'anonymous');
         image.onload = function () {
-            var base64 = getBase64Image(image, canvas);
+            var base64 = getBase64Image(image, canvas, scale);
             var file = dataURLtoFile(base64, 'img');
             resolve(file);
         }
-        image.onerror = function(){
+        image.onerror = function(e){
+            console.log(e);
             resolve(false);
         }
     })
 }
 // 将url转换为base64
-function getBase64Image(img, canvas) {
-    canvas.width = img.width;
-    canvas.height = img.height;
+function getBase64Image(img, canvas, scale) {
     var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, img.width, img.height);
+    if(scale){
+        var sw, sh;
+        if(img.width > img.height){
+            sw = maxSize;
+            sh = maxSize / img.width * img.height;
+        }
+        else{
+            sh = maxSize;
+            sw = maxSize / img.height * img.width;
+        }
+        canvas.width = sw;
+        canvas.height = sh;
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, sw, sh); 
+    }
+    else{
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+    }
+    
     var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
     var dataURL = canvas.toDataURL("image/" + ext);
     return {
@@ -63,6 +83,7 @@ function dataURLtoFile(dataurl, filename) {
 //         return false;
 //     }  
 // } 
+
 
 function validateLink(url){
     return new Promise(resolve => {
