@@ -72,8 +72,8 @@ export default {
             this.$router.push({ path: '/upload' });
         },
         getPath(name){
-            // return config.cvmPath(name);
-            var url = config.cosPath(name);
+            var url = config.cvmPath(name);
+            // var url = config.cosPath(name);
             return config.minPath(url);
         },
         onEdit(){

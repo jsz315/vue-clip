@@ -1,6 +1,6 @@
-const maxSize = 240;
+const maxSize = 180;
 
-function urlToFile(url, canvas, scale) {
+function urlToFile(url, canvas, scale, filename) {
     return new Promise(resolve => {
         var image = new Image();
         // 给img加上随机值一部分情况下能解决跨域
@@ -10,7 +10,7 @@ function urlToFile(url, canvas, scale) {
         image.setAttribute("crossOrigin", 'anonymous');
         image.onload = function () {
             var base64 = getBase64Image(image, canvas, scale);
-            var file = dataURLtoFile(base64, 'img');
+            var file = dataURLtoFile(base64, filename);
             resolve(file);
         }
         image.onerror = function(e){

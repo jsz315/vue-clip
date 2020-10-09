@@ -1,7 +1,7 @@
 import axios from 'axios';
 import tooler from './tooler'
 import request from './request'
-import cosTooler from './cosTooler'
+// import cosTooler from './cosTooler'
 import fileTooler from './fileTooler'
 import config from './config'
 
@@ -42,40 +42,75 @@ async function getTags(){
     return request.httpGet('/resource/allTags');
 }
 
-// async function addResource(src, tags, desc, onProgress){
-//     var str = await tooler.urlToBase64(src);
-//     var file = tooler.dataURLtoFile(str, "file.jpg");
-//     let data = new FormData();
-//     data.append('file', file);
-//     data.append('tags', tags.join(","));
-//     data.append('desc', desc);
-//     return request.httpPost("/resource/add", data, {
-//         onUploadProgress: e => {
-//             onProgress && onProgress(e.loaded / e.total)
-//         }
-//     });
-// }
-
-async function addResourceCos(src, tags, desc, onProgress, canvas){
-    var str = await tooler.urlToBase64(src);
-    var file = tooler.dataURLtoFile(str, "file.jpg");
-    var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
-    await minUpload(src, canvas, filename, onProgress);
-    await cosTooler.putObject(file, filename, e => {
-        onProgress && onProgress(e.loaded / e.total);
-    });
+async function uploadMin(src, canvas, filename, onProgress){
+    var file = await fileTooler.urlToFile(src, canvas, true, filename.replace(".", "_min."));
     let data = new FormData();
-    data.append('filename', filename);
-    data.append('tags', tags.join(","));
-    data.append('desc', desc);
-    return request.httpPost("/resource/cos/add", data, {
+    data.append('file', file);
+    return request.httpPost("/resource/min", data, {
         onUploadProgress: e => {
             onProgress && onProgress(e.loaded / e.total)
         }
     });
 }
 
-// async function editResource(id, tags, desc, src, oldName, onProgress){
+async function addResource(src, tags, desc, onProgress, canvas){
+    var str = await tooler.urlToBase64(src);
+    var filename = config.createName(false);
+    await uploadMin(src, canvas, filename);
+    var file = tooler.dataURLtoFile(str, filename);
+    let data = new FormData();
+    data.append('file', file);
+    // data.append('min', min);
+    data.append('tags', tags.join(","));
+    data.append('desc', desc);
+    return request.httpPost("/resource/add", data, {
+        onUploadProgress: e => {
+            onProgress && onProgress(e.loaded / e.total)
+        }
+    });
+}
+
+// async function addResourceCos(src, tags, desc, onProgress, canvas){
+//     var str = await tooler.urlToBase64(src);
+//     var file = tooler.dataURLtoFile(str, "file.jpg");
+//     var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
+//     await minUpload(src, canvas, filename, onProgress);
+//     await cosTooler.putObject(file, filename, e => {
+//         onProgress && onProgress(e.loaded / e.total);
+//     });
+//     let data = new FormData();
+//     data.append('filename', filename);
+//     data.append('tags', tags.join(","));
+//     data.append('desc', desc);
+//     return request.httpPost("/resource/cos/add", data, {
+//         onUploadProgress: e => {
+//             onProgress && onProgress(e.loaded / e.total)
+//         }
+//     });
+// }
+
+async function editResource(id, tags, desc, src, oldName, onProgress, canvas){
+    let data = new FormData();
+    data.append('id', id);
+    data.append('tags', tags.join(","));
+    data.append('desc', desc);
+    if(src){
+        var str = await tooler.urlToBase64(src);
+        var filename = config.createName(false);
+        await uploadMin(src, canvas, filename);
+        var file = tooler.dataURLtoFile(str, filename);
+        data.append('file', file);
+        data.append('old', oldName);
+    }
+    return request.httpPost("/resource/edit", data, {
+        onUploadProgress: e => {
+            onProgress && onProgress(e.loaded / e.total)
+        }
+    });
+}
+
+
+// async function editResourceCos(id, tags, desc, src, oldName, onProgress, canvas){
 //     let data = new FormData();
 //     data.append('id', id);
 //     data.append('tags', tags.join(","));
@@ -83,49 +118,29 @@ async function addResourceCos(src, tags, desc, onProgress, canvas){
 //     if(src){
 //         var str = await tooler.urlToBase64(src);
 //         var file = tooler.dataURLtoFile(str, "file.jpg");
-//         data.append('file', file);
-//         data.append('old', oldName);
+//         var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
+//         await minUpload(src, canvas, filename, onProgress);
+//         await cosTooler.putObject(file, filename, e => {
+//             onProgress && onProgress(e.loaded / e.total);
+//         });
+//         data.append('filename', filename);
 //     }
-//     return request.httpPost("/resource/edit", data, {
+//     return request.httpPost("/resource/cos/edit", data, {
 //         onUploadProgress: e => {
 //             onProgress && onProgress(e.loaded / e.total)
 //         }
 //     });
 // }
 
-
-async function editResourceCos(id, tags, desc, src, oldName, onProgress, canvas){
-    let data = new FormData();
-    data.append('id', id);
-    data.append('tags', tags.join(","));
-    data.append('desc', desc);
-    if(src){
-        var str = await tooler.urlToBase64(src);
-        var file = tooler.dataURLtoFile(str, "file.jpg");
-        var filename = Date.now() + "_" + Math.floor(Math.random() * 10000) + ".jpg";
-        await minUpload(src, canvas, filename, onProgress);
-        await cosTooler.putObject(file, filename, e => {
-            onProgress && onProgress(e.loaded / e.total);
-        });
-        data.append('filename', filename);
-        // data.append('old', oldName);
-    }
-    return request.httpPost("/resource/cos/edit", data, {
-        onUploadProgress: e => {
-            onProgress && onProgress(e.loaded / e.total)
-        }
-    });
-}
-
-async function minUpload(url, canvas, filename, onProgress){
-    console.log("minUpload");
-    var file = await fileTooler.urlToFile(url, canvas, true);
-    if(file){
-        await cosTooler.putObject(file, config.minPath(filename), e => {
-            onProgress && onProgress(e.loaded / e.total);
-        });
-    }
-}
+// async function minUpload(url, canvas, filename, onProgress){
+//     console.log("minUpload");
+//     var file = await fileTooler.urlToFile(url, canvas, true);
+//     if(file){
+//         await cosTooler.putObject(file, config.minPath(filename), e => {
+//             onProgress && onProgress(e.loaded / e.total);
+//         });
+//     }
+// }
 
 async function deleteResources(list){
     let data = new FormData();
@@ -165,8 +180,10 @@ export default {
     startUpload,
     deleteFolder,
     deleteFile,
-    addResource: addResourceCos,
-    editResource: editResourceCos,
+    addResource,
+    editResource,
+    // addResource: addResourceCos,
+    // editResource: editResourceCos,
     getImages,
     getTags,
     deleteResources,

@@ -9,6 +9,14 @@ const cos = "http://resoure-1251324668.cos.ap-guangzhou.myqcloud.com";
 //     return cosPath(name);
 // }
 
+const createName = function(min){
+    var name = Date.now() + "_" + Math.floor(Math.random() * 10000);
+    if(min){
+        name = name + "_min"; 
+    }
+    return name + ".jpg";
+}
+
 const cvmPath = function(name){
     return cvm + "/" + name;
 }
@@ -25,5 +33,6 @@ const minPath = function(url){
 export default {
     cvmPath,
     cosPath,
-    minPath
+    minPath,
+    createName
 }
