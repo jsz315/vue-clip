@@ -37,27 +37,17 @@ export default {
     if(res.data){
         this.changeTags(res.data.data);
     }
+    res = await yunTooler.getTotal();
+    if(res.data){
+        this.changeTotal(res.data.data[0].total);
+    }
   },
   methods:{
-    ...mapMutations(['changePics', 'changeId', 'changeTags']),
+    ...mapMutations(['changePics', 'changeId', 'changeTags', 'changeTotal']),
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 28px;
-}
-html, body{
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}
-.onscroll{
-  height: 100%;
-  overflow: hidden;
-}
+<style lang='less'>
+    @import "./App.less";
 </style>

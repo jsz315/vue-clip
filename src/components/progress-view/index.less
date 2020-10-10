@@ -45,22 +45,62 @@
 
 
 
+
+
+
+
+
 @media screen and (min-width: 768PX){
-.reflash-view {
+.progress-view {
     position: fixed;
-    width: 64PX;
-    height: 64PX;
-    background: #ffffff;
-    border-radius: 50%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.72);
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 24PX;
-    bottom: 48PX;
-    .iconshuaxin1{
-        font-size: 64PX;
-        color: #f33030;
+    .box{
+        padding: 30PX 50PX;
+        background: #ffffff;
+        border-radius: 12PX;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border: solid 1PX #aeaeae;
+        .loading{
+            width: 60PX;
+            height: 60PX;
+            background: url(../../assets/img/loading.png) no-repeat center;
+            background-size: contain;
+            animation: turns 1200ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        .tip{
+            margin-top: 16PX;
+            text-align: center;
+            font-size: 24PX;
+            color: #4c8697;
+            width: 120PX;
+        }
+        @keyframes turns{
+            0%{transform: rotate(0deg)}
+            100%{transform: rotate(360deg);}
+        }
     }
 }
+
+
+
+
+
+
+
 
 }

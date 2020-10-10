@@ -23,7 +23,7 @@
                 padding: 10px 20px;
                 margin: 0 20px 30px 0;
                 &:first-child{
-                    border-color: #0f92dd;
+                    // border-color: #b9d1df;
                     color: #0f92dd;
                 }
             }
@@ -64,8 +64,16 @@
     
 }
 
+
+
+
+
+
 @media screen and (min-width: 768PX){
 .filter-view {
+    overflow-y: hidden;
+    transition: all 200ms;
+    height: 0;
     .line{
         display: flex;
         justify-content: start;
@@ -85,26 +93,35 @@
                 border: solid 1PX #f0f0f0;
                 border-radius: 12PX;
                 padding: 10PX 20PX;
-                margin: 0 30PX 30PX 0;
+                margin: 0 20PX 30PX 0;
+                &:first-child{
+                    // border-color: #b9d1df;
+                    color: #0f92dd;
+                }
             }
         }
     }
     .input{
         display: flex;
         font-size: 28PX;
-        align-items: flex-start;
+        align-items: center;
         padding: 8PX 0;
         .text{
             border: solid 1PX #f0f0f0;
-            padding: 4PX 10PX;
+            padding: 8PX 10PX;
             font-size: 28PX;
+            width: 240PX;
         }
         .sure{
             margin-left: 20PX;
             cursor: pointer;
             text-align: center;
             font-size: 28PX;
-           color: #0f92dd;
+            color: #0f92dd;
+        }
+        .cancel{
+            color: #ff0000;
+            margin-left: 60PX;
         }
     }
     .checks{
@@ -118,5 +135,10 @@
     }
     
 }
+
+
+
+
+
 
 }

@@ -51,16 +51,17 @@
     .list {
         display: flex;
         flex-wrap: wrap;
-        padding-bottom: 30px;
+        padding: 30px 0 30px 30px;
+        box-sizing: border-box;
         .item {
-            width: 222px;
-            height: 260px;
+            width: 218px;
+            height: 220px;
             background-color: #eeeeee;
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
-            margin-left: 20px;
-            margin-top: 20px;
+            margin-bottom: 30px;
+            margin-right: 18px;
             position: relative;
             .btn{
                 position: absolute;
@@ -72,11 +73,34 @@
 }
 
 
+
+
+
+
+
 @media screen and (min-width: 768PX){
 .list-view {
 
     .title {
-        text-align: center;
+        width: 40%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        .arrow{
+            width: 36PX;
+            height: 36PX;
+            background: url(../../assets/img/open.png) no-repeat center;
+            background-size: contain;
+            margin-left: 20PX;
+            opacity: 0.8;
+            transition: all 200ms;
+            transform: rotate(180deg);
+            &.open{
+                transform: rotate(0deg);
+            }
+        }
     }
 
     .iconfont {
@@ -87,10 +111,10 @@
         margin: auto;
     }
     .iconbianji{
-        left: 15PX;
+        left: 30PX;
     }
     .iconadd-fill-copy{
-        right: 15PX;
+        right: 30PX;
         font-size: 36PX;
     }
     .over-btn{
@@ -98,22 +122,27 @@
         top: 0;
         bottom: 0;
         margin: auto;
-        left: 15PX;
+        left: 30PX;
     }
 
+    .scroll{
+        width: 100%;
+        height: 100%;
+    }
     .list {
         display: flex;
         flex-wrap: wrap;
-        padding-bottom: 30PX;
+        padding: 30PX 0 30PX 30PX;
+        box-sizing: border-box;
         .item {
-            width: 222PX;
-            height: 260PX;
+            width: 218PX;
+            height: 220PX;
             background-color: #eeeeee;
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
-            margin-left: 20PX;
-            margin-top: 20PX;
+            margin-bottom: 30PX;
+            margin-right: 18PX;
             position: relative;
             .btn{
                 position: absolute;
@@ -123,6 +152,11 @@
         }
     }
 }
+
+
+
+
+
 
 
 }

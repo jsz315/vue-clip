@@ -8,6 +8,7 @@ export default new Vuex.Store({
         pics: [],
         id: 0,
         clipData: null,
+        total: 0,
         tags: []
         // tags: ["家庭", "绘画", "建筑", "生活", "乐器", "卡通人物", "儿童", "人物", "男性", "创意情景", "矢量", "婚礼", "动漫", "动物", "插画", "婚纱照", "时尚", "卡通插图", "情景", "抽象", "表情", "其他卡通", "古典"]
     },
@@ -38,6 +39,9 @@ export default new Vuex.Store({
             if(state.tags.indexOf(value) == -1){
                 state.tags.push(value);
             }
+        },
+        changeTotal(state, value){
+            state.total = value; 
         }
     },
     actions: {

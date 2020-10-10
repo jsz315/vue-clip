@@ -42,7 +42,9 @@ function walk(dir) {
 function replace(item){
 	var odata = fs.readFileSync(item, 'utf8');
 	var ndata = odata.replace(/@media screen[\w\W]*/g, "");
-	var pcdata = ndata.replace(/px/ig, 'PX');
+    var pcdata = ndata.replace(/px/ig, 'PX');
+    
+    // pcdata = "";
 	var aimdata = `${ndata}\n@media screen and (min-width: 768PX){\n${pcdata}\n}`;
 
 	console.log(aimdata);

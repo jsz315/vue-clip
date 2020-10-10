@@ -25,6 +25,11 @@
     100%{transform: scale(1);}
 }
 
+
+
+
+
+
 @media screen and (min-width: 768PX){
 .checkbox-view {
     width: 30PX;
@@ -35,6 +40,8 @@
     border-radius: 50%;
     border: solid 1PX #aeaeae;
     background: #ffffff;
+    animation: grow 200ms;
+    animation-fill-mode: forwards;
     .box{
         width: 16PX;
         height: 16PX;
@@ -42,5 +49,18 @@
         background: #0ea4fc;
     }
 }
+
+@keyframes grow{
+    0%{transform: scale(0);}
+    80%{transform: scale(1.2);}
+    90%{transform: scale(0.97);}
+    96%{transform: scale(1.05);}
+    100%{transform: scale(1);}
+}
+
+
+
+
+
 
 }

@@ -81,12 +81,27 @@ export default {
             vm.enable = true;
             if (vm.clipData) {
                 vm.pic = window.URL.createObjectURL(vm.clipData.blob);
+                if(from.name == "clip"){
+                    console.log("返回不重置");
+                }
+                else{
+                    console.log("重置数据")
+                    vm.resetSize();
+                }
             }
             else{
                 vm.pic = decodeURIComponent(vm.$route.query.url);
-                vm.cur = vm.pics[vm.id];
+                if(from.name == "clip"){
+                    console.log("返回不重置");
+                }
+                else{
+                    console.log("重置数据")
+                    vm.cur = vm.pics[vm.id];
+                    vm.resetSize();
+                }
+                
             }
-            vm.resetSize();
+            // vm.resetSize();
         });
     },
     beforeRouteLeave(to, from, next) {

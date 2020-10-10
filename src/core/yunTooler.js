@@ -42,6 +42,10 @@ async function getTags(){
     return request.httpGet('/resource/allTags');
 }
 
+async function getTotal(){
+    return request.httpGet('/resource/total');
+}
+
 async function uploadMin(src, canvas, filename, onProgress){
     var file = await fileTooler.urlToFile(src, canvas, true, filename.replace(".", "_min."));
     let data = new FormData();
@@ -188,5 +192,6 @@ export default {
     getTags,
     deleteResources,
     addTag,
-    search
+    search,
+    getTotal
 }

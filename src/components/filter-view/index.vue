@@ -23,7 +23,7 @@
             <div class="line">
                 <!-- <div class="type">分类:</div> -->
                 <div class="param">
-                    <div class="item" @click="onCancel">全部</div>
+                    <div class="item" @click="onCancel">全部({{total}})</div>
                     <div class="item" v-for="item in tags" v-bind:key="item.id" @click="onChoose(item)">{{item.name}}({{item.num}})</div>
                 </div>
             </div>
@@ -49,7 +49,7 @@ export default {
     props: ["show"],
     components: {CheckboxView},
     computed:{
-        ...mapState(['tags']),
+        ...mapState(['tags', 'total']),
     },
     watch: {
         show(newValue, oldValue) {
