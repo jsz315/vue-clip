@@ -9,7 +9,7 @@
             <template v-slot:content>
                 <div class="size" ref="box">
                     <div class="list" ref="list" :class="{move}" :style="{'transform': 'translateX(' + x + 'px)'}">
-                        <div class="pic-box" v-for="item in list" v-bind:key="item.id">
+                        <div class="pic-box" v-for="item in list" :key="item.name">
                             <img class="pic" :src="item"/>
                         </div>
                     </div>
