@@ -10,6 +10,7 @@
                     <DragView @drag="onDrag"></DragView>
                     <div class="file" @click="onOpen"><div class="ico"></div>点击选择上传文件</div>
                     <input v-show="false" ref="file" type="file" multiple="multiple" @change="onChange($event)"/>
+                    <UrlView @url="onUrl"/>
                 </div>
                 <div class="list">
                     <div class="item" v-for="(item, index) in list" v-bind:key="index" @click="onEdit(item)">
@@ -24,6 +25,7 @@
 
 <script>
 import PageView from '@/components/page-view/index.vue'
+import UrlView from '@/components/url-view/index.vue'
 import ReflashView from '@/components/reflash-view/index.vue'
 import DragView from '@/components/drag-view/index.vue'
 import { mapState, mapMutations } from 'vuex'
@@ -41,7 +43,7 @@ export default {
             list: []
         };
     },
-    components: {PageView, ReflashView, DragView},
+    components: {PageView, ReflashView, DragView, UrlView},
     mounted() {
         if(this.clipData){
             this.list.push(this.clipData);
@@ -69,6 +71,9 @@ export default {
     methods: {
         ...mapMutations(['changePics', 'changeId', 'changeClipData']),
         fileToImage(file){
+            if(file.type == "img"){
+                return file.src;
+            }
             if(file.type == "complete"){
                 return window.URL.createObjectURL(file.blob);
             }
@@ -82,6 +87,10 @@ export default {
         },
         onOpen(){
             this.$refs.file.click();
+        },
+        onUrl(url){
+            console.log(url);
+            this.list.push({type: "img", src: url});
         },
         onChange(e){
             console.log(e);
