@@ -1,5 +1,7 @@
 // const host = "http://127.0.0.1:8090";
-const cvm = "https://wlwol.cn/asset/upload";
+const host = "http://119.28.7.223:9090";
+const cvm = "http://119.28.7.223:9090/asset/upload";
+// const cvm = "https://wlwol.cn/asset/upload";
 const cos = "http://resoure-1251324668.cos.ap-guangzhou.myqcloud.com";
 
 // const getPath = function(name){
@@ -34,5 +36,6 @@ export default {
     cvmPath,
     cosPath,
     minPath,
-    createName
+    createName,
+    host
 }

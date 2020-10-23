@@ -1,8 +1,9 @@
 import axios from 'axios'
+import config from './config'
 
 // axios.defaults.baseURL = "http://127.0.0.1:8090";
 
-axios.defaults.baseURL = "https://wlwol.cn";
+axios.defaults.baseURL = config.host;
 
 
 

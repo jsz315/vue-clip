@@ -43,7 +43,7 @@ export default {
             var url = this.$route.query.url;
             console.log("进入：" + decodeURIComponent(url));
             var changeClipData = this.changeClipData;
-            this.src = "dist/index.html?url=" + url;
+            this.src = "./dist/index.html?url=" + url;
             eventMaker = listener.make(window, "message", e=>{
                 var obj = e.data;
                 if(obj.type == "complete"){

@@ -1,5 +1,12 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>裁剪图片</title><link href=css/app.7c5d68d9.css rel=preload as=style><link href=js/app.2cb54e78.js rel=preload as=script><link href=js/chunk-vendors.6778a76f.js rel=preload as=script><link href=css/app.7c5d68d9.css rel=stylesheet></head><body><noscript><strong>We're sorry but pixi-game doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><script>//使用方法
-        // //使用方法，传入图片地址或blob链接
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>裁剪图片</title><script>(function (doc, win) {
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';  
+            var recalc = function () {
+              doc.documentElement.style.fontSize = 100 * (window.innerWidth / 750) + 'px';
+            };    
+            if (!doc.addEventListener) return;    
+            win.addEventListener(resizeEvt, recalc, false);    
+            doc.addEventListener('DOMContentLoaded', recalc, false);    
+        })(document, window);</script><script src=./pixi.5.2.4.min.js></script><link href=css/app.51febd6b.css rel=preload as=style><link href=js/app.d8b77889.js rel=preload as=script><link href=js/chunk-vendors.e240291b.js rel=preload as=script><link href=css/app.51febd6b.css rel=stylesheet></head><body><noscript><strong>We're sorry but pixi-game doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><script>// //使用方法，传入图片地址或blob链接
         // function clip(url){
         //     var f = document.getElementById("frame");
         //     f.src = "index.html?url=" + encodeURIComponent(url);
@@ -9,4 +16,4 @@
         //             console.log(obj);
         //         }
         //     })
-        // }</script><div id=app></div><script src=dll/pixi.dll.js></script><script src=js/chunk-vendors.6778a76f.js></script><script src=js/app.2cb54e78.js></script></body></html>
+        // }</script><div id=app></div><script src=js/chunk-vendors.e240291b.js></script><script src=js/app.d8b77889.js></script></body></html>
