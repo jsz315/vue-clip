@@ -1,15 +1,8 @@
-// const host = "http://127.0.0.1:8090";
+// const host = "https://wlwol.cn";
 const host = "http://119.28.7.223:9090";
-const cvm = "http://119.28.7.223:9090/asset/upload";
-// const cvm = "https://wlwol.cn/asset/upload";
+const cvm = host + "/asset/upload";
 const cos = "http://resoure-1251324668.cos.ap-guangzhou.myqcloud.com";
-
-// const getPath = function(name){
-//     if(name.indexOf("_") == -1){
-//         return host + "/upload/" + name;
-//     }
-//     return cosPath(name);
-// }
+const temp = host + "/asset/temp";
 
 const createName = function(min){
     var name = Date.now() + "_" + Math.floor(Math.random() * 10000);
@@ -31,11 +24,16 @@ const minPath = function(url){
     return url.replace(/(\.\w+$)/, "_min$1");
 }
 
+const tempPath = function(name){
+    return temp + "/" + name;
+}
+
 
 export default {
     cvmPath,
     cosPath,
     minPath,
+    tempPath,
     createName,
     host
 }

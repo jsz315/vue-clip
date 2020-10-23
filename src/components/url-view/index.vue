@@ -11,6 +11,7 @@
 // import draw from '../../core/draw';
 // import tooler from '../../core/tooler';
 import request from '../../core/request';
+import config from '../../core/config'
 
 // let isMobile = tooler.checkMobile();
 // let lastPoint;
@@ -35,7 +36,7 @@ export default {
             console.log(url);
             var res = await request.httpGet(url);
             console.log(res.data);
-            this.$emit("url", "https://wlwol.cn/asset/temp/" + res.data);
+            this.$emit("url", config.tempPath(res.data));
             this.url = "";
         }
     }
