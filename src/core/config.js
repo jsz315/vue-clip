@@ -1,8 +1,16 @@
 // const host = "https://wlwol.cn";
-const host = "http://119.28.7.223:9090";
+// const host = "http://119.28.7.223:9090";
+const host = getHost();
 const cvm = host + "/asset/upload";
 const cos = "http://resoure-1251324668.cos.ap-guangzhou.myqcloud.com";
 const temp = host + "/asset/temp";
+
+function getHost(){
+    if(location.hostname == "localhost" || location.hostname == "127.0.0.1" || location.hostname.indexOf("192.168") != -1){
+        return "http://xg.madman.fun:9090";
+    }
+    return "";
+}
 
 const createName = function(min){
     var name = Date.now() + "_" + Math.floor(Math.random() * 10000);
