@@ -7,7 +7,7 @@ const temp = host + "/asset/temp";
 
 function getHost(){
     if(location.hostname == "localhost" || location.hostname == "127.0.0.1" || location.hostname.indexOf("192.168") != -1){
-        return "http://xg.madman.fun:9090";
+        return "http://gg.madman.fun:9090";
     }
     return "";
 }

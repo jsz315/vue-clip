@@ -1,6 +1,6 @@
 <template>
     <div class="url-view">
-       <input class="txt" v-model="url"/>
+       <input class="txt" v-model="url" @keyup.enter="add"/>
        <div class="btn" @click="add">添加</div>
     </div>
 </template>
@@ -32,6 +32,9 @@ export default {
     },
     methods: {
         async add(){
+            if(this.url.replace(/\s*/ig, '') == ""){
+                return;
+            }
             var url = "/resource/proxy/img?url=" + encodeURIComponent(this.url);
             console.log(url);
             var res = await request.httpGet(url);
