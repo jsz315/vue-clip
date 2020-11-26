@@ -69,9 +69,14 @@ export default {
         //     console.log('== detail-view nextTick ==');
         //     this.resetPic();
         // })
-        
+        var t = 0;
         var box = this.$refs.box;
         box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
+            if(Date.now() - t < 500){
+                var url = config.cvmPath(this.pics[this.id].name);
+                window.open(url);
+            }
+            t = Date.now();
             e.preventDefault();
             if(isMobile){
                 e = e.changedTouches[0];
