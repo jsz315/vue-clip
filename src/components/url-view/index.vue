@@ -78,9 +78,9 @@ export default {
                 data.append('headers', JSON.stringify(headers));
             }
             
-            var res = await request.httpPost("http://170.106.154.187:8899/proxy", data);
+            var res = await request.httpPost("https://www.madman.fun/resource/proxy", data);
             console.log(res.data);
-            this.$emit("url", "http://170.106.154.187:8899/temp/" + name);
+            this.$emit("url", "https://www.madman.fun/asset/temp/" + name);
             // this.url = "";
         }
     }
