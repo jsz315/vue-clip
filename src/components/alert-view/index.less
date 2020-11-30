@@ -9,9 +9,16 @@
     justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, 0.72);
+    opacity: 0;
+    animation: fade 300ms;
+    animation-fill-mode: forwards;
     .box{
         width: 400px;
         background: #ffffff;
+        opacity: 0;
+        animation: move 300ms;
+        animation-fill-mode: forwards;
+        animation-delay: 100ms;
         .tip{
             padding: 40px;
             color: #666666;
@@ -30,6 +37,10 @@
                 justify-content: center;
                 align-items: center;
                 color: #18c9ff;
+                background: #ffffff;
+                &:active{
+                    background: darken(#ffffff, 20%);
+                }
                 &:nth-child(2){
                     border-left: solid 1px #e9e9e9;
                     color: #ff0a1f;
@@ -39,7 +50,15 @@
     }
 }
 
-
+@keyframes fade{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+@keyframes move{
+    0%{opacity: 0;transform: translateY(60px);}
+    30%{opacity: 1;transform: translateY(40px);}
+    100%{opacity: 1;transform: translateY(0px);}
+}
 
 
 

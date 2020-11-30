@@ -1,8 +1,8 @@
 <template>
     <div class="delete-view">
         <div class="all-btn">
-            <CheckboxView @change="onChange"></CheckboxView>
-            <span class="tip">全选</span>
+            <CheckboxView @change="onChange" ref="check"></CheckboxView>
+            <span class="tip" @click="onAll">全选</span>
         </div>
         <div class="delete-btn" @click="onDelete">
             <span>删除</span>
@@ -38,8 +38,15 @@ export default {
         onDelete(){
             this.$emit('delete');
         },
+        onAll(){
+            var n = !this.$refs.check.selected;
+            this.$refs.check.selected = n;
+            this.$emit('all', n);
+            console.log("onAll", n);
+        },
         onChange(n){
             this.$emit('all', n);
+            console.log("onChange", n);
         }
     }
 };

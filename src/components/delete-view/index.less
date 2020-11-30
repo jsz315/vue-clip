@@ -10,9 +10,8 @@
     justify-content: center;
     align-items: center;
     // background: linear-gradient(#f9f9f9, #cccccc);
-    background: rgb(255, 255, 255);
+    background:#ffffff;
     // border-radius: 0;
-    border: solid 1px #cecece;
     height: 72px;
     box-shadow: rgba(0, 0, 0, 0.4) 8px 8px 12px;
     animation: turn 200ms;
@@ -24,8 +23,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
         .tip{
             margin-left: 20px;
+        }
+        &:active{
+            background:darken(#ffffff, 20%);
         }
     }
     .delete-btn{
@@ -36,6 +39,9 @@
         color: #ffffff;
         background: #ff0000;
         height: 100%;
+        &:active{
+            background: darken(#ff0000, 20%);
+        }
     }
 }
 

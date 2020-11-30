@@ -11,7 +11,7 @@
             margin: 0 30px;
             font-size: 28px;
             width: 80px;
-            padding: 10px;
+            padding: 20px 10px;
             color: #909090;
         }
         .param{
@@ -22,9 +22,13 @@
                 border-radius: 12px;
                 padding: 10px 20px;
                 margin: 0 20px 30px 0;
-                &:first-child{
+                background: #ffffff;
+                &.cur{
                     // border-color: #b9d1df;
                     color: #0f92dd;
+                }
+                &:active{
+                    background: darken(#ffffff, 20%);
                 }
             }
         }
@@ -36,9 +40,13 @@
         padding: 8px 0;
         .text{
             border: solid 1px #f0f0f0;
-            padding: 8px 10px;
+            padding: 10px;
             font-size: 28px;
             width: 240px;
+            &:focus {
+                border: solid 1px #88cce7;
+                outline: none;
+            }
         }
         .sure{
             margin-left: 20px;
@@ -46,10 +54,16 @@
             text-align: center;
             font-size: 28px;
             color: #0f92dd;
+            &:active{
+                color: darken(#0f92dd, 20%);
+            }
         }
         .cancel{
             color: #ff0000;
             margin-left: 60px;
+            &:active{
+                color: darken(#ff0000, 20%);
+            }
         }
     }
     .checks{
@@ -63,9 +77,6 @@
     }
     
 }
-
-
-
 
 
 

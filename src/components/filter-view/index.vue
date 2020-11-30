@@ -23,8 +23,8 @@
             <div class="line">
                 <!-- <div class="type">分类:</div> -->
                 <div class="param">
-                    <div class="item" @click="onCancel">全部({{total}})</div>
-                    <div class="item" v-for="item in tags" v-bind:key="item.id" @click="onChoose(item)">{{item.name}}({{item.num}})</div>
+                    <div class="item" :class="{cur:cur==''}" @click="onCancel">全部({{total}})</div>
+                    <div class="item" :class="{cur:cur==item.name}" v-for="item in tags" v-bind:key="item.id" @click="onChoose(item)">{{item.name}}({{item.num}})</div>
                 </div>
             </div>
         </div>
@@ -43,6 +43,7 @@ export default {
     data() {
         return {
             name: "",
+            cur: "",
             height: 0
         };
     },
@@ -76,6 +77,7 @@ export default {
             // if(res && res.data){
             //     this.changePics(res.data.data);
             // }
+            this.cur = item.name;
             this.$emit("search", {
                 name: item.name,
                 isTag: true,
@@ -109,6 +111,7 @@ export default {
             this.$emit("close");
         },
         onCancel(){
+            this.cur = "";
             this.$emit("search", null);
             this.$emit("cancel");
         },
