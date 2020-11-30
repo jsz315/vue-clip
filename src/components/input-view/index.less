@@ -10,18 +10,30 @@
     height: 100%;
     font-size: 28px;
     background: rgba(0, 0, 0, 0.72);
+    opacity: 0;
+    animation: fade 300ms;
+    animation-fill-mode: forwards;
     .tag-content{
         width: 600px;
         padding: 48px 30px;
         background: #ffffff;
         border-radius: 8px;
+        opacity: 0;
+        animation: move 300ms;
+        animation-fill-mode: forwards;
+        animation-delay: 100ms;
         .text{
             display: block;
             box-sizing: border-box;
-            padding: 16px;
+            padding: 10px;
             width: 100%;
             font-size: 24px;
             margin-bottom: 20px;
+            border: solid 1px #f0f0f0;
+            &:focus {
+                border: solid 1px #88cce7;
+                outline: none;
+            }
         }
         .add{
             margin: 16px 0 32px;
@@ -41,17 +53,33 @@
             border-radius: 4px;
             text-align: center;
             color: #ffffff;
+            cursor: pointer;
         }
         .sure{
             margin-left: 20px;
             background: #f33030;
+            &:active{
+                background: darken(#f33030, 20%);
+            }
         }
         .quit{
             background: #888888;
+            &:active{
+                background: darken(#888888, 20%);
+            }
         }
     }
 }
     
+@keyframes fade{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+@keyframes move{
+    0%{opacity: 0;transform: translateY(60px);}
+    30%{opacity: 1;transform: translateY(40px);}
+    100%{opacity: 1;transform: translateY(0px);}
+}
 
 
 
@@ -72,18 +100,30 @@
     height: 100%;
     font-size: 28PX;
     background: rgba(0, 0, 0, 0.72);
+    opacity: 0;
+    animation: fade 300ms;
+    animation-fill-mode: forwards;
     .tag-content{
         width: 600PX;
         padding: 48PX 30PX;
         background: #ffffff;
         border-radius: 8PX;
+        opacity: 0;
+        animation: move 300ms;
+        animation-fill-mode: forwards;
+        animation-delay: 100ms;
         .text{
             display: block;
             box-sizing: border-box;
-            padding: 16PX;
+            padding: 10PX;
             width: 100%;
             font-size: 24PX;
             margin-bottom: 20PX;
+            border: solid 1PX #f0f0f0;
+            &:focus {
+                border: solid 1PX #88cce7;
+                outline: none;
+            }
         }
         .add{
             margin: 16PX 0 32PX;
@@ -103,17 +143,33 @@
             border-radius: 4PX;
             text-align: center;
             color: #ffffff;
+            cursor: pointer;
         }
         .sure{
             margin-left: 20PX;
             background: #f33030;
+            &:active{
+                background: darken(#f33030, 20%);
+            }
         }
         .quit{
             background: #888888;
+            &:active{
+                background: darken(#888888, 20%);
+            }
         }
     }
 }
     
+@keyframes fade{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+@keyframes move{
+    0%{opacity: 0;transform: translateY(60PX);}
+    30%{opacity: 1;transform: translateY(40PX);}
+    100%{opacity: 1;transform: translateY(0PX);}
+}
 
 
 

@@ -14,6 +14,10 @@
         text-align: left;
         margin-right: 20px;
         border: solid 1px #eeeeee;
+        &:focus {
+            border: solid 1px #88cce7;
+            outline: none;
+        }
     }
 
     .btn {
@@ -21,7 +25,10 @@
         height: 40px;
         line-height: 40px;
         cursor: pointer;
-        color: rgb(41, 176, 255);
+        color: #29b0ff;
+        &:active{
+            color: darken(#29b0ff, 20%);
+        }
     }
 
     .ico{
@@ -31,6 +38,9 @@
         background: url(../../assets/img/more.png) no-repeat center;
         background-size: contain;
         margin-left: 8px;
+        &:active{
+            opacity: 0.8;
+        }
     }
     .opt{
         margin-top: 16px;
@@ -52,70 +62,66 @@
 
 
 
+
 @media screen and (min-width: 768PX){
-.upload-view {
-
-    .title {
-        text-align: center;
-    }
-
-    .icon-liebiao {
-        font-size: 32PX;
-        position: absolute;
-        left: 15PX;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-    }
-
-    .icon-tianjia {
-        font-size: 32PX;
-        position: absolute;
-        right: 15PX;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-    }
-    .upload-box{
-        padding: 30PX;
-        font-size: 28PX;
-        .file{
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            background: #eeeeee;
-            padding: 10PX 0;
-            .ico{
-                background: url(../../assets/img/upload.png) no-repeat center;
-                background-size: contain;
-                width: 30PX;
-                height: 30PX;
-                margin-right: 12PX;
-            }
-        }
-    }
-
-    .list {
+.url-view {
+    font-size: 30PX;
+    .row{
+        margin-top: 20PX;
         display: flex;
-        flex-wrap: wrap;
-
-        .item {
-            width: 222PX;
-            height: 260PX;
-            overflow: hidden;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: 20PX;
-            margin-top: 20PX;
-            background: #eeeeee;
-            .img{
-                width: 100%;
-            }
+        justify-content: center;
+        align-items: center;
+    }
+    .txt {
+        text-align: center;
+        display: block;
+        flex: 1;
+        padding: 10PX;
+        text-align: left;
+        margin-right: 20PX;
+        border: solid 1PX #eeeeee;
+        &:focus {
+            border: solid 1PX #88cce7;
+            outline: none;
         }
+    }
+
+    .btn {
+        width: 80PX;
+        height: 40PX;
+        line-height: 40PX;
+        cursor: pointer;
+        color: #29b0ff;
+        &:active{
+            color: darken(#29b0ff, 20%);
+        }
+    }
+
+    .ico{
+        width: 36PX;
+        height: 36PX;
+        cursor: pointer;
+        background: url(../../assets/img/more.png) no-repeat center;
+        background-size: contain;
+        margin-left: 8PX;
+        &:active{
+            opacity: 0.8;
+        }
+    }
+    .opt{
+        margin-top: 16PX;
+    }
+    .more{
+        display: block;
+        box-sizing: border-box;
+        padding: 10PX;
+        width: 100%;
+        height: 120PX;
+        max-width: 100%;
+        min-width: 100%;
     }
 }
+
 
 
 

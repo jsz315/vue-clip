@@ -67,3 +67,11 @@ new Vue({
     script.innerHTML = 'setTimeout(function(){eruda.init();console.log("eruda.init");}, 3000);';
     document.body.appendChild(script);
 })();
+
+// import Remote from './core/remote/cos';
+// console.log("Remote", Remote)
+// var api = new Remote();
+
+// api.t1();
+// api.t2();
+// api.t4();

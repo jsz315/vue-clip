@@ -5,34 +5,34 @@ import request from './request'
 import fileTooler from './fileTooler'
 import config from './config'
 
-function startUpload(file, path, fullPath) {
-    console.log(path, fullPath);
-    let data = new FormData();
-    let temp = (path + fullPath).split("/");
-    let name = temp.pop();
-    data.append('path', temp.join("/"));
-    data.append('file', file);
-    data.append('name', name);
-    data.append('tag', '0');
+// function startUpload(file, path, fullPath) {
+//     console.log(path, fullPath);
+//     let data = new FormData();
+//     let temp = (path + fullPath).split("/");
+//     let name = temp.pop();
+//     data.append('path', temp.join("/"));
+//     data.append('file', file);
+//     data.append('name', name);
+//     data.append('tag', '0');
 
-    return new Promise(resolve=>{
-        axios({
-            method: 'post',
-            timeout: 6000,
-            url: 'http://127.0.0.1:8899/yun/upload',
-            data: data
-        })
-        .then(response => {
-            console.log(response.data)
-            resolve(true)
-        })
-        .catch(error => {
-            console.log(error)
-            resolve(false)
-        })
-    })
+//     return new Promise(resolve=>{
+//         axios({
+//             method: 'post',
+//             timeout: 6000,
+//             url: 'http://127.0.0.1:8899/yun/upload',
+//             data: data
+//         })
+//         .then(response => {
+//             console.log(response.data)
+//             resolve(true)
+//         })
+//         .catch(error => {
+//             console.log(error)
+//             resolve(false)
+//         })
+//     })
     
-}
+// }
 
 async function getImages(page, size){
     return request.httpGet('/resource/imgs', {page, size});
@@ -181,7 +181,7 @@ function deleteFile(item, path){
 }
 
 export default {
-    startUpload,
+    // startUpload,
     deleteFolder,
     deleteFile,
     addResource,

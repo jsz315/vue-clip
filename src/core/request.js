@@ -5,8 +5,6 @@ import config from './config'
 
 axios.defaults.baseURL = config.host;
 
-
-
 const httpGet = function(url, data){
     return axios.get(url, {
         params: data

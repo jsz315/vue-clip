@@ -11,7 +11,8 @@
 <script>
 import { mapMutations } from 'vuex'
 // import request from "@/core/request"
-import yunTooler from "@/core/yunTooler"
+// import yunTooler from "@/core/yunTooler"
+import remote from "@/core/remote"
 
 
 export default {
@@ -32,12 +33,12 @@ export default {
     // ]);
   },
   async mounted() {
-    console.log('== app mounted ==');
-    var res = await yunTooler.getTags();
+    console.log('== app mounted remote ==');
+    var res = await remote.getTags();
     if(res.data){
         this.changeTags(res.data.data);
     }
-    res = await yunTooler.getTotal();
+    res = await remote.getTotal();
     if(res.data){
         this.changeTotal(res.data.data[0].total);
     }

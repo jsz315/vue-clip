@@ -45,6 +45,9 @@
             pointer-events: all;
             cursor: pointer;
             background: #f33030;
+            &:active{
+                background: darken(#f33030, 20%);
+            }
         }
     }
 
@@ -59,10 +62,14 @@
         .info{
             flex: 1;
             font-size: 24px;
-            line-height: 48px;
             display: flex;
             box-sizing: border-box;
-            padding: 4px 8px;
+            padding: 10px;
+            border: solid 1px #eeeeee;
+            &:focus {
+                border: solid 1px #88cce7;
+                outline: none;
+            }
         }
     }
     .tags-box{
@@ -98,6 +105,7 @@
         padding: 30px;
     }
 }
+
 
 
 
@@ -153,6 +161,9 @@
             pointer-events: all;
             cursor: pointer;
             background: #f33030;
+            &:active{
+                background: darken(#f33030, 20%);
+            }
         }
     }
 
@@ -167,10 +178,14 @@
         .info{
             flex: 1;
             font-size: 24PX;
-            line-height: 48PX;
             display: flex;
             box-sizing: border-box;
-            padding: 4PX 8PX;
+            padding: 10PX;
+            border: solid 1PX #eeeeee;
+            &:focus {
+                border: solid 1PX #88cce7;
+                outline: none;
+            }
         }
     }
     .tags-box{
@@ -206,6 +221,7 @@
         padding: 30PX;
     }
 }
+
 
 
 

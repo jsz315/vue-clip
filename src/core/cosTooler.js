@@ -3,7 +3,6 @@ var config = {
     Region: 'ap-guangzhou',
 };
 
-console.log("ok" + Math.random());
 
 var cos = new window.COS({
     getAuthorization: function (options, callback) {
