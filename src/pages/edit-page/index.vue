@@ -3,7 +3,7 @@
         <PageView>
             <template v-slot:header>
                 <!-- <span class="iconfont icon-liebiao" @click="onBack"></span> -->
-                <div class="iconfont iconfanhui" @click="onBack"></div>
+                <div class="iconfont icon-fanhui2" @click="onBack"></div>
                 <div class="title">图片编辑</div>
             </template>
             <template v-slot:content>

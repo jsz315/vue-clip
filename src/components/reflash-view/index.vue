@@ -1,6 +1,6 @@
 <template>
     <div class="reflash-view">
-        <span class="iconfont iconshuaxin1" @click="onReflash"></span>
+        <span class="iconfont icon-shuaxin1" @click="onReflash"></span>
     </div>
 </template>
 

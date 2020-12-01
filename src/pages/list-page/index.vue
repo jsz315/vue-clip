@@ -2,11 +2,11 @@
     <div class="list-view">
         <PageView>
             <template v-slot:header>
-                <span class="iconfont iconbianji" @click="onEdit" v-show="!isEdit"></span>
+                <span class="iconfont icon-bianji" @click="onEdit" v-show="!isEdit"></span>
                 <span class="over-btn" @click="onQuit" v-show="isEdit">完成</span>
                 
                 <div class="title" @click="onTogglerFilter">筛选列表<div class="arrow" :class="{'open': isFilter}"></div></div>
-                <span class="iconfont iconadd-fill-copy" @click="onAdd"></span>
+                <span class="iconfont icon-tianjia" @click="onAdd"></span>
             </template>
             <template v-slot:content>
                 <FilterView :show="isFilter" @search="onSearch" @cancel="onCancel" @close="isFilter=false"></FilterView>

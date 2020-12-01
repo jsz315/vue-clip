@@ -2,7 +2,7 @@
     <div class="upload-view">
         <PageView>
             <template v-slot:header>
-                <span class="iconfont iconfanhui" @click="onBack"></span>
+                <span class="iconfont icon-fanhui2" @click="onBack"></span>
                 <div class="title">上传图片</div>
             </template>
             <template v-slot:content>

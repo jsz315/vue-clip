@@ -57,6 +57,7 @@
 
 
 
+
 @media screen and (min-width: 768PX){
 .delete-view {
     position: fixed;
@@ -70,9 +71,8 @@
     justify-content: center;
     align-items: center;
     // background: linear-gradient(#f9f9f9, #cccccc);
-    background: rgb(255, 255, 255);
+    background:#ffffff;
     // border-radius: 0;
-    border: solid 1PX #cecece;
     height: 72PX;
     box-shadow: rgba(0, 0, 0, 0.4) 8PX 8PX 12PX;
     animation: turn 200ms;
@@ -84,8 +84,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
         .tip{
             margin-left: 20PX;
+        }
+        &:active{
+            background:darken(#ffffff, 20%);
         }
     }
     .delete-btn{
@@ -96,6 +100,9 @@
         color: #ffffff;
         background: #ff0000;
         height: 100%;
+        &:active{
+            background: darken(#ff0000, 20%);
+        }
     }
 }
 
@@ -104,6 +111,7 @@
     90%{opacity: 1;transform: translateY(-2PX);}
     100%{opacity: 1;transform: translateY(0PX);}
 }
+
 
 
 

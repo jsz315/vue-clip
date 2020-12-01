@@ -1,10 +1,17 @@
 {
-  "id": "1938026",
-  "name": "vue-clip",
+  "id": "1730137",
+  "name": "common",
   "font_family": "iconfont",
-  "css_prefix_text": "icon",
-  "description": "图片裁剪项目",
+  "css_prefix_text": "icon-",
+  "description": "常用",
   "glyphs": [
+    {
+      "icon_id": "736495",
+      "name": "返回 (2)",
+      "font_class": "fanhui2",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
     {
       "icon_id": "3216524",
       "name": "刷新",
@@ -13,53 +20,74 @@
       "unicode_decimal": 58986
     },
     {
-      "icon_id": "824975",
-      "name": "编辑",
-      "font_class": "bianji",
-      "unicode": "e604",
-      "unicode_decimal": 58884
+      "icon_id": "13135313",
+      "name": "关闭",
+      "font_class": "guanbi1",
+      "unicode": "e602",
+      "unicode_decimal": 58882
     },
     {
-      "icon_id": "4803667",
-      "name": "图片",
-      "font_class": "tupian",
-      "unicode": "e651",
-      "unicode_decimal": 58961
+      "icon_id": "577704",
+      "name": "成功",
+      "font_class": "chenggong",
+      "unicode": "e668",
+      "unicode_decimal": 58984
     },
     {
-      "icon_id": "4919802",
+      "icon_id": "604642",
+      "name": "上传",
+      "font_class": "shangchuan",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "604646",
       "name": "刷新",
       "font_class": "shuaxin",
-      "unicode": "e673",
-      "unicode_decimal": 58995
+      "unicode": "e62a",
+      "unicode_decimal": 58922
     },
     {
-      "icon_id": "10708257",
+      "icon_id": "845857",
+      "name": "预加载图片",
+      "font_class": "picturelarge",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "1472556",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "1617807",
+      "name": "1101加载中",
+      "font_class": "jiazaizhong",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "5831309",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "5961366",
+      "name": "列表",
+      "font_class": "liebiao",
+      "unicode": "ec6b",
+      "unicode_decimal": 60523
+    },
+    {
+      "icon_id": "6204091",
       "name": "关  闭",
       "font_class": "guanbi",
-      "unicode": "e68b",
-      "unicode_decimal": 59019
-    },
-    {
-      "icon_id": "12926065",
-      "name": "返 回",
-      "font_class": "fanhui",
-      "unicode": "e62b",
-      "unicode_decimal": 58923
-    },
-    {
-      "icon_id": "13965701",
-      "name": "表单 列表-03",
-      "font_class": "biaodanliebiao-",
-      "unicode": "e653",
-      "unicode_decimal": 58963
-    },
-    {
-      "icon_id": "15722628",
-      "name": "添加",
-      "font_class": "add-fill-copy",
-      "unicode": "e600",
-      "unicode_decimal": 58880
+      "unicode": "e608",
+      "unicode_decimal": 58888
     }
   ]
 }

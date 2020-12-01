@@ -1,5 +1,6 @@
+const path = require('path')
 module.exports = {
-publicPath: './',
+  publicPath: './',
   css: {
     loaderOptions: {
       css: {},
@@ -28,5 +29,11 @@ publicPath: './',
     //         'axios': 'axios',
     //     }
     // }
+  },
+  pluginOptions: {
+    "style-resources-loader": {
+      preProcessor: "less",
+      patterns: [path.resolve(__dirname, "src/global.less")]
+    }
   }
 }

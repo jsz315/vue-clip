@@ -2,9 +2,9 @@
     <div class="detail-view">
         <PageView>
             <template v-slot:header>
-                <span class="iconfont iconfanhui" @click="onBack"></span>
+                <span class="iconfont icon-fanhui2" @click="onBack"></span>
                 <div class="title">图片详情</div>
-                <span class="iconfont iconbianji" @click="onEdit"></span>
+                <span class="iconfont icon-bianji" @click="onEdit"></span>
             </template>
             <template v-slot:content>
                 <div class="size" ref="box">

@@ -81,6 +81,7 @@
 
 
 
+
 @media screen and (min-width: 768PX){
 .filter-view {
     overflow-y: hidden;
@@ -95,7 +96,7 @@
             margin: 0 30PX;
             font-size: 28PX;
             width: 80PX;
-            padding: 10PX;
+            padding: 20PX 10PX;
             color: #909090;
         }
         .param{
@@ -106,9 +107,13 @@
                 border-radius: 12PX;
                 padding: 10PX 20PX;
                 margin: 0 20PX 30PX 0;
-                &:first-child{
+                background: #ffffff;
+                &.cur{
                     // border-color: #b9d1df;
                     color: #0f92dd;
+                }
+                &:active{
+                    background: darken(#ffffff, 20%);
                 }
             }
         }
@@ -120,9 +125,13 @@
         padding: 8PX 0;
         .text{
             border: solid 1PX #f0f0f0;
-            padding: 8PX 10PX;
+            padding: 10PX;
             font-size: 28PX;
             width: 240PX;
+            &:focus {
+                border: solid 1PX #88cce7;
+                outline: none;
+            }
         }
         .sure{
             margin-left: 20PX;
@@ -130,10 +139,16 @@
             text-align: center;
             font-size: 28PX;
             color: #0f92dd;
+            &:active{
+                color: darken(#0f92dd, 20%);
+            }
         }
         .cancel{
             color: #ff0000;
             margin-left: 60PX;
+            &:active{
+                color: darken(#ff0000, 20%);
+            }
         }
     }
     .checks{
@@ -147,8 +162,6 @@
     }
     
 }
-
-
 
 
 

@@ -3,7 +3,7 @@
         <div class="row">
             <input class="txt" v-model="url" @keyup.enter="add"/>
             <div class="btn" @click="add">确定</div>
-            <div class="ico" @click="toggler"></div>
+            <div class="iconfont icon-liebiao" @click="toggler"></div>
         </div>
        
        <div class="opt" v-if="useHeaders">
@@ -71,7 +71,6 @@ export default {
 
             let data = new FormData();
             data.append('url', this.url);
-            let name = this.url.split("/").pop();
             if(this.useHeaders){
                 var headers = this.getHeaders();
                 console.log(headers);
@@ -80,7 +79,13 @@ export default {
             
             var res = await request.httpPost("https://www.madman.fun/resource/proxy", data);
             console.log(res.data);
-            this.$emit("url", "https://www.madman.fun/asset/temp/" + name);
+            if(res.data.code == 200){
+                this.$emit("url", "https://www.madman.fun/asset/temp/" + res.data.data);
+            }
+            else{
+                this.$toast({message: "请求图片失败"});
+            }
+            
             // this.url = "";
         }
     }
