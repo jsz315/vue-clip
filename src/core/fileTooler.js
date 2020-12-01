@@ -7,7 +7,7 @@ function urlToFile(url, canvas, scale, filename) {
         // image.src = img + '?time=' + new Date().valueOf();
         image.src = url;
         // 允许跨域操作
-        image.setAttribute("crossOrigin", 'anonymous');
+        image.setAttribute("crossOrigin", '');
         image.onload = function () {
             var base64 = getBase64Image(image, canvas, scale);
             var file = dataURLtoFile(base64, filename);
