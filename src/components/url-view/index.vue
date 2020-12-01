@@ -86,7 +86,7 @@ export default {
                 this.$toast({message: "请求图片失败"});
             }
             
-            // this.url = "";
+            this.url = "";
         }
     }
 };

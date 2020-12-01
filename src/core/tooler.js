@@ -31,6 +31,7 @@ function getElementPosition(element) {
 }
 
 async function urlToBase64(url) {
+    //本地跨域已解决
     var img = await getImage(url);
     var canvas = document.createElement("canvas");
     canvas.width = img.width;
@@ -43,6 +44,7 @@ async function urlToBase64(url) {
 }
 
 function dataURLtoFile(dataurl, filename) {
+    //本地跨域已解决
     var arr = dataurl.split(',');
     var mime = arr[0].match(/:(.*?);/)[1];
     var bstr = atob(arr[1]);

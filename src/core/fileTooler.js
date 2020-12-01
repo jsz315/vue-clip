@@ -1,6 +1,7 @@
 const maxSize = 180;
 
 function urlToFile(url, canvas, scale, filename) {
+    //本地跨域已解决
     return new Promise(resolve => {
         var image = new Image();
         // 给img加上随机值一部分情况下能解决跨域

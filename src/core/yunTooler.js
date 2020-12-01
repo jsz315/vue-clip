@@ -61,6 +61,7 @@ async function addResource(src, tags, desc, onProgress, canvas){
     var str = await tooler.urlToBase64(src);
     var filename = config.createName(false);
     await uploadMin(src, canvas, filename);
+    console.log("upload min over");
     var file = tooler.dataURLtoFile(str, filename);
     let data = new FormData();
     data.append('file', file);
