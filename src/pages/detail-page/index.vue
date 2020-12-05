@@ -9,8 +9,9 @@
             <template v-slot:content>
                 <div class="size" ref="box">
                     <div class="list" ref="list" :class="{move}" :style="{'transform': 'translateX(' + x + 'px)'}">
-                        <div class="pic-box" v-for="item in list" :key="item.name">
-                            <img class="pic" :src="item"/>
+                        <div class="pic-box" v-for="item in list" :key="item.url">
+                            <img class="pic" :src="item.url"/>
+                            <LoadingView :num="item.num" v-if="item.num!=100"></LoadingView>
                         </div>
                     </div>
                 </div>
@@ -22,10 +23,12 @@
 
 <script>
 import PageView from '@/components/page-view/index.vue'
+import LoadingView from '@/components/loading-view/index.vue'
 // import Hammer from 'hammerjs';
 // import draw from '../../core/draw';
 import tooler from '@/core/tooler';
 import config from '@/core/config';
+import imgMap from '@/core/imgMap';
 import { mapState, mapMutations } from 'vuex'
 
 let isMobile = tooler.checkMobile();
@@ -41,7 +44,7 @@ export default {
             move: true
         };
     },
-    components: {PageView},
+    components: {PageView, LoadingView},
     computed:{
         ...mapState(['pics', 'id'])
     },
@@ -51,7 +54,7 @@ export default {
         // 因为当守卫执行前，组件实例还没被创建
         console.log("进入页面", to, from);
         next(vm => {
-            console.log("== beforeRouteEnter nextTick ==", vm);
+            // console.log("== beforeRouteEnter nextTick ==", vm);
             // vm.id = vm.$route.query.id;
             if(from.name !== "edit"){
                 vm.changeId(Number(vm.$route.query.id));
@@ -69,6 +72,7 @@ export default {
         //     console.log('== detail-view nextTick ==');
         //     this.resetPic();
         // })
+        console.log("detail mounted");
         var t = 0;
         var box = this.$refs.box;
         box.addEventListener(isMobile ? "touchstart" : "mousedown", (e) => {
@@ -137,7 +141,7 @@ export default {
             temp.push(this.getPic(this.id - 1));
             temp.push(this.getPic(this.id));
             temp.push(this.getPic(this.id + 1));
-            this.list = temp;
+            this.list = temp;            
             console.log(this.list, 'list');
             this.x = 0;
             setTimeout(() => {
@@ -146,14 +150,29 @@ export default {
         },
         getPic(n){
             var pics = this.pics;
+            var id = n;
             if(n < 0){
-                return pics[pics.length - 1];
+                // return pics[pics.length - 1];
+                id = pics.length - 1;
             }
             if(n >= pics.length){
-                return pics[n % pics.length];
+                // return pics[n % pics.length];
+                id = n % pics.length;
             }
-            // return pics[n];
-            return config.cvmPath(pics[n].name);
+            var url = config.cvmPath(pics[id].name);
+            var num = 0;
+
+            var $this = this;
+            imgMap.start(url, (num) => {
+                console.log($this, "this")
+                var obj = $this.list.find(item => item.url == url);
+                if(obj){
+                    obj.num = num;
+                }
+                
+            });
+
+            return {url, num};
         },
         onEdit(){
             var url = config.cvmPath(this.pics[this.id].name);

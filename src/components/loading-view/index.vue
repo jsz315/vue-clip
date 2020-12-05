@@ -1,6 +1,9 @@
 <template>
-    <div class="tag-view">
-        {{item.name}}<span class="iconfont icon-guanbi" @click="onDelete"></span>
+    <div class="loading-view">
+        <div class="box">
+            <div class="loading"></div>
+            <div class="tip">下载{{num}}%</div>
+        </div>
     </div>
 </template>
 
@@ -13,10 +16,10 @@
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-    props: ["item"],
+    props: ["num"],
     data() {
         return {
-            
+            // num: 0
         };
     },
     components: {},
@@ -28,10 +31,9 @@ export default {
     },
     methods:{
         ...mapMutations(['changePics', 'changeId']),
-        onDelete(){
-            console.log('onDelete');
-            this.$emit('delete');
-        }
+        // show(n){
+        //     this.num = n;
+        // }
     }
 };
 </script>
