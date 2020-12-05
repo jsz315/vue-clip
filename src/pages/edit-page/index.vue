@@ -83,8 +83,8 @@ export default {
                 vm.pic = window.URL.createObjectURL(vm.clipData.blob);
                 if(from.name == "clip"){
                     console.log("返回不重置");
-                    this.width = vm.clipData.info.clipSize.width;
-                    this.height = vm.clipData.info.clipSize.height;
+                    vm.width = vm.clipData.info.clipSize.width;
+                    vm.height = vm.clipData.info.clipSize.height;
                 }
                 else{
                     console.log("重置数据")
