@@ -1,0 +1,54 @@
+.regist-view {
+    .title{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .head-img{
+        margin: 70px auto;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: #aeaeae;
+    }
+    .param{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 40px;
+        font-size: 16px;
+        .label{
+            width: 150px;
+            color: #999999;
+        }
+        .txt{
+            flex: 1;
+            padding: 10px;
+            border: solid 1px #eeeeee;
+            &:focus {
+                border: solid 1px #88cce7;
+                outline: none;
+            }
+        }
+    }
+    .btn{
+        width: 670px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        color: #ffffff;
+        background: @mainColor;
+        cursor: pointer;
+        margin: 60px auto 20px;
+        border-radius: 8px;
+        &:active{
+            background: darken(@mainColor, 20%);
+        }
+    }
+    .tips{
+        padding: 40px 40px;
+        display: flex;
+        justify-content: space-between;
+        color: #999999;
+    }
+}

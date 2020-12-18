@@ -3,10 +3,21 @@ import config from './config'
 
 // axios.defaults.baseURL = "http://127.0.0.1:8090";
 
-axios.defaults.baseURL = config.host;
+const instance = axios.create({
+    baseURL: config.verificateHost
+})
+
+instance.interceptors.request.use(function(config){
+    config.headers.common["tonken"] = localStorage.getItem("token");
+    return config;
+})
+
+instance.interceptors.response.use(function(response){
+    return response;
+})
 
 const httpGet = function(url, data){
-    return axios.get(url, {
+    return instance.get(url, {
         params: data
     })
 }

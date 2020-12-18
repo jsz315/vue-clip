@@ -27,7 +27,9 @@ Vue.use(VueRouter)
 
 
 const routes = [
-  { path: '/', redirect: '/list' },
+  { path: '/', redirect: '/home' },
+  { path: '/home', component: (resolve)=>require(['@/pages/home-page/index.vue'], resolve), name: 'home' },
+  { path: '/regist', component: (resolve)=>require(['@/pages/regist-page/index.vue'], resolve), name: 'regist' },
   { path: '/list', component: (resolve)=>require(['@/pages/list-page/index.vue'], resolve), name: 'list' },
   { path: '/detail', component: (resolve)=>require(['@/pages/detail-page/index.vue'], resolve), name: 'detail' },
   { path: '/edit', component: (resolve)=>require(['@/pages/edit-page/index.vue'], resolve), name: 'edit' },
