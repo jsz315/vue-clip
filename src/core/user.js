@@ -10,10 +10,18 @@ const instance = axios.create({
 instance.interceptors.request.use(function(config){
     config.headers.common["tonken"] = localStorage.getItem("token");
     return config;
+}, function(err){
+    console.warn("request err");
+    console.error(err)
+    return Promise.resolve({data: {code: 500, msg: "无法连接服务器"}});
 })
 
 instance.interceptors.response.use(function(response){
     return response;
+}, function(err){
+    console.warn("response err");
+    console.error(err);
+    return Promise.resolve({data: {code: 400, msg: "服务器异常[" + err.response.status + "]"}});
 })
 
 const httpGet = function(url, data){

@@ -16,7 +16,7 @@
                 </div>
                 <div class="btn" @click="onLogin">登录</div>
                 <div class="tips">
-                    <div class="forget">忘记密码</div>
+                    <div class="forget" @click="onForget">忘记密码</div>
                     <div class="regist" @click="goRegist">注册新账号</div>
                 </div>
                 
@@ -72,6 +72,15 @@ export default {
         ...mapMutations(['changePics', 'changeId', 'changeClipData']),
         goRegist(){
             this.$router.push({ path: '/regist', query: {  }});
+        },
+        async onForget(){
+            var res = await user.httpGet("/hello", {
+                name: this.username
+            });
+            if(res.data.code == 0){
+                localStorage.setItem("token", res.data.token);
+            }
+            console.log(res);
         },
         async onLogin(){
             var res = await user.httpGet("/user/login", {
