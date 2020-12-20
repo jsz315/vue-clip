@@ -99,7 +99,7 @@ export default {
             this.codeId = codeId;
         },
         async onRegist(){
-            var res = await user.httpGet("/user/regist", {
+            var res = await user.httpPost("/user/regist", {
                 username: this.username,
                 password: this.password1,
                 email: this.email,

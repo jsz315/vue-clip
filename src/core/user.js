@@ -8,7 +8,7 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(function(config){
-    config.headers.common["tonken"] = localStorage.getItem("token");
+    config.headers.common["token"] = localStorage.getItem("token");
     return config;
 }, function(err){
     console.warn("request err");
@@ -31,7 +31,11 @@ const httpGet = function(url, data){
 }
 
 const httpPost = function(url, data, config){
-    return axios.post(url, data, Object.assign(config || {}, {
+    var formData = new FormData();
+    for(var i in data){
+        formData.append(i, data[i]);
+    }
+    return instance.post(url, formData, Object.assign(config || {}, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
