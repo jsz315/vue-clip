@@ -21,7 +21,7 @@ instance.interceptors.response.use(function(response){
 }, function(err){
     console.warn("response err");
     console.error(err);
-    return Promise.resolve({data: {code: 400, msg: "服务器异常[" + err.response.status + "]"}});
+    return Promise.resolve({data: {code: 400, msg: "服务器异常[" + err.message + "]"}});
 })
 
 const httpGet = function(url, data){

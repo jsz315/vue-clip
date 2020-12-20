@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        token: "",
         pics: [],
         id: 0,
         clipData: null,

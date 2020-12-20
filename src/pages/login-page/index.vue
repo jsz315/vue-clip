@@ -1,5 +1,5 @@
 <template>
-    <div class="home-view">
+    <div class="login-view">
         <PageView>
             <template v-slot:header>
                 <div class="title">登录</div>
@@ -96,6 +96,13 @@ export default {
             var res = await user.httpGet("/user/auth", {
                 token: localStorage.getItem("token")
             });
+            if(res.data.code == 0){
+                this.$toast({message: "认证成功"});
+            }
+            else{
+                this.$toast({message: res.data.msg});
+            }
+
             console.log(res);
         }
     }

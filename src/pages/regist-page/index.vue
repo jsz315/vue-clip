@@ -2,7 +2,7 @@
     <div class="regist-view">
         <PageView>
             <template v-slot:header>
-                <div class="title">登录</div>
+                <div class="title">注册</div>
             </template>
             <template v-slot:content>
                 <div class="head-img"></div>
@@ -59,15 +59,13 @@ export default {
             password1: "",
             password2: "",
             email: "",
-            code: ""
+            code: "",
+            codeId: ""
         };
     },
     components: {PageView},
     async mounted() {
-        // this.code = "http://127.0.0.1:8899/user/code";
-        var res = await user.httpGet("/user/code", {});
-        console.log(res);
-        this.$refs.code.innerHTML = res.data;
+        this.changeCode();
     },
     computed: {
         ...mapState(['pics', 'id', 'clipData'])
@@ -93,40 +91,32 @@ export default {
         goLogin(){
             this.$router.push({ path: '/home', query: {} });
         },
+        async changeCode(){
+            var res = await user.httpGet("/user/code", {});
+            console.log(res);
+            this.$refs.code.innerHTML = res.data.img;
+            this.codeId = res.data.codeId;
+        },
         async onRegist(){
             var res = await user.httpGet("/user/regist", {
                 username: this.username,
                 password: this.password1,
                 email: this.email,
-                code: this.code
+                code: this.code,
+                codeId: this.codeId
             });
             
             if(res.data.code == 0){
                 this.$toast({message: "注册成功"});
                 this.$router.push("/home");
             }
+            else if(res.data.code == 2){
+                this.$toast({message: res.data.msg});
+                this.changeCode();
+            }
             else{
                 this.$toast({message: res.data.msg});
             }
-
-            // user.httpGet("/user/regists", {
-            //     username: this.username,
-            //     password: this.password1,
-            //     email: this.email
-            // }).then(res => {
-            //     console.log(res);
-            //     if(res.data.code == 0){
-            //         this.$toast({message: "注册成功"});
-            //         this.$router.push("/home");
-            //     }
-            //     else{
-            //         this.$toast({message: res.data.msg});
-            //     }
-            // }).catch(err => {
-            //     console.log(err);
-            //     this.$toast({message: "服务器异常"});
-            // })
-            
         }
     }
 };

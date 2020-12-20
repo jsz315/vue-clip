@@ -27,20 +27,36 @@ Vue.use(VueRouter)
 
 
 const routes = [
-  { path: '/', redirect: '/home' },
-  { path: '/home', component: (resolve)=>require(['@/pages/home-page/index.vue'], resolve), name: 'home' },
+  { path: '/', redirect: '/login' },
+  { path: '/login', component: (resolve)=>require(['@/pages/login-page/index.vue'], resolve), name: 'login' },
   { path: '/regist', component: (resolve)=>require(['@/pages/regist-page/index.vue'], resolve), name: 'regist' },
-  { path: '/list', component: (resolve)=>require(['@/pages/list-page/index.vue'], resolve), name: 'list' },
-  { path: '/detail', component: (resolve)=>require(['@/pages/detail-page/index.vue'], resolve), name: 'detail' },
-  { path: '/edit', component: (resolve)=>require(['@/pages/edit-page/index.vue'], resolve), name: 'edit' },
-  { path: '/clip', component: (resolve)=>require(['@/pages/clip-page/index.vue'], resolve), name: 'clip' },
-  { path: '/upload', component: (resolve)=>require(['@/pages/upload-page/index.vue'], resolve), name: 'upload' },
-  { path: '/move', component: (resolve)=>require(['@/pages/move-page/index.vue'], resolve), name: 'move' },
-  { path: '/scale', component: (resolve)=>require(['@/pages/scale-page/index.vue'], resolve), name: 'scale' },
+  { path: '/list', component: (resolve)=>require(['@/pages/list-page/index.vue'], resolve), name: 'list', meta: {auth: true} },
+  { path: '/detail', component: (resolve)=>require(['@/pages/detail-page/index.vue'], resolve), name: 'detail', meta: {auth: true} },
+  { path: '/edit', component: (resolve)=>require(['@/pages/edit-page/index.vue'], resolve), name: 'edit', meta: {auth: true} },
+  { path: '/clip', component: (resolve)=>require(['@/pages/clip-page/index.vue'], resolve), name: 'clip', meta: {auth: true} },
+  { path: '/upload', component: (resolve)=>require(['@/pages/upload-page/index.vue'], resolve), name: 'upload', meta: {auth: true} },
+  { path: '/move', component: (resolve)=>require(['@/pages/move-page/index.vue'], resolve), name: 'move', meta: {auth: true} },
+  { path: '/scale', component: (resolve)=>require(['@/pages/scale-page/index.vue'], resolve), name: 'scale', meta: {auth: true} },
 ]
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next)=>{
+  if(to.meta.auth){
+    if(!store.state.token){
+      next({
+        path: "/login"
+      })
+    }
+    else{
+      next();
+    }
+  }
+  else{
+    next();
+  }
 })
 
 Vue.config.productionTip = false

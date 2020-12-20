@@ -1,4 +1,4 @@
-.home-view {
+.login-view {
     .title{
         display: flex;
         justify-content: center;
@@ -6,10 +6,10 @@
     }
     .head-img{
         margin: 70px auto;
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        background: #aeaeae;
+        width: 600px;
+        height: 360px;
+        background: url(../../assets/img/login.png) no-repeat center;
+        background-size: contain;
     }
     .param{
         display: flex;
@@ -22,6 +22,7 @@
             color: #999999;
         }
         .txt{
+            width: 0;
             flex: 1;
             padding: 16px;
             border: solid 1px #eeeeee;
@@ -50,5 +51,11 @@
         display: flex;
         justify-content: space-between;
         color: #999999;
+        .forget{
+            cursor: pointer;
+        }
+        .regist{
+            cursor: pointer;
+        }
     }
 }
