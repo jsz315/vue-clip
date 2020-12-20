@@ -50,7 +50,7 @@ export default {
         this.auth();
     },
     computed: {
-        ...mapState(['pics', 'id', 'clipData'])
+        ...mapState(['pics', 'id', 'clipData', 'token'])
     },
     beforeRouteEnter(to, from, next){
         // 在渲染该组件的对应路由被 confirm 前调用
@@ -69,7 +69,7 @@ export default {
    
     
     methods: {
-        ...mapMutations(['changePics', 'changeId', 'changeClipData']),
+        ...mapMutations(['changePics', 'changeId', 'changeClipData', 'changeToken', 'changeUserInfo']),
         goRegist(){
             this.$router.push({ path: '/regist', query: {  }});
         },
@@ -89,6 +89,7 @@ export default {
             });
             if(res.data.code == 0){
                 localStorage.setItem("token", res.data.token);
+                this.changeToken("token", res.data.token);
             }
             console.log(res);
         },
@@ -98,6 +99,8 @@ export default {
             });
             if(res.data.code == 0){
                 this.$toast({message: "认证成功"});
+                this.changeUserInfo(res.data.data.userInfo);
+                console.log(res.data.data.userInfo);
             }
             else{
                 this.$toast({message: res.data.msg});
