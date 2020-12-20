@@ -94,8 +94,9 @@ export default {
         async changeCode(){
             var res = await user.httpGet("/user/code", {});
             console.log(res);
-            this.$refs.code.innerHTML = res.data.img;
-            this.codeId = res.data.codeId;
+            var {img, codeId} = res.data.data;
+            this.$refs.code.innerHTML = img;
+            this.codeId = codeId;
         },
         async onRegist(){
             var res = await user.httpGet("/user/regist", {
@@ -108,9 +109,9 @@ export default {
             
             if(res.data.code == 0){
                 this.$toast({message: "注册成功"});
-                this.$router.push("/home");
+                this.$router.push("/login");
             }
-            else if(res.data.code == 2){
+            else if(res.data.code == 1){
                 this.$toast({message: res.data.msg});
                 this.changeCode();
             }

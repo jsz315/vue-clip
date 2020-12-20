@@ -91,6 +91,9 @@ export default {
                 localStorage.setItem("token", res.data.token);
                 this.changeToken("token", res.data.token);
             }
+            else{
+                this.$toast({message: res.data.msg});
+            }
             console.log(res);
         },
         async auth(){
