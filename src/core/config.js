@@ -4,7 +4,8 @@ const host = getHost();
 const cvm = host + "/asset/upload";
 const cos = "http://resoure-1251324668.cos.ap-guangzhou.myqcloud.com";
 
-const verificateHost = "http://106.54.75.203:8899";
+// const verificateHost = "http://106.54.75.203:8899";
+const verificateHost = host;
 
 const proxyHost = "https://www.madman.fun";
 const temp = proxyHost + "/asset/temp";

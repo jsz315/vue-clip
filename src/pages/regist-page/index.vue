@@ -89,7 +89,7 @@ export default {
     methods: {
         ...mapMutations(['changePics', 'changeId', 'changeClipData']),
         goLogin(){
-            this.$router.push({ path: '/home', query: {} });
+            this.$router.push({ path: '/login', query: {} });
         },
         async changeCode(){
             var res = await user.httpGet("/user/code", {});
