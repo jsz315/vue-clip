@@ -43,12 +43,14 @@ const router = new VueRouter({
   routes
 })
 
+
 router.beforeEach((to, from, next)=>{
+    console.log("store.state.userInfo", store.state.userInfo);
   if(to.meta.auth){
-      console.log("store.state.userInfo", store.state.userInfo);
     if(!store.state.userInfo){
       next({
-        path: "/login"
+        path: "/login",
+        query: {redirect: to.fullPath}
       })
     }
     else{
@@ -59,6 +61,12 @@ router.beforeEach((to, from, next)=>{
     next();
   }
 })
+
+// history.pushState(null, null, window.location.href);
+// window.addEventListener('popstate', function () {
+//     history.pushState(null, null, window.location.href);
+// });
+
 
 Vue.config.productionTip = false
 

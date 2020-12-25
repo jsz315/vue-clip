@@ -91,7 +91,7 @@ export default {
                 localStorage.setItem("token", res.data.data.token);
                 this.changeUserInfo(res.data.data.userInfo);
                 this.$toast({message: "登录成功"});
-                this.$router.push({path: "/list"});
+                this.$router.replace({path: "/list"});
             }
             else{
                 this.$toast({message: res.data.msg});
@@ -105,7 +105,7 @@ export default {
                 this.$toast({message: "认证成功"});
                 this.changeUserInfo(res.data.data.userInfo);
                 console.log(res.data.data.userInfo);
-                this.$router.push({path: "/list"});
+                this.$router.replace({path: "/list"});
             }
             else{
                 this.$toast({message: res.data.msg});
