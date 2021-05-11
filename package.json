@@ -15,7 +15,7 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "lib-flexible": "^0.3.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "postcss-px2rem": "^0.3.0",
     "vue": "^2.6.11",
     "vue-easyrefresh": "^1.0.6",
